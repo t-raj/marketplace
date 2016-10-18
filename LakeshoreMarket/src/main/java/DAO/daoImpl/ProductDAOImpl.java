@@ -1,0 +1,68 @@
+package main.java.DAO.daoImpl;
+
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import main.java.DAO.ProductDAO;
+import main.java.model.constant.Constant;
+import main.java.model.entity.Product;
+
+public class ProductDAOImpl implements ProductDAO{
+	
+	
+	@Autowired
+	private SessionFactory sessionFactory = buildSessionFactory(new Configuration().configure(Constant.HIBERNATE_FILE_NAME));
+	
+	
+	private SessionFactory buildSessionFactory(Configuration configure) {
+			ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configure.getProperties()).buildServiceRegistry();
+			sessionFactory = configure.buildSessionFactory(serviceRegistry);
+			return sessionFactory;
+		}
+
+	@Override
+	public void add(Product product) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.saveOrUpdate(product);
+		session.flush();
+		tx.commit();
+		
+	}
+
+	
+	@Override
+	public void delete(long productId) {
+		Session session = sessionFactory.openSession();
+		Product product = find(productId);
+		product.setActive(false);
+		Transaction tx = session.beginTransaction();
+		update(product);
+		session.flush();
+		tx.commit();
+	}
+
+
+
+	@Override
+	public Product find(long productId) {
+		
+		return (Product) sessionFactory.getCurrentSession().get(Product.class, productId);
+	}
+	
+	@Override
+	public void  update(Product product) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.saveOrUpdate(product);
+		session.flush();
+		tx.commit();
+	}
+
+}

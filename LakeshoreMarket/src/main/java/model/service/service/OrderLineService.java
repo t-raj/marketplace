@@ -6,17 +6,17 @@ import main.java.model.order.orderBean.OrderLineBean;
 
 public interface OrderLineService {
 	
-	
-	void cancel(long orderId);
-
-	OrderLineBean get(long orderId);
-
-	List<OrderLineBean> get();
-
-	void update(OrderLineBean orderLineBean);
 
 	void addItem(OrderLineBean orderLineBean);
+	
+	OrderLineBean get(long orderId);
+	
+	void update(OrderLineBean orderLineBean);
 
-	List<OrderLineBean> get(int orderId);
+	void cancel(long orderId);	
+	
+	List<OrderLineBean> get();
+
+	//List<OrderLineBean> get(int orderId);
 
 }

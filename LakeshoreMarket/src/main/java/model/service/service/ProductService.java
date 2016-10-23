@@ -6,10 +6,10 @@ public interface ProductService {
 	
 	void add(ProductBean productBean);
 	
-	void delete(long productId);
-	
-	void update(ProductBean productBean);
-	
 	ProductBean get(int productId);
+	
+	void update(ProductBean productBean);	
+	
+	void delete(long productId);
 
 }

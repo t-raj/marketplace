@@ -6,18 +6,18 @@ import main.java.model.order.orderBean.OrderBean;
 
 public interface OrderService {
 
-	void submit(OrderBean orderBean);
-
-	void cancel(long orderId);
-
-	OrderBean get(long orderId);
-
-	List<OrderBean> get();
-
-	void update(OrderBean orderBean);
+	//void submit(OrderBean orderBean);
 
 	void addItem(OrderBean orderBean);
+	
+	OrderBean get(long orderId);
 
-	OrderBean get(int orderId);
+	void update(OrderBean orderBean);
+	
+	void cancel(long orderId);
+	
+	List<OrderBean> get();
+
+	//OrderBean get(int orderId);
 
 }

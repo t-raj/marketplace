@@ -7,12 +7,14 @@ import main.java.model.partner.partnerBean.PartnerBean;
 public interface PartnerService {
 	
 	void add(PartnerBean partnerBean);
-
-	void delete(long partnerId);
-
+	
+	PartnerBean get(int customerId);
+	
 	void update(PartnerBean partnerBean);
+	
+	void delete(long partnerId);
 	
 	List<PartnerBean> get();
 	
-	PartnerBean get(int customerId);
+	
 }

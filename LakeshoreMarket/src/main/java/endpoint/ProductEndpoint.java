@@ -21,14 +21,25 @@ public class ProductEndpoint {
 	
 	@Autowired(required=true)
 	private static ProductService productService; 
-
-	@Path("{productId}")
+	
+	/*
+	@Path("{Product}")
 	@GET
 	@Produces("application/xml")
+	
+	*/
 	public ProductModel search(int productId) {
-		return ElementUtil.buildProductModel(productService.get(productId));
+		ProductModel productRepresentation = new ProductModel();
 		
+		try {
+			productRepresentation = ElementUtil.buildProductModel(productService.get(productId));
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return productRepresentation;
 	}
+	
 
 
 }

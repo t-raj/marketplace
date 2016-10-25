@@ -43,7 +43,17 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 
 	@Override
 	public void delete(long orderLineId) {
-		// TODO Auto-generated method stub
+		try {
+			Session session = sessionFactory.openSession();
+			OrderLine orderLine = get(orderLineId);
+			orderLine.setStatus("Deleted");
+			Transaction tx = session.beginTransaction();
+			update(orderLine);
+			session.flush();
+			tx.commit();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

@@ -36,6 +36,9 @@ public class OrderLine implements Serializable {
 	@Column(name="price")
 	private double price;
 	
+	@Column(name="Status")
+	private String status;
+	
 	List<Product> products = new ArrayList<Product>();
 	List<Integer> productIds = null;
 
@@ -87,6 +90,14 @@ public class OrderLine implements Serializable {
 
 	public void setCost(double price) {
 		this.price = price;
+	}
+
+	public void setStatus(String string) {
+		this.status = string;	
+	}
+	
+	public String getStatus(){
+		return status;
 	}
 	
 }

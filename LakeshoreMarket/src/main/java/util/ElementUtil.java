@@ -223,11 +223,11 @@ public class ElementUtil {
 		}
 		
 		ProductModel productModel = new ProductModel();
+		productModel.setpId(productBean.getId());
 		productModel.setDescription(productBean.getDescription());
 		productModel.setPrice(productBean.getPrice());
 		return productModel;
 	}
-	
 	
 
 }

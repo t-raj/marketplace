@@ -10,6 +10,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +24,7 @@ import main.java.model.service.service.OrderService;
 import main.java.model.service.service.PaymentService;
 
 
+@Path("/PaymentService")
 public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired(required=true)

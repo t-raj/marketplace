@@ -15,12 +15,12 @@ import main.java.model.service.service.ProductService;
 import main.java.util.ElementUtil;
 
 
-@Path("/ProductService/")
+@Path("/ProductService")
 public class ProductServiceImpl implements ProductService {
 	
 	private ProductDAO productDAO = new ProductDAOImpl();
 
-	@POST
+	@PUT
 	@Produces({"application/xml" , "application/json"})
 	@Path("/ProductBean")
 	public void add(ProductBean productBean) {
@@ -36,15 +36,8 @@ public class ProductServiceImpl implements ProductService {
 		return ElementUtil.buildProductBean(productDAO.find(productId));
 	}
 	
-	@DELETE
-	@Produces({"application/xml" , "application/json"})
-	@Path("/Product/id")
-	public void delete(@PathParam("id")long productId) {
-		productDAO.delete(productId);
-		
-	}
 
-	@PUT
+	@POST
 	@Produces({"application/xml" , "application/json"})
 	@Path("/ProductBean")
 	public void update(ProductBean productBean) {
@@ -52,6 +45,12 @@ public class ProductServiceImpl implements ProductService {
 		productDAO.update(ElementUtil.buildProduct(productBean));
 		
 	}
-
+	
+	@DELETE
+	@Produces({"application/xml" , "application/json"})
+	@Path("/Product/id")
+	public void delete(@PathParam("id")long productId) {
+		productDAO.delete(productId);
+	}
 
 }

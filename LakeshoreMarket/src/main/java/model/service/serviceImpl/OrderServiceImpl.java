@@ -20,7 +20,7 @@ import main.java.model.service.service.OrderService;
 import main.java.util.ElementUtil;
 
 @Service
-@Path("/OrderService/")
+@Path("/OrderService")
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	*/
 	
-	@POST
+	@PUT
 	@Produces({"application/xml" , "application/json"})
 	@Path("/OrderBean")
 	public void addItem(OrderBean orderBean) {
@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
 		return ElementUtil.buildOrderBean(orderDAO.get(orderBeanId));
 	}
 	
-	@PUT
+	@POST
 	@Produces({"application/xml" , "application/json"})
 	@Path("/OrderBean")
 	public void update(OrderBean orderBean) {

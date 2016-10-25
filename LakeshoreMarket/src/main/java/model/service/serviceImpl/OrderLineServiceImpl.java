@@ -21,7 +21,7 @@ public class OrderLineServiceImpl implements OrderLineService{
 
 	private OrderLineDAO orderLineDAO = new OrderLineDAOImpl();
 	
-	@POST
+	@PUT
 	@Produces({"application/xml" , "application/json"})
 	@Path("/OrderLineBean")
 	public void addItem(OrderLineBean orderLineBean) {
@@ -38,7 +38,7 @@ public class OrderLineServiceImpl implements OrderLineService{
 	}
 	
 	
-	@PUT
+	@POST
 	@Produces({"application/xml" , "application/json"})
 	@Path("/OrderLineBean")
 	public void update(OrderLineBean orderLineBean) {

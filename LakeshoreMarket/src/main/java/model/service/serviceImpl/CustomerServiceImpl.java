@@ -16,14 +16,14 @@ import main.java.model.customer.customerBean.CustomerBean;
 import main.java.model.service.service.CustomerService;
 import main.java.util.ElementUtil;
 
-@Path("/CustomerService/")
+@Path("/CustomerService")
 //@Component
 public class CustomerServiceImpl implements CustomerService {
 
 //	@Autowired
 	private CustomerDAO customerDAO = new CustomerDAOImpl();
 	
-	@POST
+	@PUT
 	@Produces({"application/xml" , "application/json"})
 	@Path("/CustomerBean")
 	public void add(CustomerBean customerBean) {
@@ -40,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return ElementUtil.buildCustomerBean(customerDAO.find(customerId));
 	}
 
-	@PUT
+	@POST
 	@Produces({"application/xml" , "application/json"})
 	@Path("/CustomerBean")
 	public void update(CustomerBean customerBean) {

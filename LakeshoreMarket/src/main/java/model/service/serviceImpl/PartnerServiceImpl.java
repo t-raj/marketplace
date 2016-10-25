@@ -22,7 +22,7 @@ public class PartnerServiceImpl implements PartnerService {
 //	@Autowired
 	private PartnerDAO partnerDAO = new PartnerDAOImpl();
 	
-	@POST
+	@PUT
 	@Produces({"application/xml" , "application/json"})
 	@Path("/PartnerBean")
 	public void add(PartnerBean partnerBean) {
@@ -39,7 +39,7 @@ public class PartnerServiceImpl implements PartnerService {
 		return ElementUtil.buildPartnerBean(partnerDAO.find(partnerId));
 	}
 
-	@PUT
+	@POST
 	@Produces({"application/xml" , "application/json"})
 	@Path("/PartnerBean")
 	public void update(PartnerBean partnerBean) {

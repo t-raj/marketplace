@@ -22,12 +22,11 @@ public class ProductEndpoint {
 	@Autowired(required=true)
 	private static ProductService productService; 
 	
-	/*
+
 	@Path("{Product}")
 	@GET
 	@Produces("application/xml")
 	
-	*/
 	public ProductModel search(int productId) {
 		ProductModel productRepresentation = new ProductModel();
 		

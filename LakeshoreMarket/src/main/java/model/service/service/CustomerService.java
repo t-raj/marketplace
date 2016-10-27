@@ -15,4 +15,6 @@ public interface CustomerService {
 	void update(CustomerBean customerBean);
 	
 	List<CustomerBean> get();
+
+	String getEmail();
 }

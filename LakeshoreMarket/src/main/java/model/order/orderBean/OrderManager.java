@@ -37,8 +37,11 @@ public class OrderManager {
 	private static CustomerService customerService;
 	private static PartnerService partnerService;
 	
+	
+	
 	boolean successful; 
 	boolean shipped;
+	private static String orderStatus;
 	
 	public boolean isSuccessful() {
 		return successful;
@@ -49,8 +52,6 @@ public class OrderManager {
 	}
 
 	public void makePayment(int orderID){
-		
-		
 		
 		double totalPrice =0;
 		OrderBean order = orderService.get(orderID);
@@ -78,33 +79,31 @@ public class OrderManager {
 
 	}
 
-	public void getOrderStatus(long orderId){
-		
-		String orderStatus;
+	public String getOrderStatus(long orderId){
 		
 		if(successful == true){
 			orderStatus = Constant.paid;
 		}
 		if(shipped == true){
 			orderStatus = Constant.shipped;
-			//get the customer object and send notification 
-			Order order = new Order(); 
-			int customerId = order.getCustomerId();
-			Customer customer = new Customer();
-			customer.setId(customerId);;
+		
+		
 			
-			shipNotification(customer);
+	
+			
+			shipNotification(customerService);
 		}
 		else{
 			orderStatus = orderService.get(orderId).getStatus();
 		}
+		return orderStatus;
 		
 	}
 	
-	private void shipNotification(Customer customer) {
+	private void shipNotification(CustomerService customerService) {
 		
 		String from = "publicNotification@gmail.com"; 
-		String to = customer.getEmail();
+		String to = customerService.getEmail();
 		String host = "localhost";
 		
 		Properties properties = System.getProperties();
@@ -129,9 +128,53 @@ public class OrderManager {
 		}
 	}
 
+	public void cancelOrder(long orderId) {
+		//update the status from previous to cancelled for a given order
+		
+		try {
+			orderStatus = orderService.get(orderId).getStatus();
+				
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(orderService.get(orderId) == null){
+			return;
+		}
+		else{
+			orderService.get(orderId).setStatus("cancelled");
+		}
+		
+		
+	}
 
-	
-	
-	
+	public void shipOrder(long orderId) {
+		
+		try {
+			orderStatus = orderService.get(orderId).getStatus();
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// TODO Auto-generated method stub
+		if(successful && orderStatus == "ordered"){
+			orderStatus ="in progress";
+			System.out.println("Your payment is scucced, and the shippment is in progress");
+
+			if(shipped){
+				orderStatus = "shipped";
+			}
+			System.out.println("Your order has been shipped! Please wait patiently for your package.");
+			}
+		
+		else{
+			System.out.println("Your order has not been shipped yet");
+		}
+		
+	}
+
+
+
 
 }

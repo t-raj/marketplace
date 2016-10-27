@@ -2,6 +2,7 @@ package main.java.model.service.serviceImpl;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -41,6 +42,7 @@ public class PartnerServiceImpl implements PartnerService {
 
 	@POST
 	@Produces({"application/xml" , "application/json"})
+	@Consumes({"application/xml" , "application/json"})
 	@Path("/PartnerBean")
 	public void update(PartnerBean partnerBean) {
 		System.out.println("POST METHOD from Customer with ID:......" + partnerBean.getId());

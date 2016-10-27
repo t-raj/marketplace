@@ -2,6 +2,7 @@ package main.java.model.service.serviceImpl;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -54,6 +55,7 @@ public class OrderServiceImpl implements OrderService {
 	
 	@POST
 	@Produces({"application/xml" , "application/json"})
+	@Consumes({"application/xml" , "application/json"})
 	@Path("/OrderBean")
 	public void update(OrderBean orderBean) {
 		System.out.println("POST METHOD from Order with ID:......" + orderBean.getId());

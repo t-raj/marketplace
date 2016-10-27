@@ -1,5 +1,6 @@
 package main.java.model.service.serviceImpl;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -39,6 +40,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@POST
 	@Produces({"application/xml" , "application/json"})
+	@Consumes({"application/xml" , "application/json"})
 	@Path("/ProductBean")
 	public void update(ProductBean productBean) {
 		System.out.println("POST METHOD from product with ID:......" + productBean.getId());

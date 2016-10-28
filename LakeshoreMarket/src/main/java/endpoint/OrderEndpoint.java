@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
@@ -26,8 +27,9 @@ public class OrderEndpoint {
 	
 	private static List<OrderBean> orderList;
 	
-	@GET//1.b accept buy order
-	@Produces("application/xml")
+	@PUT//1.b accept buy order
+	@Produces({"application/xml", "application/json"})
+	@Consumes({"application/xml", "application/json"})
 	@Path("/Order")
 	public void processOrder(OrderModel orderModel) {
  
@@ -38,9 +40,7 @@ public class OrderEndpoint {
  
 		String result = "@Produces(\"application/xml\") Output: \n\nC to F Converter Output: \n\n" + fahrenheit;
 		return "<ctofservice>" + "<celsius>" + celsius + "</celsius>" + "<ctofoutput>" + result + "</ctofoutput>" + "</ctofservice>";
-		
 		*/
-		
 		orderManager.processOrder(orderModel.getCustomerId());
 	}
  

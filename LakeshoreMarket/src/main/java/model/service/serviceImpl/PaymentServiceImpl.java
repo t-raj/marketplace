@@ -35,17 +35,18 @@ public class PaymentServiceImpl implements PaymentService {
 	boolean successful; 
 	boolean shipped;
 	
+	@Override
 	public boolean isSuccessful() {
 		return successful;
 	}
 
+	@Override
 	public void setSuccessful(boolean successful) {
 		this.successful = successful;
 	}
 
+	@Override
 	public void makePayment(Customer customer, Partner partner ){
-		
-		
 		
 		double totalPrice =0;
 		List<OrderLineBean> products = (List<OrderLineBean>) orderLineService.get();
@@ -98,6 +99,7 @@ public class PaymentServiceImpl implements PaymentService {
 		return orderStatus;
 	}
 	
+	
 	private void shipNotification(Customer customer) {
 		
 		String from = "publicNotification@gmail.com"; 
@@ -126,9 +128,5 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 	}
 
-
-	
-	
-	
 
 }

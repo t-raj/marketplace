@@ -8,6 +8,7 @@ public class Constant {
 	public static final String cancelled = "cancelled";
 	public static final String pending = "pending";
 	public static final String orderMade = "orderMade";
+	public static final String preshipping = "preshipping";
 	
 	
 

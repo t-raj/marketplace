@@ -9,6 +9,7 @@ import main.java.model.entity.Order;
 import main.java.model.entity.OrderLine;
 import main.java.model.entity.Partner;
 import main.java.model.entity.Product;
+import main.java.model.order.OrderModel;
 import main.java.model.order.orderBean.OrderBean;
 import main.java.model.order.orderBean.OrderLineBean;
 import main.java.model.partner.partnerBean.PartnerBean;
@@ -227,6 +228,20 @@ public class ElementUtil {
 		productModel.setDescription(productBean.getDescription());
 		productModel.setPrice(productBean.getPrice());
 		return productModel;
+	}
+
+	public static OrderModel buildOrderModel(OrderBean orderBean) {
+		// TODO Auto-generated method stub
+		if(orderBean == null){
+			return null;
+		}
+		OrderModel orderModel = new OrderModel();
+		orderModel.setCustomerId(orderBean.getCustomerId());
+		orderModel.setPartnerId(orderBean.getPartnerId());
+		orderModel.setStatus(orderBean.getStatus());
+		orderModel.setCost(orderBean.getCost());
+		
+		return orderModel;
 	}
 	
 

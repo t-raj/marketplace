@@ -21,36 +21,27 @@ public class ProductServiceImpl implements ProductService {
 	
 	private ProductDAO productDAO = new ProductDAOImpl();
 
-	@PUT
-	@Produces({"application/xml" , "application/json"})
-	@Path("/ProductBean")
+	@Override
 	public void add(ProductBean productBean) {
 		System.out.println("POST METHOD from Product with ID:.........." + productBean.getId());
 		productDAO.add(ElementUtil.buildProduct(productBean));
 	}
 
-	@GET
-	@Produces({"application/xml" , "application/json"})
-	@Path("/ProductBean/Id")
+	@Override
 	public ProductBean get(@PathParam("id")int productId) {
 		System.out.println("GET METHOD from product with ID: ......" + productId);
 		return ElementUtil.buildProductBean(productDAO.find(productId));
 	}
 	
 
-	@POST
-	@Produces({"application/xml" , "application/json"})
-	@Consumes({"application/xml" , "application/json"})
-	@Path("/ProductBean")
+	@Override
 	public void update(ProductBean productBean) {
 		System.out.println("POST METHOD from product with ID:......" + productBean.getId());
 		productDAO.update(ElementUtil.buildProduct(productBean));
 		
 	}
 	
-	@DELETE
-	@Produces({"application/xml" , "application/json"})
-	@Path("/Product/id")
+	@Override
 	public void delete(@PathParam("id")long productId) {
 		productDAO.delete(productId);
 	}

@@ -18,6 +18,7 @@ import main.java.model.constant.Constant;
 import main.java.model.customer.customerBean.CustomerBean;
 import main.java.model.entity.Customer;
 import main.java.model.entity.Order;
+import main.java.model.order.OrderModel;
 import main.java.model.partner.partnerBean.PartnerBean;
 import main.java.model.product.productBean.ProductBean;
 import main.java.model.service.service.CustomerService;
@@ -25,6 +26,7 @@ import main.java.model.service.service.OrderLineService;
 import main.java.model.service.service.OrderService;
 import main.java.model.service.service.PartnerService;
 import main.java.model.service.service.ProductService;
+import main.java.util.ElementUtil;
 
 @Controller
 public class OrderManager {
@@ -38,9 +40,11 @@ public class OrderManager {
 	private static PartnerService partnerService;
 	
 	
+	boolean transaction = false;
+	boolean successful = false; 
+	boolean shipped =false;
+	boolean preshipping =false;
 	
-	boolean successful; 
-	boolean shipped;
 	private static String orderStatus;
 	
 	public boolean isSuccessful() {
@@ -50,8 +54,35 @@ public class OrderManager {
 	public void setSuccessful(boolean successful) {
 		this.successful = successful;
 	}
+	
+	public OrderModel processOrder(int orderId){
+		OrderModel orderRepresentation = new OrderModel();
+		
+		OrderBean orderBean = new OrderBean();
+		
+		try {
+			orderRepresentation = ElementUtil.buildOrderModel(orderService.get(orderId));
+			
+			orderService.addItem(orderService.get(orderId));
+			
+			System.out.println("Your order with Id....." + orderId+ "has been created");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return orderRepresentation;
+		
+	}
 
 	public void makePayment(int orderID){
+		
+		if(transaction == true){
+			successful = true;
+		}
+		
+		if(successful == true){
 		
 		double totalPrice =0;
 		OrderBean order = orderService.get(orderID);
@@ -75,6 +106,10 @@ public class OrderManager {
 		System.out.println("Customer: " + customerLogin);
 		
 		System.out.println("vendor: " + partnerLogin);
+		}
+		else{
+			System.out.println("Your payment was not successful, please try again!");
+		}
 		
 
 	}
@@ -84,21 +119,32 @@ public class OrderManager {
 		if(successful == true){
 			orderStatus = Constant.paid;
 		}
-		if(shipped == true){
+		if(successful == true && preshipping == true){
+			orderStatus = Constant.preshipping;
+		
+		}
+		if(successful == true && preshipping == true && shipped == true){
 			orderStatus = Constant.shipped;
-		
-		
-			
-	
-			
 			shipNotification(customerService);
 		}
 		else{
 			orderStatus = orderService.get(orderId).getStatus();
 		}
+		
+		List<OrderLineBean> orderLines = (List<OrderLineBean>) orderLineService.get();
+		List<ProductBean> products = null;
+		for(OrderLineBean line : orderLines){
+			if(line.getId()==orderId){
+			ProductBean product = (productService.get(line.getProductId()));
+			products.add(product);
+			}
+		}
+		System.out.println("Your order with product(s)......"+ products+ "has the order status..."+ orderStatus);
+		
 		return orderStatus;
 		
 	}
+
 	
 	private void shipNotification(CustomerService customerService) {
 		
@@ -109,6 +155,7 @@ public class OrderManager {
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", host);
 		Session session = Session.getDefaultInstance(properties);
+		
 		
 		try {
 			MimeMessage message = new MimeMessage(session);

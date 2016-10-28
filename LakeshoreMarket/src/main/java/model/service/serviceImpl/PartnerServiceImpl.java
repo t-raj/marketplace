@@ -23,43 +23,32 @@ public class PartnerServiceImpl implements PartnerService {
 //	@Autowired
 	private PartnerDAO partnerDAO = new PartnerDAOImpl();
 	
-	@PUT
-	@Produces({"application/xml" , "application/json"})
-	@Path("/PartnerBean")
+	@Override
 	public void add(PartnerBean partnerBean) {
 		System.out.println("POST METHOD from Customer with ID:.........." + partnerBean.getId() +" and First Name: " 
 				+ partnerBean.getFirstName() + "and Last Name: " + partnerBean.getLastName());
 		partnerDAO.add(ElementUtil.buildPartner(partnerBean));		
 	}
 	
-	@GET
-	@Produces({"application/xml" , "application/json"})
-	@Path("/CustomerBean/Id")
+	@Override
 	public PartnerBean get(@PathParam("id")int partnerId) {
 		System.out.println("GET METHOD from partner with ID: ......" + partnerId);
 		return ElementUtil.buildPartnerBean(partnerDAO.find(partnerId));
 	}
 
-	@POST
-	@Produces({"application/xml" , "application/json"})
-	@Consumes({"application/xml" , "application/json"})
-	@Path("/PartnerBean")
+	@Override
 	public void update(PartnerBean partnerBean) {
 		System.out.println("POST METHOD from Customer with ID:......" + partnerBean.getId());
 		partnerDAO.update(ElementUtil.buildPartner(partnerBean));
 	}
 
-	@GET
-	@Produces({"application/xml" , "application/json"})
-	@Path("/PartnerBean")
+	@Override
 	public List<PartnerBean> get() {
 		System.out.println("POST METHOD for all partners.......");
 		return ElementUtil.buildPartnerBeanList(partnerDAO.find());
 	}
 
-	@DELETE
-	@Produces({"application/xml" , "application/json"})
-	@Path("/Partner/id")
+	@Override
 	public void delete(@PathParam("id")long partnerId) {
 		partnerDAO.delete(partnerId);
 		

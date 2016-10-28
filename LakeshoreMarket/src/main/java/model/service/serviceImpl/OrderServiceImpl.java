@@ -37,41 +37,30 @@ public class OrderServiceImpl implements OrderService {
 	}
 	*/
 	
-	@PUT
-	@Produces({"application/xml" , "application/json"})
-	@Path("/OrderBean")
+	@Override
 	public void addItem(OrderBean orderBean) {
 		System.out.println("POST METHOD from Order with ID:.........." + orderBean.getId() );
 		orderDAO.add(ElementUtil.buildOrder(orderBean));
 	}
 
-	@GET
-	@Produces({"application/xml" , "application/json"})
-	@Path("/OrderBean/Id")
+	@Override
 	public OrderBean get(@PathParam("id")long orderBeanId) {
 		System.out.println("GET METHOD from order with ID: ......" + orderBeanId);
 		return ElementUtil.buildOrderBean(orderDAO.get(orderBeanId));
 	}
 	
-	@POST
-	@Produces({"application/xml" , "application/json"})
-	@Consumes({"application/xml" , "application/json"})
-	@Path("/OrderBean")
+	@Override
 	public void update(OrderBean orderBean) {
 		System.out.println("POST METHOD from Order with ID:......" + orderBean.getId());
 		orderDAO.update(ElementUtil.buildOrder(orderBean));
 	}
 	
-	@DELETE
-	@Produces({"application/xml" , "application/json"})
-	@Path("/Order/id")
+	@Override
 	public void cancel(@PathParam("id")long orderId) {
 		orderDAO.delete(orderId);
 	}
 	
-	@GET
-	@Produces({"application/xml" , "application/json"})
-	@Path("/OrderBean")
+	@Override
 	public List<OrderBean> get() {
 		System.out.println("POST METHOD for all orders.......");
 		return ElementUtil.buildOrderBeanList(orderDAO.get());

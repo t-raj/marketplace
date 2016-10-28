@@ -22,42 +22,31 @@ public class OrderLineServiceImpl implements OrderLineService{
 
 	private OrderLineDAO orderLineDAO = new OrderLineDAOImpl();
 	
-	@PUT
-	@Produces({"application/xml" , "application/json"})
-	@Path("/OrderLineBean")
+	@Override
 	public void addItem(OrderLineBean orderLineBean) {
 		System.out.println("POST METHOD from OrderLine with ID:.........." + orderLineBean.getId());
 		orderLineDAO.update(ElementUtil.buildOrderLine(orderLineBean));
 	}
 	
-	@GET
-	@Produces({"application/xml" , "application/json"})
-	@Path("/OrderLineBean")
+	@Override
 	public OrderLineBean get(@PathParam("id")long orderLineId) {
 		System.out.println("GET METHOD from orderLine with ID: ......" + orderLineId);
 		return ElementUtil.buildOrderLineBean(orderLineDAO.get(orderLineId));
 	}
 	
 	
-	@POST
-	@Produces({"application/xml" , "application/json"})
-	@Consumes({"application/xml" , "application/json"})
-	@Path("/OrderLineBean")
+	@Override
 	public void update(OrderLineBean orderLineBean) {
 		System.out.println("POST METHOD from OrderLine with ID:......" + orderLineBean.getId() + "has been updated");
 		orderLineDAO.update(ElementUtil.buildOrderLine(orderLineBean));
 	}
-
-	@DELETE
-	@Produces({"application/xml" , "application/json"})
-	@Path("/OrderLine/id")
+	
+	@Override
 	public void cancel(@PathParam("id")long orderId) {
 		orderLineDAO.delete(orderId);
 	}
 	
-	@GET
-	@Produces({"application/xml" , "application/json"})
-	@Path("/OrderLineBean")
+	@Override
 	public List<OrderLineBean> get() {
 		System.out.println("POST METHOD for all orderLines are.......");
 		return ElementUtil.buildOrderLineBeanList(orderLineDAO.get());

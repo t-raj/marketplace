@@ -26,24 +26,29 @@ public class OrderEndpoint {
 	
 	private static List<OrderBean> orderList;
 	
-	@GET
-	@Consumes("application/xml")
+	@GET//1.b accept buy order
 	@Produces("application/xml")
-	public String processOrder(OrderModel oderModel) {
+	@Path("/Order")
+	public void processOrder(OrderModel orderModel) {
  
+		/*
 		Double fahrenheit;
 		Double celsius = 36.8;
 		fahrenheit = ((celsius * 9) / 5) + 32;
  
 		String result = "@Produces(\"application/xml\") Output: \n\nC to F Converter Output: \n\n" + fahrenheit;
 		return "<ctofservice>" + "<celsius>" + celsius + "</celsius>" + "<ctofoutput>" + result + "</ctofoutput>" + "</ctofservice>";
+		
+		*/
+		
+		orderManager.processOrder(orderModel.getCustomerId());
 	}
  
 //the order does not actually delete from the database, instead the status changed from previous to cancelled 
 	
 
 
-	@GET
+	@GET//1.d. ship orders
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
 	public void shipOrder(long orderId){
@@ -51,24 +56,24 @@ public class OrderEndpoint {
 	}
 	
 
-	@GET
+	@GET//1.d. ship orders
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
-	public void shipOrders(List<OrderBean> orderBeanList){
+	public void shipOrders(List<OrderModel> orderRepresentationList){
 		
-		for(OrderBean orderBean: orderBeanList){
-			this.shipOrder(orderBean.getId());
+		for(OrderModel orderModel: orderRepresentationList){
+			this.shipOrder(orderModel.getCustomerId());
 		}
 	}
 	
-	@GET
+	@GET//1.e provide order status, provide status of orders in progress  //2.d. get acknowledgement of order fulfillment if shipped
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
 	public String orderStatus(long orderId){
 		return orderManager.getOrderStatus(orderId);
 	}
 	
-	@DELETE
+	@DELETE//1.f. order cancel
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
 	public void cancelOrder(long orderId){
@@ -83,6 +88,7 @@ public class OrderEndpoint {
 		}
 	}
 	
+
 	
 	
 	

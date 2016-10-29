@@ -16,10 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import main.java.model.constant.Constant;
 import main.java.model.customer.customerBean.CustomerBean;
-import main.java.model.entity.Customer;
-import main.java.model.entity.Order;
-import main.java.model.entity.Partner;
-import main.java.model.order.OrderModel;
 import main.java.model.order.orderBean.OrderBean;
 import main.java.model.order.orderBean.OrderLineBean;
 import main.java.model.partner.partnerBean.PartnerBean;
@@ -30,7 +26,8 @@ import main.java.model.service.service.OrderService;
 import main.java.model.service.service.PartnerService;
 import main.java.model.service.service.PaymentService;
 import main.java.model.service.service.ProductService;
-import main.java.util.ElementUtil;
+
+
 
 
 @Path("/PaymentService")
@@ -68,12 +65,12 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 	
 	@Override
-	public OrderModel processOrder(int orderId){
+	public OrderBean processOrder(int orderId){
 		
-		OrderModel orderRepresentation = new OrderModel();
+		OrderBean orderBean = new OrderBean();
 		
 		try {
-			orderRepresentation = ElementUtil.buildOrderModel(orderService.get(orderId));
+			orderBean = orderService.get(orderId);
 			
 			orderService.addItem(orderService.get(orderId));
 			
@@ -83,7 +80,7 @@ public class PaymentServiceImpl implements PaymentService{
 			e.printStackTrace();
 		}
 		
-		return orderRepresentation;
+		return orderBean;
 	}
 
 	@Override
@@ -208,21 +205,25 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 
 	@Override
-	public void shipOrder(long orderId) {
+	public OrderBean shipOrder(long orderId) {
+		
+		OrderBean orderBean = new OrderBean();
 		
 		try {
-			orderStatus = orderService.get(orderId).getStatus();
+			orderBean.setStatus( orderService.get(orderId).getStatus());
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// TODO Auto-generated method stub
 		if(successful && orderStatus == "ordered"){
-			orderStatus ="in progress";
+			
+			orderBean.setStatus("in progress");
+			
 			System.out.println("Your payment is scucced, and the shippment is in progress");
 
 			if(shipped){
-				orderStatus = "shipped";
+				orderBean.setStatus( "shipped");
 			}
 			System.out.println("Your order has been shipped! Please wait patiently for your package.");
 			}
@@ -230,6 +231,7 @@ public class PaymentServiceImpl implements PaymentService{
 		else{
 			System.out.println("Your order has not been shipped yet");
 		}
-		
+		return orderBean;
 	}
+	
 }

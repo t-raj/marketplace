@@ -55,13 +55,13 @@ public class PaymentService {
 		this.successful = successful;
 	}
 	
-	public OrderModel processOrder(int orderId){
-		OrderModel orderRepresentation = new OrderModel();
+	public OrderBean processOrder(int orderId){
+		
 		
 		OrderBean orderBean = new OrderBean();
 		
 		try {
-			orderRepresentation = ElementUtil.buildOrderModel(orderService.get(orderId));
+			orderBean = orderService.get(orderId);
 			
 			orderService.addItem(orderService.get(orderId));
 			
@@ -72,7 +72,7 @@ public class PaymentService {
 		}
 		
 		
-		return orderRepresentation;
+		return orderBean;
 		
 	}
 

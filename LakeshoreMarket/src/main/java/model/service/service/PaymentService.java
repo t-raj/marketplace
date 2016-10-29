@@ -1,6 +1,7 @@
 package main.java.model.service.service;
 
 import main.java.model.order.OrderModel;
+import main.java.model.order.orderBean.OrderBean;
 
 public interface PaymentService {
 
@@ -8,7 +9,7 @@ public interface PaymentService {
 
 	void setSuccessful(boolean successful);
 
-	OrderModel processOrder(int orderId);
+	OrderBean processOrder(int orderId);
 
 	void makePayment(int orderID);
 
@@ -16,6 +17,6 @@ public interface PaymentService {
 
 	void cancelOrder(long orderId);
 
-	void shipOrder(long orderId);
+	OrderBean shipOrder(long orderId);
 
 }

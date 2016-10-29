@@ -1,7 +1,6 @@
 package main.java.model.service.service;
 
-import main.java.model.entity.Customer;
-import main.java.model.entity.Partner;
+import main.java.model.order.OrderModel;
 
 public interface PaymentService {
 
@@ -9,9 +8,14 @@ public interface PaymentService {
 
 	void setSuccessful(boolean successful);
 
-	void makePayment(Customer customer, Partner partner);
+	OrderModel processOrder(int orderId);
+
+	void makePayment(int orderID);
 
 	String getOrderStatus(long orderId);
-	
+
+	void cancelOrder(long orderId);
+
+	void shipOrder(long orderId);
 
 }

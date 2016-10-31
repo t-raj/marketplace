@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import main.java.DAO.PartnerDAO;
 import main.java.DAO.daoImpl.PartnerDAOImpl;
 import main.java.model.partner.partnerBean.PartnerBean;
+import main.java.model.product.productBean.ProductBean;
 import main.java.model.service.service.PartnerService;
 import main.java.util.ElementUtil;
 
@@ -24,10 +25,20 @@ public class PartnerServiceImpl implements PartnerService {
 	private PartnerDAO partnerDAO = new PartnerDAOImpl();
 	
 	@Override
-	public void add(PartnerBean partnerBean) {
-		System.out.println("POST METHOD from Customer with ID:.........." + partnerBean.getId() +" and First Name: " 
-				+ partnerBean.getFirstName() + "and Last Name: " + partnerBean.getLastName());
-		partnerDAO.add(ElementUtil.buildPartner(partnerBean));		
+	public void register(int partnerID, String login, String password, String firstName, String lastName, String streetAddress, String city, String state, int zip) {
+		PartnerBean partner = new PartnerBean();
+		partner.setId(partnerID);
+		partner.setLogin(login);
+		partner.setPassword(password);
+		partner.setFirstName(firstName);
+		partner.setFirstName(lastName);
+		partner.setStreetAddress(streetAddress);
+		partner.setCity(city);
+		partner.setState(state);
+		partner.setActive(true);
+		partner.setZip_code(zip);
+		System.out.println("partner " + partner.getFirstName() + " " + partner.getLastName() + " has been registered");
+		partnerDAO.add(ElementUtil.buildPartner(partner));		
 	}
 	
 	@Override

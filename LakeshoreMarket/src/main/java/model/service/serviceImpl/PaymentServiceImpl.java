@@ -220,7 +220,7 @@ public class PaymentServiceImpl implements PaymentService{
 			
 			orderBean.setStatus("in progress");
 			
-			System.out.println("Your payment is scucced, and the shippment is in progress");
+			System.out.println("Your payment is successful, and the shippment is in progress");
 
 			if(shipped){
 				orderBean.setStatus( "shipped");

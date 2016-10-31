@@ -22,12 +22,6 @@ public class ProductServiceImpl implements ProductService {
 	private ProductDAO productDAO = new ProductDAOImpl();
 
 	@Override
-	public void add(ProductBean productBean) {
-		System.out.println("POST METHOD from Product with ID:.........." + productBean.getId());
-		productDAO.add(ElementUtil.buildProduct(productBean));
-	}
-
-	@Override
 	public ProductBean get(@PathParam("id")int productId) {
 		System.out.println("GET METHOD from product with ID: ......" + productId);
 		return ElementUtil.buildProductBean(productDAO.find(productId));
@@ -42,8 +36,34 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public void delete(@PathParam("id")long productId) {
-		productDAO.delete(productId);
+	public void addNewProduct(int productID, String description, int partnerID, int numAvailable,int price){
+		ProductBean productBean = new ProductBean();
+		productBean.setId(productID);
+		productBean.setDescription(description);
+		productBean.setPartnerID(partnerID);
+		productBean.setNumAvailable(numAvailable);
+		productBean.setPrice(price);
+		productBean.setActive(true);
+		System.out.println("product " + productBean.getId() + " has been added to the database");
+		productDAO.add(ElementUtil.buildProduct(productBean));
+	}
+	
+	@Override
+	public void addExistingProduct(int productID, int partnerID, int quantity){
+		ProductBean product = this.get(productID);
+		if ((product.equals(null))||(product.getPartnerID() != partnerID))
+			System.out.println("You do not currently carry any products matching this ID.");
+		else if (!product.isActive())
+			product.setActive(true);
+		product.setNumAvailable(product.getNumAvailable() + quantity);
+	}
+	
+	@Override
+	public void setProductInactive(int productID, int partnerID){
+		ProductBean product = this.get(productID);
+		if ((product.equals(null))||(product.getPartnerID() != partnerID))
+			System.out.println("You do not currently carry any products matching this ID.");
+		product.setActive(false);
 	}
 
 }

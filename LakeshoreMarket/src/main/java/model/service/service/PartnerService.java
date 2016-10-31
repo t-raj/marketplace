@@ -6,7 +6,7 @@ import main.java.model.partner.partnerBean.PartnerBean;
 
 public interface PartnerService {
 	
-	void add(PartnerBean partnerBean);
+	void register(int partnerID, String login, String password, String firstName, String lastName, String streetAddress, String city, String state, int zip);
 	
 	PartnerBean get(int customerId);
 	

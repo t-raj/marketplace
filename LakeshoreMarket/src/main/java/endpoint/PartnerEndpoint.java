@@ -3,6 +3,7 @@ package main.java.endpoint;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -28,20 +29,22 @@ public class PartnerEndpoint {
 	@Autowired(required=true)
 	private static PartnerService partnerService;
 	
-	@PUT//2.1 Need to register and create profile of partners
+	@POST//2.1 Need to register and create profile of partners
 	@Produces({"application/xml", "application/json"})
 	@Consumes({"application/xml", "application/json"})
 	@Path("/Partner")
-	public Response createPartner(PartnerModel partnerModel){
-		
-		if (partnerModel != null) {
-			partnerService.register(partnerModel.getId(), partnerModel.getLogin(), partnerModel.getPassword(), partnerModel.getFirstName(), partnerModel.getLastName(), partnerModel.getStreetAddress(), partnerModel.getCity(), partnerModel.getState(), partnerModel.getZip_code());
-		}
-		
-		String message = "Partner with id: " + partnerModel.getId() + " was created";
+	public Response registerPartner(int partnerID, String login, String password, String firstName, String lastName, String streetAddress, String city, String state, int zip){
+		PartnerModel partnerRepresentation = new PartnerModel();
+		String message;
+		try {
+			partnerService.register(partnerID, login, password, firstName, lastName, streetAddress, city, state, zip);
+			message = "partner successfully registered";
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			message = "Error. Partner could not be registered";
+		}	
 		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
-	
 	
 	
 

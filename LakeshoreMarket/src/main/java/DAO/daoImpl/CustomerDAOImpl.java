@@ -70,57 +70,5 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 	
 
-	// to be used with spring beans
-/*	
-	public void add(Customer customer) {
-		sessionFactory.getCurrentSession().save(customer);
-	}
-
-	public void delete(long customerId) {
-		Customer customer = find(customerId);
-		customer.setActive(false);
-		update(customer);
-	}
-
-	public Customer find(long customerId) {
-		return (Customer) sessionFactory.
-			      getCurrentSession().
-			      get(Customer.class, customerId);
-	}
-
-	public List<Customer> find() {
-		Criteria criteria = sessionFactory.
-			      getCurrentSession().createCriteria(Customer.class);
-		return criteria.list(); 
-	}
-	
-	public void add(Customer customer) {
-		sessionFactory.getCurrentSession().save(customer);
-	}
-
-	public void delete(long customerId) {
-		Customer customer = find(customerId);
-		customer.setActive(false);
-		update(customer);
-	}
-
-	public Customer find(long customerId) {
-		return (Customer) sessionFactory.
-			      getCurrentSession().
-			      get(Customer.class, customerId);
-	}
-
-	public List<Customer> find() {
-		Criteria criteria = sessionFactory.
-			      getCurrentSession().createCriteria(Customer.class);
-		return criteria.list(); 
-	}
-	
-
-	public void update(Customer customer) {
-		 sessionFactory.getCurrentSession().saveOrUpdate(customer);
-
-	}
-	*/
 
 }

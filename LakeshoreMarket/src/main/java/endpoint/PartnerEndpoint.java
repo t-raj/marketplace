@@ -15,7 +15,12 @@ import main.java.model.partner.partnerBean.PartnerBean;
 import main.java.model.partner.partnerBean.PartnerModel;
 import main.java.model.service.service.PartnerService;
 
-//for testing purposes
+
+/**
+ * This endpoint layer class corresponds to the service layer presented in class. 
+ * @author lbo
+ *
+ */
 public class PartnerEndpoint {
 
 	@Autowired(required=true)
@@ -25,11 +30,13 @@ public class PartnerEndpoint {
 	@Produces({"application/xml", "application/json"})
 	@Consumes({"application/xml", "application/json"})
 	@Path("/Partner")
-	public PartnerModel createPartner(int partnerId){
+	public String createPartner(PartnerModel partnerModel){
 		
-		//TO DO for Tara
-		return null;
+		if (partnerModel != null) {
+			partnerService.register(partnerModel.getId(), partnerModel.getLogin(), partnerModel.getPassword(), partnerModel.getFirstName(), partnerModel.getLastName(), partnerModel.getStreetAddress(), partnerModel.getCity(), partnerModel.getState(), partnerModel.getZip_code());
+		}
 		
+		return "Partner with id: " + partnerModel.getId() + " was created";
 	}
 	
 	

@@ -16,21 +16,22 @@ import main.java.model.service.service.ProductService;
 import main.java.util.ElementUtil;
 
 
-@Path("/ProductService")
+/**
+ * This service layer class corresponds to the activity layer presented in class. 
+ * @author lbo
+ *
+ */
 public class ProductServiceImpl implements ProductService {
 	
 	private ProductDAO productDAO = new ProductDAOImpl();
 
 	@Override
 	public ProductBean get(@PathParam("id")int productId) {
-		System.out.println("GET METHOD from product with ID: ......" + productId);
 		return ElementUtil.buildProductBean(productDAO.find(productId));
 	}
-	
 
 	@Override
 	public void update(ProductBean productBean) {
-		System.out.println("POST METHOD from product with ID:......" + productBean.getId());
 		productDAO.update(ElementUtil.buildProduct(productBean));
 		
 	}
@@ -56,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
 		else if (!product.isActive())
 			product.setActive(true);
 		product.setNumAvailable(product.getNumAvailable() + quantity);
+		productDAO.update(ElementUtil.buildProduct(product));
 	}
 	
 	@Override
@@ -64,6 +66,7 @@ public class ProductServiceImpl implements ProductService {
 		if ((product.equals(null))||(product.getPartnerID() != partnerID))
 			System.out.println("You do not currently carry any products matching this ID.");
 		product.setActive(false);
+		productDAO.update(ElementUtil.buildProduct(product));
 	}
 
 }

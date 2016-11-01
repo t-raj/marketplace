@@ -16,51 +16,45 @@ import main.java.DAO.daoImpl.CustomerDAOImpl;
 import main.java.model.customer.customerBean.CustomerBean;
 import main.java.model.service.service.CustomerService;
 import main.java.util.ElementUtil;
-
-@Path("/CustomerService")
-//@Component
+/**
+ * This service layer class corresponds to the activity layer presented in class. 
+ * @author lbo
+ *
+ */
 public class CustomerServiceImpl implements CustomerService {
 	
 	private static CustomerBean customerBean;
 
-//	@Autowired
 	private CustomerDAO customerDAO = new CustomerDAOImpl();
 	
 	@Override
 	public void add(CustomerBean customerBean) {
-		System.out.println("POST METHOD from Customer with ID:.........." + customerBean.getId() +" and First Name: " 
-	+ customerBean.getFirstName() + "and Last Name: " + customerBean.getLastName());
 		customerDAO.add(ElementUtil.buildCustomer(customerBean));		
 	}
 	
 	@Override
 	public CustomerBean get(int customerId) {
-		System.out.println("GET METHOD from customer with ID: ......" + customerId);
 		return ElementUtil.buildCustomerBean(customerDAO.find(customerId));
 	}
 
 	@Override
 	public void update(CustomerBean customerBean) {
-		System.out.println("POST METHOD from Customer with ID:......" + customerBean.getId());
 		customerDAO.update(ElementUtil.buildCustomer(customerBean));
 	}
 
 
 	@Override
-	public void delete(@PathParam("id")long customerId) {
+	public void delete(long customerId) {
 		customerDAO.delete(customerId);
 	}
 	
 	@Override
 	public List<CustomerBean> get() {
-		System.out.println("POST METHOD for all customers.......");
 		return ElementUtil.buildCustomerBeanList(customerDAO.find());
 	}
 
 	@Override
 	public String getEmail() {
-		// TODO Auto-generated method stub
-		
 		String toEmail = customerBean.getEmail();
 		
 		return toEmail;

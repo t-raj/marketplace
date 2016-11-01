@@ -36,7 +36,6 @@ public class OrderDAOImpl implements OrderDAO {
 			session.flush();
 			tx.commit();
 		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

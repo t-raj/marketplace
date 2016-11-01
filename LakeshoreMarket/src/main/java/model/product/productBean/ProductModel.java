@@ -12,14 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 
 public class ProductModel {
 	
-	private double pId;
+	private int pId;
 	private String description;
 	private int price;
+	private int partnerId;
+	private int numberAvailable;
 	
-	public double getpId() {
+	public int getpId() {
 		return pId;
 	}
-	public void setpId(double pId) {
+	public void setpId(int pId) {
 		this.pId = pId;
 	}	
 	public String getDescription() {
@@ -33,6 +35,18 @@ public class ProductModel {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public int getNumberAvailable() {
+		return numberAvailable;
+	}
+	public void setNumberAvailable(int numberAvailable) {
+		this.numberAvailable = numberAvailable;
+	}
+	public int getPartnerId() {
+		return partnerId;
+	}
+	public void setPartnerId(int partnerId) {
+		this.partnerId = partnerId;
 	}
 	
 

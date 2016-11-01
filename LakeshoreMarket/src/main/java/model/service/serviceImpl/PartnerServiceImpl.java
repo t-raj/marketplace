@@ -18,10 +18,13 @@ import main.java.model.product.productBean.ProductBean;
 import main.java.model.service.service.PartnerService;
 import main.java.util.ElementUtil;
 
-@Path("/PartnerService/")
+/**
+ * This service layer class corresponds to the activity layer presented in class. 
+ * @author lbo
+ *
+ */
 public class PartnerServiceImpl implements PartnerService {
 	
-//	@Autowired
 	private PartnerDAO partnerDAO = new PartnerDAOImpl();
 	
 	@Override
@@ -42,25 +45,22 @@ public class PartnerServiceImpl implements PartnerService {
 	}
 	
 	@Override
-	public PartnerBean get(@PathParam("id")int partnerId) {
-		System.out.println("GET METHOD from partner with ID: ......" + partnerId);
+	public PartnerBean get(int partnerId) {
 		return ElementUtil.buildPartnerBean(partnerDAO.find(partnerId));
 	}
 
 	@Override
 	public void update(PartnerBean partnerBean) {
-		System.out.println("POST METHOD from Customer with ID:......" + partnerBean.getId());
 		partnerDAO.update(ElementUtil.buildPartner(partnerBean));
 	}
 
 	@Override
 	public List<PartnerBean> get() {
-		System.out.println("POST METHOD for all partners.......");
 		return ElementUtil.buildPartnerBeanList(partnerDAO.find());
 	}
 
 	@Override
-	public void delete(@PathParam("id")long partnerId) {
+	public void delete(long partnerId) {
 		partnerDAO.delete(partnerId);
 		
 	}

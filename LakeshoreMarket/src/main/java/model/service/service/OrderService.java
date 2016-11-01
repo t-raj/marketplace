@@ -18,6 +18,6 @@ public interface OrderService {
 	
 	List<OrderBean> get();
 
-	//OrderBean get(int orderId);
+	void sendOrder(int orderId, int partnerId);
 
 }

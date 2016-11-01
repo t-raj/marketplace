@@ -17,9 +17,14 @@ import main.java.model.service.service.OrderLineService;
 import main.java.model.service.service.OrderService;
 import main.java.util.ElementUtil;
 
+
+/**
+ * This endpoint layer class corresponds to the service layer presented in class. 
+ * @author lbo
+ *
+ */
 public class OrderEndpoint {
 	
-//	@Autowired(required=true)
 	private static OrderService orderService;
 	private static OrderLineService orderLineService;
 	private static PaymentService paymentService;
@@ -32,20 +37,7 @@ public class OrderEndpoint {
 	@Consumes({"application/xml", "application/json"})
 	@Path("/Order")
 	public OrderModel processOrder(int orderId) {
-		
-		OrderModel orderRepresentation = new OrderModel();
-		OrderBean orderBean = new OrderBean();
-		
-		orderRepresentation = ElementUtil.buildOrderModel(paymentService.processOrder(orderId));
-		/*
-		Double fahrenheit;
-		Double celsius = 36.8;
-		fahrenheit = ((celsius * 9) / 5) + 32;
- 
-		String result = "@Produces(\"application/xml\") Output: \n\nC to F Converter Output: \n\n" + fahrenheit;
-		return "<ctofservice>" + "<celsius>" + celsius + "</celsius>" + "<ctofoutput>" + result + "</ctofoutput>" + "</ctofservice>";
-		*/
-		return orderRepresentation;
+		return ElementUtil.buildOrderModel(paymentService.processOrder(orderId));
 	}
  
 //the order does not actually delete from the database, instead the status changed from previous to cancelled 
@@ -55,11 +47,7 @@ public class OrderEndpoint {
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
 	public OrderModel shipOrder(int orderId){
-		OrderModel orderRepresentation = new OrderModel();
-		
-		orderRepresentation =ElementUtil.buildOrderModel(paymentService.shipOrder(orderId)); 
-	
-		return orderRepresentation;
+		 return ElementUtil.buildOrderModel(paymentService.shipOrder(orderId)); 
 	}
 	
 
@@ -69,7 +57,7 @@ public class OrderEndpoint {
 	public void shipOrders(List<OrderModel> orderRepresentationList){
 		
 		for(OrderModel orderRepresentation: orderRepresentationList){
-			this.shipOrder(orderRepresentation.getCustomerId());
+			shipOrder(orderRepresentation.getCustomerId());
 		}
 	}
 	
@@ -84,33 +72,28 @@ public class OrderEndpoint {
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
 	public String cancelOrder(OrderModel orderModel){
+		StringBuilder sb = new StringBuilder();
 		
 		OrderModel orderRepresentation = new OrderModel();
 		
 		orderRepresentation.setStatus(paymentService.getOrderStatus(orderModel.getCustomerId()));
 		
-		System.out.println("The order ID you have cancelled is...." + orderModel);
-		
 		paymentService.cancelOrder(orderModel.getCustomerId());
 		
 		if(paymentService.getOrderStatus(orderModel.getCustomerId()) == "cancelled"){
-			
-		System.out.println("The order with order ID:........" + orderModel.getCustomerId() + " has been cancelled");
-	}
-		return orderRepresentation.getStatus();
-	
+			sb.append("The order with customer ID:........" + orderModel.getCustomerId() + " has status updated to: " + orderRepresentation.getStatus());
+		}
+
+		return sb.toString();
 	}
 
 	@PUT//2.c push orders that customers made to partners
 	@Produces({"application/xml", "application/json"})
 	@Consumes({"application/xml", "application/json"})
 	@Path("/Order")
-	
-	public OrderModel youNameItHere(){
-		
-		//TO DO for Tara
-		return null;
-		
+	public String sendOrderToPartner(int orderId, int partnerId){
+		orderService.sendOrder(orderId, partnerId);
+		return orderId + " was sent to partner " + partnerId;
 	}
 	
 	

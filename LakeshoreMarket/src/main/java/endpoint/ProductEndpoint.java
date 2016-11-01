@@ -1,6 +1,11 @@
 package main.java.endpoint;
 
 
+/**
+ * This endpoint layer class corresponds to the service layer presented in class. 
+ * @author lbo
+ *
+ */
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -15,29 +20,25 @@ import org.springframework.stereotype.Controller;
 import main.java.model.product.productBean.ProductBean;
 import main.java.model.product.productBean.ProductModel;
 import main.java.model.service.service.ProductService;
+import main.java.model.service.serviceImpl.ProductServiceImpl;
 import main.java.util.ElementUtil;
 
-@Controller 
 public class ProductEndpoint {
 	
+	private static ProductService productService = new ProductServiceImpl(); 
 	
-	@Autowired(required=true)
-	private static ProductService productService; 
-	
-
 	@Path("{Product}")//1.a search item database by product
 	@GET
 	@Produces("application/xml")
-	
 	public ProductModel search(int productId) {
 		ProductModel productRepresentation = new ProductModel();
 		
 		try {
 			productRepresentation = ElementUtil.buildProductModel(productService.get(productId));
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return productRepresentation;
 	}
 	
@@ -45,10 +46,11 @@ public class ProductEndpoint {
 	@Produces({"application/xml", "application/json"})
 	@Consumes({"application/xml", "application/json"})
 	@Path("/Product")
+	public String addProduct(ProductModel productModel){
+		if (productModel != null) {
+			productService.addNewProduct(productModel.getpId(), productModel.getDescription(), productModel.getPartnerId(), productModel.getNumberAvailable(), productModel.getPrice());
+		}
 
-	public ProductModel addProduct(){
-		
-		//TO DO for Tara
 		return null;
 		
 	}

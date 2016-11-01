@@ -17,62 +17,49 @@ import org.springframework.stereotype.Service;
 import main.java.DAO.OrderDAO;
 import main.java.DAO.daoImpl.OrderDAOImpl;
 import main.java.model.order.orderBean.OrderBean;
+import main.java.model.partner.partnerBean.PartnerBean;
 import main.java.model.service.service.OrderService;
+import main.java.model.service.service.PartnerService;
 import main.java.util.ElementUtil;
 
-@Service
-@Path("/OrderService")
+/**
+ * This service layer class corresponds to the activity layer presented in class. 
+ * @author lbo
+ *
+ */
 public class OrderServiceImpl implements OrderService {
 
-	@Autowired
 	private OrderDAO orderDAO = new OrderDAOImpl();
-	
-	/*
-	@POST
-	@Produces({"application/xml" , "application/json"})
-	@Path("/OrderBean")
-	public void submit(OrderBean orderBean) {
-		System.out.println("POST METHOD from Order with ID:.........." + orderBean.getId() );
-		ElementUtil.buildOrderBean(orderDAO.get(orderBean.getId()));
-	}
-	*/
 	
 	@Override
 	public void addItem(OrderBean orderBean) {
-		System.out.println("POST METHOD from Order with ID:.........." + orderBean.getId() );
 		orderDAO.add(ElementUtil.buildOrder(orderBean));
 	}
 
 	@Override
-	public OrderBean get(@PathParam("id")long orderBeanId) {
-		System.out.println("GET METHOD from order with ID: ......" + orderBeanId);
+	public OrderBean get(long orderBeanId) {
 		return ElementUtil.buildOrderBean(orderDAO.get(orderBeanId));
 	}
 	
 	@Override
 	public void update(OrderBean orderBean) {
-		System.out.println("POST METHOD from Order with ID:......" + orderBean.getId());
 		orderDAO.update(ElementUtil.buildOrder(orderBean));
 	}
 	
 	@Override
-	public void cancel(@PathParam("id")long orderId) {
+	public void cancel(long orderId) {
 		orderDAO.delete(orderId);
 	}
 	
 	@Override
 	public List<OrderBean> get() {
-		System.out.println("POST METHOD for all orders.......");
 		return ElementUtil.buildOrderBeanList(orderDAO.get());
 	}
-	
-	/*
-	@GET
-	@Produces({"application/xml" , "application/json"})
-	@Path("/CustomerBean/Id")
-	public OrderBean get(@PathParam("id")int orderId) {
-		System.out.println("GET METHOD from order with ID: ......" + orderId);
-		return ElementUtil.buildOrderBean(orderDAO.get(orderId));
+
+	@Override
+	public void sendOrder(int orderId, int partnerId) {
+		System.out.println("Your order " + orderId + "was sent to partner " + partnerId);
+		
 	}
-	*/
+	
 }

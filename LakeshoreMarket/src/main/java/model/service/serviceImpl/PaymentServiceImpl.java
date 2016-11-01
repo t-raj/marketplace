@@ -1,5 +1,6 @@
 package main.java.model.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -26,11 +27,11 @@ import main.java.model.service.service.OrderService;
 import main.java.model.service.service.PartnerService;
 import main.java.model.service.service.PaymentService;
 import main.java.model.service.service.ProductService;
-
-
-
-
-@Path("/PaymentService")
+/**
+ * This service layer class corresponds to the activity layer presented in class. 
+ * @author lbo
+ *
+ */
 public class PaymentServiceImpl implements PaymentService{
 	
 	@Autowired(required=true)
@@ -76,7 +77,6 @@ public class PaymentServiceImpl implements PaymentService{
 			
 			System.out.println("Your order with Id....." + orderId+ "has been created");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -95,7 +95,7 @@ public class PaymentServiceImpl implements PaymentService{
 		double totalPrice =0;
 		OrderBean order = orderService.get(orderID);
 		List<OrderLineBean> orderLines = (List<OrderLineBean>) orderLineService.get();
-		List<ProductBean> products = null;
+		List<ProductBean> products = new ArrayList<ProductBean>();;
 		for(OrderLineBean line : orderLines){
 			if(line.getId()==orderID){
 			ProductBean product = (productService.get(line.getProductId()));
@@ -140,7 +140,7 @@ public class PaymentServiceImpl implements PaymentService{
 		}
 		
 		List<OrderLineBean> orderLines = (List<OrderLineBean>) orderLineService.get();
-		List<ProductBean> products = null;
+		List<ProductBean> products = new ArrayList<ProductBean>();
 		for(OrderLineBean line : orderLines){
 			if(line.getId()==orderId){
 			ProductBean product = (productService.get(line.getProductId()));
@@ -172,12 +172,10 @@ public class PaymentServiceImpl implements PaymentService{
 			message.setText("Your payment was successful, and we have shipped your order");
 			
 			Transport.send(message);
-			System.out.println("Shippment notification sent successfully...");
+			System.out.println("Shipment notification sent successfully...");
 		} catch (AddressException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -190,7 +188,6 @@ public class PaymentServiceImpl implements PaymentService{
 			orderStatus = orderService.get(orderId).getStatus();
 				
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -212,10 +209,9 @@ public class PaymentServiceImpl implements PaymentService{
 		try {
 			orderBean.setStatus( orderService.get(orderId).getStatus());
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// TODO Auto-generated method stub
+
 		if(successful && orderStatus == "ordered"){
 			
 			orderBean.setStatus("in progress");

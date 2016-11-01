@@ -17,51 +17,40 @@ import main.java.model.order.orderBean.OrderLineBean;
 import main.java.model.service.service.OrderLineService;
 import main.java.util.ElementUtil;
 
-@Path("/OrderLineService")
+/**
+ * This service layer class corresponds to the activity layer presented in class. 
+ * @author lbo
+ *
+ */
 public class OrderLineServiceImpl implements OrderLineService{
 
 	private OrderLineDAO orderLineDAO = new OrderLineDAOImpl();
 	
 	@Override
 	public void addItem(OrderLineBean orderLineBean) {
-		System.out.println("POST METHOD from OrderLine with ID:.........." + orderLineBean.getId());
 		orderLineDAO.update(ElementUtil.buildOrderLine(orderLineBean));
 	}
 	
 	@Override
-	public OrderLineBean get(@PathParam("id")long orderLineId) {
-		System.out.println("GET METHOD from orderLine with ID: ......" + orderLineId);
+	public OrderLineBean get(long orderLineId) {
 		return ElementUtil.buildOrderLineBean(orderLineDAO.get(orderLineId));
 	}
 	
 	
 	@Override
 	public void update(OrderLineBean orderLineBean) {
-		System.out.println("POST METHOD from OrderLine with ID:......" + orderLineBean.getId() + "has been updated");
 		orderLineDAO.update(ElementUtil.buildOrderLine(orderLineBean));
 	}
 	
 	@Override
-	public void cancel(@PathParam("id")long orderId) {
+	public void cancel(long orderId) {
 		orderLineDAO.delete(orderId);
 	}
 	
 	@Override
 	public List<OrderLineBean> get() {
-		System.out.println("POST METHOD for all orderLines are.......");
 		return ElementUtil.buildOrderLineBeanList(orderLineDAO.get());
 	}
-	
-	/*
-	@GET
-	@Produces({"application/xml" , "application/json"})
-	@Path("/OrderLineBean")
-	public List<OrderLineBean> get(@PathParam("id")int orderId) {
-		System.out.println("POST METHOD for all orderLines are.......");
-		return (List<OrderLineBean>) ElementUtil.buildOrderLineBean(orderLineDAO.get(orderId));
-	}
-	*/
-	
 	
 
 }

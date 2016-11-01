@@ -3,18 +3,18 @@ package main.java.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.model.customer.customerBean.CustomerBean;
+import main.java.model.bean.CustomerBean;
+import main.java.model.bean.OrderBean;
+import main.java.model.bean.OrderLineBean;
+import main.java.model.bean.PartnerBean;
+import main.java.model.bean.ProductBean;
 import main.java.model.entity.Customer;
 import main.java.model.entity.Order;
 import main.java.model.entity.OrderLine;
 import main.java.model.entity.Partner;
 import main.java.model.entity.Product;
-import main.java.model.order.OrderModel;
-import main.java.model.order.orderBean.OrderBean;
-import main.java.model.order.orderBean.OrderLineBean;
-import main.java.model.partner.partnerBean.PartnerBean;
-import main.java.model.product.productBean.ProductBean;
-import main.java.model.product.productBean.ProductModel;
+import main.java.service.model.OrderModel;
+import main.java.service.model.ProductModel;
 
 public class ElementUtil {
 	

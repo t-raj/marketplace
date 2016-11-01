@@ -25,8 +25,11 @@ Eclipse IDE
 * Postgres on Heroku
 
 ### Architecture ###
+
 * Database-DAO
+
 * Domain-Entity and Beans
+
 * Service-Activity, Resource and Representation
 
 ### Tools ###

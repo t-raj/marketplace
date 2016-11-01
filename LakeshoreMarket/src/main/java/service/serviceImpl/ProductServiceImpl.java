@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import main.java.DAO.ProductDAO;
 import main.java.DAO.daoImpl.ProductDAOImpl;
 import main.java.model.bean.ProductBean;
+import main.java.model.entity.Product;
 import main.java.service.service.ProductService;
 import main.java.util.ElementUtil;
 
@@ -50,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public void addExistingProduct(int productID, int partnerID, int quantity){
+	public ProductBean addExistingProduct(int productID, int partnerID, int quantity){
 		ProductBean product = this.get(productID);
 		if ((product.equals(null))||(product.getPartnerID() != partnerID))
 			System.out.println("You do not currently carry any products matching this ID.");
@@ -58,6 +59,9 @@ public class ProductServiceImpl implements ProductService {
 			product.setActive(true);
 		product.setNumAvailable(product.getNumAvailable() + quantity);
 		productDAO.update(ElementUtil.buildProduct(product));
+		Product productEntity =  productDAO.find(productID);
+		product = ElementUtil.buildProductBean(productEntity);
+		return product;
 	}
 	
 	@Override

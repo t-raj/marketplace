@@ -69,5 +69,21 @@ public class ProductEndpoint {
 		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
 	
+	@PUT//2.2 Add product or products in market place
+	@Produces({"application/xml", "application/json"})
+	@Consumes({"application/xml", "application/json"})
+	@Path("/Product")
+	public Response addExistingProduct(int productID, int partnerID, int quantity){
+		String message;
+		ProductModel productRepresentation = search(productID);
+		try {
+			productRepresentation = ElementUtil.buildProductModel(productService.addExistingProduct(productID, partnerID, quantity));
+			message = "product successfully added";
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			message = "Error.Product could not be added.";
+		}
+		return Response.ok(message, MediaType.APPLICATION_JSON).build();
+	} 
 
 }

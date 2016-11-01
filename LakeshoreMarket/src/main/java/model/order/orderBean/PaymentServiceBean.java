@@ -29,7 +29,7 @@ import main.java.model.service.service.ProductService;
 import main.java.util.ElementUtil;
 
 @Controller
-public class PaymentService {
+public class PaymentServiceBean {
 	 
 	@Autowired(required=true)
 	private static OrderLineService orderLineService; 

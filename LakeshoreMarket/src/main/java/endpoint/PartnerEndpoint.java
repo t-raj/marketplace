@@ -6,6 +6,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,13 +32,14 @@ public class PartnerEndpoint {
 	@Produces({"application/xml", "application/json"})
 	@Consumes({"application/xml", "application/json"})
 	@Path("/Partner")
-	public String createPartner(PartnerModel partnerModel){
+	public Response createPartner(PartnerModel partnerModel){
 		
 		if (partnerModel != null) {
 			partnerService.register(partnerModel.getId(), partnerModel.getLogin(), partnerModel.getPassword(), partnerModel.getFirstName(), partnerModel.getLastName(), partnerModel.getStreetAddress(), partnerModel.getCity(), partnerModel.getState(), partnerModel.getZip_code());
 		}
 		
-		return "Partner with id: " + partnerModel.getId() + " was created";
+		String message = "Partner with id: " + partnerModel.getId() + " was created";
+		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
 	
 	

@@ -49,5 +49,4 @@ public class ProductModel {
 		this.partnerId = partnerId;
 	}
 	
-
 }

@@ -8,6 +8,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 
 import main.java.DAO.OrderDAO;
 import main.java.model.order.OrderModel;
@@ -36,42 +39,48 @@ public class OrderEndpoint {
 	@Produces({"application/xml", "application/json"})
 	@Consumes({"application/xml", "application/json"})
 	@Path("/Order")
-	public OrderModel processOrder(int orderId) {
-		return ElementUtil.buildOrderModel(paymentService.processOrder(orderId));
+	public Response processOrder(int orderId) {
+		ElementUtil.buildOrderModel(paymentService.processOrder(orderId));
+		String message = "Orders were shipped";
+		
+		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
  
-//the order does not actually delete from the database, instead the status changed from previous to cancelled 
-	
-
 	@GET//1.d. ship orders
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
-	public OrderModel shipOrder(int orderId){
-		 return ElementUtil.buildOrderModel(paymentService.shipOrder(orderId)); 
+	public Response shipOrder(int orderId){
+		ElementUtil.buildOrderModel(paymentService.shipOrder(orderId)); 
+		String message = "Orders were shipped";
+
+		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
-	
 
 	@GET//1.d. ship orders
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
-	public void shipOrders(List<OrderModel> orderRepresentationList){
-		
+	public Response shipOrders(List<OrderModel> orderRepresentationList){
 		for(OrderModel orderRepresentation: orderRepresentationList){
 			shipOrder(orderRepresentation.getCustomerId());
 		}
+		
+		String message = "Orders were shipped";
+		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
 	
 	@GET//1.e provide order status, provide status of orders in progress  //2.d. get acknowledgement of order fulfillment if shipped
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
-	public String orderStatus(OrderModel orderModel){
-		return paymentService.getOrderStatus(orderModel.getCustomerId());
+	public Response orderStatus(OrderModel orderModel){
+		String message = paymentService.getOrderStatus(orderModel.getCustomerId());
+		return Response.ok(message, MediaType.APPLICATION_JSON).build();
+	
 	}
 	
 	@DELETE//1.f. order cancel
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
-	public String cancelOrder(OrderModel orderModel){
+	public Response cancelOrder(OrderModel orderModel){
 		StringBuilder sb = new StringBuilder();
 		
 		OrderModel orderRepresentation = new OrderModel();
@@ -84,16 +93,19 @@ public class OrderEndpoint {
 			sb.append("The order with customer ID:........" + orderModel.getCustomerId() + " has status updated to: " + orderRepresentation.getStatus());
 		}
 
-		return sb.toString();
+		String message = sb.toString();
+		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
 
 	@PUT//2.c push orders that customers made to partners
 	@Produces({"application/xml", "application/json"})
 	@Consumes({"application/xml", "application/json"})
 	@Path("/Order")
-	public String sendOrderToPartner(int orderId, int partnerId){
+	public Response sendOrderToPartner(int orderId, int partnerId){
 		orderService.sendOrder(orderId, partnerId);
-		return orderId + " was sent to partner " + partnerId;
+		String message = orderId + " was sent to partner " + partnerId;
+		return Response.ok(message, MediaType.APPLICATION_JSON).build();
+
 	}
 	
 	

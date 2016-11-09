@@ -30,7 +30,7 @@ Eclipse IDE
 
 * Domain-Entity and Beans
 
-* Service-Activity, Resource and Representation
+* Service-Activity(Service), Resource(Endpoint) and Representation(Model)
 
 ### Tools ###
 * Tomcat for Service layer

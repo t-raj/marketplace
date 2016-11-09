@@ -16,7 +16,9 @@ import javax.ws.rs.core.Response;
 import main.java.DAO.OrderDAO;
 import main.java.model.bean.OrderBean;
 import main.java.service.model.OrderModel;
-import main.java.service.service.*;
+import main.java.service.service.OrderLineService;
+import main.java.service.service.OrderService;
+import main.java.service.service.PaymentService;
 import main.java.util.ElementUtil;
 
 
@@ -25,7 +27,7 @@ import main.java.util.ElementUtil;
  * @author lbo
  *
  */
-@Path("/service")
+@Path("/service/Order")
 public class OrderEndpoint {
 	
 	private static OrderService orderService;
@@ -35,10 +37,10 @@ public class OrderEndpoint {
 	
 	private static List<OrderBean> orderList;
 	
-	@PUT//1.b accept buy order
+	@GET//1.b accept buy order
 	@Produces({"application/xml", "application/json"})
 	@Consumes({"application/xml", "application/json"})
-	@Path("/Order")
+	@Path("/")
 	public Response processOrder(int orderId) {
 		ElementUtil.buildOrderModel(paymentService.processOrder(orderId));
 		String message = "Orders were shipped";
@@ -48,7 +50,7 @@ public class OrderEndpoint {
  
 	@PUT//1.d. ship orders
 	@Produces({"application/xml" , "application/json"})
-	@Path("/Order/id")
+	@Path("/shipment")
 	public Response shipOrder(int orderId){
 		ElementUtil.buildOrderModel(paymentService.shipOrder(orderId)); 
 		String message = "Orders were shipped";
@@ -56,7 +58,7 @@ public class OrderEndpoint {
 		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
 
-	@GET//1.d. ship orders
+/*	@GET//1.d. ship orders
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
 	public Response shipOrders(List<OrderModel> orderRepresentationList){
@@ -67,19 +69,19 @@ public class OrderEndpoint {
 		String message = "Orders were shipped";
 		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
-	
-	@GET//1.e provide order status, provide status of orders in progress  //2.d. get acknowledgement of order fulfillment if shipped
+	*/
+	@PUT//1.e provide order status, provide status of orders in progress  //2.d. get acknowledgement of order fulfillment if shipped
 	@Produces({"application/xml" , "application/json"})
-	@Path("/Order/id")
-	public Response orderStatus(OrderModel orderModel){
-		String message = paymentService.getOrderStatus(orderModel.getCustomerId());
+	@Path("/status")
+	public Response orderStatus(int customerId){
+		String message = paymentService.getOrderStatus(customerId);
 		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	
 	}
 	
 	@DELETE//1.f. order cancel
 	@Produces({"application/xml" , "application/json"})
-	@Path("/Order/id")
+	@Path("/")
 	public Response cancelOrder(OrderModel orderModel){
 		StringBuilder sb = new StringBuilder();
 		
@@ -100,13 +102,12 @@ public class OrderEndpoint {
 	@PUT//2.c push orders that customers made to partners
 	@Produces({"application/xml", "application/json"})
 	@Consumes({"application/xml", "application/json"})
-	@Path("/Order")
+	@Path("/partnermessage")
 	public Response sendOrderToPartner(int orderId, int partnerId){
 		orderService.sendOrder(orderId, partnerId);
 		String message = orderId + " was sent to partner " + partnerId;
 		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 
 	}
-	
 	
 }

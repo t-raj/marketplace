@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -26,6 +27,7 @@ import main.java.util.ElementUtil;
  * @author lbo
  *
  */
+@Path("/service")
 public class OrderEndpoint {
 	
 	private static OrderService orderService;
@@ -46,7 +48,7 @@ public class OrderEndpoint {
 		return Response.ok(message, MediaType.APPLICATION_JSON).build();
 	}
  
-	@GET//1.d. ship orders
+	@PUT//1.d. ship orders
 	@Produces({"application/xml" , "application/json"})
 	@Path("/Order/id")
 	public Response shipOrder(int orderId){

@@ -19,8 +19,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import main.java.model.bean.ProductBean;
 import main.java.service.model.ProductModel;
@@ -28,11 +26,9 @@ import main.java.service.service.ProductService;
 import main.java.service.serviceImpl.ProductServiceImpl;
 import main.java.util.ElementUtil;
 
-@Controller 
 public class ProductEndpoint {
 	
 	
-	@Autowired(required=true)
 	private static ProductService productService; 
 	
 
@@ -53,8 +49,8 @@ public class ProductEndpoint {
 	}
 	
 	@POST//2.2 Add product or products in market place
-	@Produces({"application/xml", "application/json"})
-	@Consumes({"application/xml", "application/json"})
+	@Produces({"application/xml"})
+	@Consumes({"application/xml"})
 	@Path("/Product")
 
 	public Response addNewProduct(int productID, String description, int partnerID, int numAvailable,int price){
@@ -70,8 +66,8 @@ public class ProductEndpoint {
 	}
 	
 	@PUT//2.2 Add product or products in market place
-	@Produces({"application/xml", "application/json"})
-	@Consumes({"application/xml", "application/json"})
+	@Produces({"application/xml"})
+	@Consumes({"application/xml"})
 	@Path("/Product")
 	public Response addExistingProduct(int productID, int partnerID, int quantity){
 		String message;

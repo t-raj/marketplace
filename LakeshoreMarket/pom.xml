@@ -29,35 +29,10 @@
     
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- Define Spring version as a constant -->
-    <spring.version>3.2.0.RELEASE</spring.version>
+    <cxf.version>3.1.7</cxf.version>
   </properties>
   
   <dependencies>
-
-	    <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-core</artifactId>
-          <version>${spring.version}</version>
-        </dependency>
-    
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-context</artifactId>
-          <version>${spring.version}</version>
-        </dependency>
-    
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-tx</artifactId>
-          <version>${spring.version}</version>
-        </dependency>
-    
-        <dependency>
-           <groupId>org.springframework</groupId>
-           <artifactId>spring-orm</artifactId>
-           <version>${spring.version}</version>
-        </dependency>
     
 		<dependency>
             <groupId>org.hibernate</groupId>
@@ -71,11 +46,12 @@
 			<version>5.1.31</version>
 		</dependency>
 		
-			<dependency>
-			<groupId>asm</groupId>
-			<artifactId>asm</artifactId>
-			<version>3.3.1</version>
+		<dependency>
+		   <groupId>asm</groupId>
+		   <artifactId>asm</artifactId>
+		   <version>3.3.1</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-bundle</artifactId>
@@ -111,13 +87,45 @@
        </dependency>
      	
     <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-    		<groupId>org.postgresql</groupId>
-    		<artifactId>postgresql</artifactId>
-    		<version>9.4-1200-jdbc41</version>
-		</dependency>
+	   <dependency>
+    	  <groupId>org.postgresql</groupId>
+    	  <artifactId>postgresql</artifactId>
+    	  <version>9.4-1200-jdbc41</version>
+	   </dependency>
      	
-	
+ 	 <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        <version>${cxf.version}</version>
+     </dependency>
+  
+     <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http</artifactId>
+        <version>${cxf.version}</version>
+     </dependency>
+    
+      <!-- Jetty is needed if you're are not using the CXFServlet -->
+     <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http-jetty</artifactId>
+        <version>${cxf.version}</version>
+     </dependency>
+    
+    <!-- jackson jars needed to be imported via maven as this is a maven project -->
+    <dependency>
+       <groupId>org.codehaus.jackson</groupId>
+       <artifactId>jackson-xc</artifactId>
+       <version>1.9.4</version>
+    </dependency>
+
+    <dependency>
+       <groupId>org.codehaus.jackson</groupId>
+       <artifactId>jackson-jaxrs</artifactId>
+       <version>1.9.4</version>
+    </dependency>
+    
+    
   </dependencies>
 	
 </project>

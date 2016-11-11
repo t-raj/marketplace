@@ -12,16 +12,19 @@
   <import resource="classpath:META-INF/cxf/cxf.xml" />
   <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
   	
+  		<!-- json support currently not working 
+  
   <bean id="jacksonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider" />
-      	
-  <jaxrs:server name="LakeshoreMarketplace" address="http://localhost:8081">
+-->  
+	  	
+  <jaxrs:server name="LakeshoreMarketplace" address="http://localhost:8083">
 		<jaxrs:serviceBeans>
 			<ref bean="orderServiceRest" />
 			<ref bean="partnerServiceRest" />
 			<ref bean="productServiceRest" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
-			<ref bean="jacksonProvider" />
+		<!-- 	<ref bean="jacksonProvider" />-->
 		</jaxrs:providers> 
 
 		<jaxrs:schemaLocations>
@@ -31,9 +34,10 @@
 			<jaxrs:schemaLocation>main.java.service.model.ProductModel</jaxrs:schemaLocation>
 		</jaxrs:schemaLocations>
 
-	</jaxrs:server>
+    </jaxrs:server>
+
   	<bean id="orderServiceRest" class="main.java.service.endpoint.OrderEndpoint" />
-  	<bean id="orderServiceRest" class="main.java.service.endpoint.PartnerEndpoint" />
-  	<bean id="orderServiceRest" class="main.java.service.endpoint.ProductEndpoint" />
-  
+  	<bean id="partnerServiceRest" class="main.java.service.endpoint.PartnerEndpoint" />
+  	<bean id="productServiceRest" class="main.java.service.endpoint.ProductEndpoint" />
+
 </beans>

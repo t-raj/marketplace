@@ -38,8 +38,19 @@ public class OrderEndpoint {
 	private static List<OrderBean> orderList;
 	
 	@GET//1.b accept buy order
-	@Produces({"application/xml", "application/json"})
-	@Consumes({"application/xml", "application/json"})
+	@Produces({"application/xml"})
+	@Consumes({"application/xml"})
+	@Path("/")
+	public String test() {
+		String message = "Orders were shipped";
+		
+//		return Response.ok(message, MediaType.APPLICATION_JSON).build();
+		return message;
+	}
+ 
+	@GET//1.b accept buy order
+	@Produces({"application/xml"})
+	@Consumes({"application/xml"})
 	@Path("/")
 	public Response processOrder(int orderId) {
 		ElementUtil.buildOrderModel(paymentService.processOrder(orderId));
@@ -49,7 +60,7 @@ public class OrderEndpoint {
 	}
  
 	@PUT//1.d. ship orders
-	@Produces({"application/xml" , "application/json"})
+	@Produces({"application/xml"})
 	@Path("/shipment")
 	public Response shipOrder(int orderId){
 		ElementUtil.buildOrderModel(paymentService.shipOrder(orderId)); 
@@ -59,7 +70,7 @@ public class OrderEndpoint {
 	}
 
 /*	@GET//1.d. ship orders
-	@Produces({"application/xml" , "application/json"})
+	@Produces({"application/xml"})
 	@Path("/Order/id")
 	public Response shipOrders(List<OrderModel> orderRepresentationList){
 		for(OrderModel orderRepresentation: orderRepresentationList){
@@ -71,7 +82,7 @@ public class OrderEndpoint {
 	}
 	*/
 	@PUT//1.e provide order status, provide status of orders in progress  //2.d. get acknowledgement of order fulfillment if shipped
-	@Produces({"application/xml" , "application/json"})
+	@Produces({"application/xml"})
 	@Path("/status")
 	public Response orderStatus(int customerId){
 		String message = paymentService.getOrderStatus(customerId);
@@ -80,7 +91,7 @@ public class OrderEndpoint {
 	}
 	
 	@DELETE//1.f. order cancel
-	@Produces({"application/xml" , "application/json"})
+	@Produces({"application/xml"})
 	@Path("/")
 	public Response cancelOrder(OrderModel orderModel){
 		StringBuilder sb = new StringBuilder();
@@ -100,8 +111,8 @@ public class OrderEndpoint {
 	}
 
 	@PUT//2.c push orders that customers made to partners
-	@Produces({"application/xml", "application/json"})
-	@Consumes({"application/xml", "application/json"})
+	@Produces({"application/xml"})
+	@Consumes({"application/xml"})
 	@Path("/partnermessage")
 	public Response sendOrderToPartner(int orderId, int partnerId){
 		orderService.sendOrder(orderId, partnerId);

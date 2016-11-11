@@ -10,11 +10,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.RequestMapping;
-
-import main.java.model.bean.PartnerBean;
 import main.java.service.model.PartnerModel;
 import main.java.service.service.PartnerService;
 
@@ -26,12 +21,11 @@ import main.java.service.service.PartnerService;
  */
 public class PartnerEndpoint {
 
-	@Autowired(required=true)
 	private static PartnerService partnerService;
 	
 	@POST//2.1 Need to register and create profile of partners
-	@Produces({"application/xml", "application/json"})
-	@Consumes({"application/xml", "application/json"})
+	@Produces({"application/xml"})
+	@Consumes({"application/xml"})
 	@Path("/Partner")
 	public Response registerPartner(int partnerID, String login, String password, String firstName, String lastName, String streetAddress, String city, String state, int zip){
 		PartnerModel partnerRepresentation = new PartnerModel();

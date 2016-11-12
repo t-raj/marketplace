@@ -1,12 +1,5 @@
 package main.java.service.endpoint;
 
-/**
- * This endpoint layer class corresponds to the service layer presented in class. 
- * @author lbo
- *
- */
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,14 +9,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
 
-
-import main.java.model.bean.ProductBean;
 import main.java.service.model.ProductModel;
 import main.java.service.service.ProductService;
-import main.java.service.serviceImpl.ProductServiceImpl;
 import main.java.util.ElementUtil;
 
 @Path("/product")

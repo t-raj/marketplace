@@ -7,7 +7,6 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import main.java.DAO.ProductDAO;
 import main.java.model.constant.Constant;
@@ -15,16 +14,13 @@ import main.java.model.entity.Product;
 
 public class ProductDAOImpl implements ProductDAO{
 	
-	
-	@Autowired
 	private SessionFactory sessionFactory = buildSessionFactory(new Configuration().configure(Constant.HIBERNATE_FILE_NAME));
-	
 	
 	private SessionFactory buildSessionFactory(Configuration configure) {
 			ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configure.getProperties()).buildServiceRegistry();
 			sessionFactory = configure.buildSessionFactory(serviceRegistry);
 			return sessionFactory;
-		}
+	}
 
 	@Override
 	public void add(Product product) {
@@ -48,11 +44,8 @@ public class ProductDAOImpl implements ProductDAO{
 		tx.commit();
 	}
 
-
-
 	@Override
 	public Product find(long productId) {
-		
 		return (Product) sessionFactory.getCurrentSession().get(Product.class, productId);
 	}
 	

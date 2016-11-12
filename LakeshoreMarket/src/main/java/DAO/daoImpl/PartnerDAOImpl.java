@@ -14,10 +14,8 @@ import main.java.DAO.PartnerDAO;
 import main.java.model.constant.Constant;
 import main.java.model.entity.Partner;
 
-//@Service
 public class PartnerDAOImpl implements PartnerDAO {
 
-	//	@Autowired
 	private SessionFactory sessionFactory = buildSessionFactory(new Configuration().configure(Constant.HIBERNATE_FILE_NAME));
 
 	private SessionFactory buildSessionFactory(Configuration configuration) {
@@ -25,8 +23,6 @@ public class PartnerDAOImpl implements PartnerDAO {
 		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		return sessionFactory;
 	}
-
-	// used for now for testing 
 
 	public void add(Partner partner) {
 		Session session = sessionFactory.openSession();
@@ -68,7 +64,5 @@ public class PartnerDAOImpl implements PartnerDAO {
 		
 		return partners;
 	}
-	
-
 
 }

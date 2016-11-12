@@ -18,6 +18,7 @@ import main.java.service.model.OrderModel;
 import main.java.service.model.PaymentModel;
 import main.java.service.service.OrderService;
 import main.java.service.service.OrderService.Status;
+import main.java.service.serviceImpl.OrderServiceImpl;
 import main.java.util.ElementUtil;
 
 /**
@@ -28,7 +29,7 @@ import main.java.util.ElementUtil;
 @Path("/order")
 public class OrderEndpoint implements OrderEndpointInterface {
 	
-	private static OrderService orderService;
+	private static OrderService orderService = new OrderServiceImpl();
 	
 	@POST//1.b accept a new buy order
 	@Consumes({"application/xml"})

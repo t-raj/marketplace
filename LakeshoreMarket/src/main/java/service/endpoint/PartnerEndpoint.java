@@ -1,19 +1,15 @@
 package main.java.service.endpoint;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import main.java.model.bean.PartnerBean;
 import main.java.service.model.PartnerModel;
 import main.java.service.service.PartnerService;
+import main.java.service.serviceImpl.PartnerServiceImpl;
 import main.java.util.ElementUtil;
 
 
@@ -26,7 +22,7 @@ import main.java.util.ElementUtil;
 @Path("/Partner")
 public class PartnerEndpoint implements PartnerEndpointInterface {
 
-	private static PartnerService partnerService;
+	private static PartnerService partnerService = new PartnerServiceImpl();
 	
 	@POST//2.1 Need to register and create profile of partners
 	@Produces({"application/xml"})

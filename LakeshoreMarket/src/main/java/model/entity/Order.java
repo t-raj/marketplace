@@ -15,22 +15,22 @@ public class Order implements Serializable {
 
 	@Id
 	@Column(name="id")
-	private long id;
+	private int id;
 	
 	@Column(name="partner_id")
-	private long partnerId;
+	private int partnerId;
 	
 	@Column(name="customer_id")
-	private long customerId;
+	private int customerId;
 	
 	@Column(name="status")
 	private String status;
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -38,15 +38,15 @@ public class Order implements Serializable {
 		return partnerId;
 	}
 
-	public void setPartnerId(long partnerId) {
+	public void setPartnerId(int partnerId) {
 		this.partnerId = partnerId;
 	}
 
-	public long getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(long id) {
+	public void setCustomerId(int id) {
 		this.customerId = id;
 	}
 	

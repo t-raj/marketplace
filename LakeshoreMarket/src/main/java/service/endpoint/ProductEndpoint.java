@@ -1,6 +1,5 @@
 package main.java.service.endpoint;
 
-
 /**
  * This endpoint layer class corresponds to the service layer presented in class. 
  * @author lbo
@@ -28,10 +27,8 @@ import main.java.util.ElementUtil;
 
 public class ProductEndpoint {
 	
-	
 	private static ProductService productService; 
 	
-
 	@Path("{Product}")//1.a search item database by product
 	@GET
 	@Produces("application/xml")

@@ -133,34 +133,25 @@ public class ElementUtil {
 	}
 	
 	public static final Order buildOrder(OrderBean orderBean){
-		
 		Order order = new Order();
-		List<Partner> partners = new ArrayList<Partner>(); 
-		
-		
 		if(orderBean !=null){
 			order.setId(orderBean.getId());
 			order.setCustomerId(orderBean.getCustomerId());
 			
-			order.setPartnerIds(orderBean.getPartnerIds(partners));
-
-			order.setCost(orderBean.getCost());
-			order.setPaid(orderBean.getPaid());
-			order.setStatus(orderBean.getStatus());
+			if (orderBean.getStatus() != null) {
+				order.setStatus(orderBean.getStatus().toString());
+			}
 		}
 		return order;
 	} 
 	
 	public static final OrderBean buildOrderBean(Order order) {
-
 		OrderBean orderBean = new OrderBean();
 		
 		if (order != null) {
 			orderBean.setId(order.getId());
 			orderBean.setCustomerId(order.getCustomerId());
 			orderBean.setPartnerId(order.getPartnerId());
-			orderBean.setCost(order.getCost());
-			orderBean.setPaid(order.getPaid());
 			orderBean.setStatus(orderBean.getStatus());
 			
         }
@@ -231,17 +222,34 @@ public class ElementUtil {
 	}
 
 	public static OrderModel buildOrderModel(OrderBean orderBean) {
-		// TODO Auto-generated method stub
 		if(orderBean == null){
 			return null;
 		}
 		OrderModel orderModel = new OrderModel();
 		orderModel.setCustomerId(orderBean.getCustomerId());
-		orderModel.setPartnerId(orderBean.getPartnerId());
 		orderModel.setStatus(orderBean.getStatus());
-		orderModel.setCost(orderBean.getCost());
+		orderModel.setProductIds(orderBean.getProductIds());
 		
 		return orderModel;
+	}
+
+	public static OrderBean buildOrderBean(OrderModel order) {
+		OrderBean orderBean = new OrderBean();
+		
+		if (order != null) {
+			orderBean.setCustomerId(order.getCustomerId());
+			orderBean.setStatus(orderBean.getStatus());
+			orderBean.setProductIds(order.getProductIds());
+        }
+        return orderBean;
+	}
+
+	public static List<OrderModel> buildOrderModelList(List<OrderBean> orderBeans) {
+		List<OrderModel> orderModels = new ArrayList<OrderModel>();
+		for (OrderBean orderBean :orderBeans) {
+			orderModels.add(buildOrderModel(orderBean));
+		}
+		return orderModels;
 	}
 	
 

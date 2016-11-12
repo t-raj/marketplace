@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
@@ -15,9 +16,10 @@ import main.java.DAO.OrderDAO;
 import main.java.model.constant.Constant;
 import main.java.model.entity.Customer;
 import main.java.model.entity.Order;
+import main.java.service.service.OrderService.Status;
 
 public class OrderDAOImpl implements OrderDAO {
-	
+
 	private SessionFactory sessionFactory = buildSessionFactory(new Configuration().configure(Constant.HIBERNATE_FILE_NAME));
 
 	private SessionFactory buildSessionFactory(Configuration configuration) {
@@ -26,6 +28,9 @@ public class OrderDAOImpl implements OrderDAO {
 		return sessionFactory;
 	}
 
+	/**
+	 * This method adds an order to the database 
+	 */
 	@Override
 	public void add(Order order) {	
 		try {
@@ -40,12 +45,15 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 	}
 
+	/**
+	 * This method sets the status of an order to canceled
+	 */
 	@Override
 	public void delete(long orderId) {
 		try {
 			Session session = sessionFactory.openSession();
 			Order order = get(orderId);
-			order.setStatus("Deleted");
+			order.setStatus(Status.CANCELED.toString());
 			Transaction tx = session.beginTransaction();
 			update(order);
 			session.flush();
@@ -55,19 +63,32 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 	}
 
+	/**
+	 * This method retrieves an order from the database 
+	 * @param orderId
+	 */
 	@Override
 	public Order get(long orderId) {
 		return (Order) sessionFactory.
-			      getCurrentSession().
-			      get(Order.class, orderId);
+				getCurrentSession().
+				get(Order.class, orderId);
 	}
 
+	/**
+	 * This method retrieves all orders from the database that meet the status(es) given. If no status given, then returns all orders. 
+	 */
 	@Override
-	public List<Order> get() {
+	public List<Order> get(List<Status> statuses) {
 		List<Order> orders = null;
 		try {
 			Session session = sessionFactory.openSession();
 			Criteria criteria = session.createCriteria(Order.class);
+			if (statuses != null && !statuses.isEmpty()) {
+				// add the status restriction(s)
+				for (Status status : statuses) {
+					criteria.add(Restrictions.eq("status", status.toString()));
+				}
+			}
 			orders = criteria.list();
 			session.close();
 		} catch (HibernateException e) {
@@ -76,6 +97,9 @@ public class OrderDAOImpl implements OrderDAO {
 		return orders;
 	}
 
+	/**
+	 * This method updates an order
+	 */
 	@Override
 	public void update(Order order) {
 		try {
@@ -87,6 +111,44 @@ public class OrderDAOImpl implements OrderDAO {
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * This method gets the orders with a certain status and partnerId
+	 */
+	@Override
+	public List<Order> get(Status status, long partnerId) {
+		List<Order> orders = null;
+		try {
+			Session session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(Order.class);
+			if (status != null) {
+				criteria.add(Restrictions.eq("status", status.toString()));
+			}
+			criteria.add(Restrictions.eq("partner_id", partnerId));
+			orders = criteria.list();
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return orders;
+	}
+
+	@Override
+	public List<Order> get(Status status) {
+		List<Order> orders = null;
+		try {
+			Session session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(Order.class);
+			if (status != null) {
+				criteria.add(Restrictions.eq("status", status.toString()));
+			}
+			orders = criteria.list();
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return orders;
 	}
 
 }

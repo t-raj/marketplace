@@ -3,6 +3,7 @@ package main.java.DAO;
 import java.util.List;
 
 import main.java.model.entity.Order;
+import main.java.service.service.OrderService.Status;
 
 public interface OrderDAO {
 
@@ -14,13 +15,10 @@ public interface OrderDAO {
 	
 	Order get(long orderId);
 
-	List<Order> get();
+	List<Order> get(List<Status> status);
 
-	//List<Order> get(int customerId);
-	
-	
-	
-	
+	List<Order> get(Status status);
 
-	
+	List<Order> get(Status status, long partnerId);
+
 }

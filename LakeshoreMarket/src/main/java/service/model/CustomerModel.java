@@ -10,7 +10,6 @@ import main.java.model.bean.AddressBean;
 @XmlRootElement(name = "Customer")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-
 public class CustomerModel {
 
 		private int id;
@@ -19,7 +18,6 @@ public class CustomerModel {
 		private String firstName;
 		private String lastName;
 		private AddressBean address = new AddressBean(); // avoid null pointer 
-		private boolean isActive;
 		
 		public String getEmail() {
 			return email;
@@ -31,12 +29,6 @@ public class CustomerModel {
 
 		public int getId() {
 			return id;
-		}
-		public boolean isActive() {
-			return isActive;
-		}
-		public void setActive(boolean isActive) {
-			this.isActive = isActive;
 		}
 		public void setId(int id) {
 			this.id = id;

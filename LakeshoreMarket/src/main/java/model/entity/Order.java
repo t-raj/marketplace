@@ -1,9 +1,6 @@
 package main.java.model.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,56 +18,39 @@ public class Order implements Serializable {
 
 	@Id
 	@Column(name="id")
-	private int id;
+	private long id;
 	
 	@Column(name="partner_id")
-	private int partnerId;
+	private long partnerId;
 	
 	@Column(name="customer_id")
-	private int customerId;
-	
-	@Column(name="paid")
-	private Boolean paid;
+	private long customerId;
 	
 	@Column(name="status")
 	private String status;
 	
-	@Column(name="cost")
-	private double cost;
-	
-	List<Partner> partners = new ArrayList<Partner>();
-	List<Integer> partnerIds = null;
-
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public int getPartnerId() {
+	public long getPartnerId() {
 		return partnerId;
 	}
 
-	public void setPartnerId(int partnerId) {
+	public void setPartnerId(long partnerId) {
 		this.partnerId = partnerId;
 	}
 
-	public int getCustomerId() {
+	public long getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
-	
-	public Boolean getPaid() {
-		return paid;
-	}
-
-	public void setPaid(Boolean paid) {
-		this.paid = paid;
+	public void setCustomerId(long id) {
+		this.customerId = id;
 	}
 	
 	public String getStatus() {
@@ -80,25 +60,6 @@ public class Order implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	public double getCost() {
-		return cost;
-	}
-
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
-	
-	public List<Integer> getPartnerIds(List<Partner> partners){
-		for(Partner partner: partners){
-			partnerIds.add(partner.getId());
-		}
-		return partnerIds;
-	}
-	
-	public void setPartnerIds(List<Integer> partnerIds){
-		this.partnerIds = partnerIds;
-	}
-	
+		
 	
 }

@@ -29,7 +29,7 @@ public class ProductEndpoint {
 	
 	private static ProductService productService; 
 	
-	@Path("{Product}")//1.a search item database by product
+	@Path("/Product/{ProductId}")//1.a search item database by product
 	@GET
 	@Produces("application/xml")
 	

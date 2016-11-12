@@ -17,8 +17,7 @@ public class View {
         String password = "M38kBlQBSuiyx_hiVwHdoukKgc";
         String driver = "org.postgresql.Driver";
 
-        
-        
+       
         
         System.out.println("-------- PostgreSQL "
 				+ "JDBC Connection Testing ------------");
@@ -42,8 +41,7 @@ public class View {
 
 		try {
 
-			connection = DriverManager.getConnection(
-					url, username, password);
+			connection = DriverManager.getConnection(url, username, password);
 
 		} catch (SQLException e) {
 

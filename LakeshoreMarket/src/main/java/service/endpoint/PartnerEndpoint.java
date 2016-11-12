@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -19,7 +20,7 @@ import main.java.service.service.PartnerService;
  * @author lbo
  *
  */
-public class PartnerEndpoint {
+public class PartnerEndpoint implements PartnerEndpointInterface {
 
 	private static PartnerService partnerService;
 	
@@ -27,8 +28,8 @@ public class PartnerEndpoint {
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
 	@Path("/Partner")
-	public Response registerPartner(int partnerID, String login, String password, String firstName, String lastName, String streetAddress, String city, String state, int zip){
-		PartnerModel partnerRepresentation = new PartnerModel();
+	public Response registerPartner(@PathParam("partnerId")int partnerID, String login, String password, String firstName, String lastName, String streetAddress, String city, String state, int zip){
+		//PartnerModel partnerRepresentation = new PartnerModel();
 		String message;
 		try {
 			partnerService.register(partnerID, login, password, firstName, lastName, streetAddress, city, state, zip);

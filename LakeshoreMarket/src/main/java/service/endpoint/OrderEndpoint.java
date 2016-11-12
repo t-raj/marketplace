@@ -102,7 +102,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	 * @param partnerId
 	 * @return list of orders that have been placed for the partner
 	 */
-	@PUT//2.c push orders that customers made to the partner
+	@POST//2.c push orders that customers made to the partner
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
 	@Path("/pushedOrders")

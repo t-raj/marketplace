@@ -271,6 +271,19 @@ public class ElementUtil {
 		}
 		return orderModels;
 	}
+
+	public static ProductBean buildProductBean(ProductModel product) {
+		ProductBean productBean = new ProductBean();
+		if (product != null) {
+			productBean.setId(product.getpId());
+			productBean.setDescription(product.getDescription());
+			productBean.setPartnerID(product.getPartnerId());
+			productBean.setNumAvailable(product.getNumberAvailable());
+			productBean.setPrice(product.getPrice());
+			productBean.setActive(true);
+        }
+		return productBean;
+	}
 	
 
 }

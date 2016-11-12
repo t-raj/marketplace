@@ -38,15 +38,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public void addNewProduct(int productID, String description, int partnerID, int numAvailable,int price){
-		ProductBean productBean = new ProductBean();
-		productBean.setId(productID);
-		productBean.setDescription(description);
-		productBean.setPartnerID(partnerID);
-		productBean.setNumAvailable(numAvailable);
-		productBean.setPrice(price);
-		productBean.setActive(true);
-		System.out.println("product " + productBean.getId() + " has been added to the database");
+	public void addNewProduct(ProductBean productBean){
 		productDAO.add(ElementUtil.buildProduct(productBean));
 	}
 	

@@ -12,6 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -25,15 +26,16 @@ import main.java.service.service.ProductService;
 import main.java.service.serviceImpl.ProductServiceImpl;
 import main.java.util.ElementUtil;
 
-public class ProductEndpoint {
+@Path("/product")
+public class ProductEndpoint implements ProductEndpointInterface{
 	
 	private static ProductService productService; 
 	
-	@Path("{Product}")//1.a search item database by product
+	@Path("/{productID}")//1.a search item database by product
 	@GET
 	@Produces("application/xml")
 	
-	public ProductModel search(int productId) {
+	public ProductModel search(@PathParam("productId") int productId) {
 		ProductModel productRepresentation = new ProductModel();
 		
 		try {
@@ -48,25 +50,25 @@ public class ProductEndpoint {
 	@POST//2.2 Add product or products in market place
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
-	@Path("/Product")
+	@Path("/add/{productID}")
 
-	public Response addNewProduct(int productID, String description, int partnerID, int numAvailable,int price){
+	public Response addNewProduct(ProductModel product){
 		String message;
 		try {
-			productService.addNewProduct(productID, description, partnerID, numAvailable, price);
+			productService.addNewProduct(ElementUtil.buildProductBean(product));
 			message = "product successfully added";
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			message = "Error.Product could not be added.";
 		}
-		return Response.ok(message, MediaType.APPLICATION_JSON).build();
+		return Response.ok(message, MediaType.APPLICATION_XML).build();
 	}
 	
 	@PUT//2.2 Add product or products in market place
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
-	@Path("/Product")
-	public Response addExistingProduct(int productID, int partnerID, int quantity){
+	@Path("/add/{productID}")
+	public Response addExistingProduct(@PathParam("productId") int productID, @PathParam("partnerId") int partnerID, @PathParam("quantity") int quantity){
 		String message;
 		ProductModel productRepresentation = search(productID);
 		try {
@@ -76,7 +78,7 @@ public class ProductEndpoint {
 			e.printStackTrace();
 			message = "Error.Product could not be added.";
 		}
-		return Response.ok(message, MediaType.APPLICATION_JSON).build();
+		return Response.ok(message, MediaType.APPLICATION_XML).build();
 	} 
 
 }

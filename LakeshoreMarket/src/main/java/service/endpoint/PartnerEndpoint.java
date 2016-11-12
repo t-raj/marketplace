@@ -31,17 +31,16 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@Consumes({"application/xml"})
 	@Path("/Partner")
 	public Response registerPartner(PartnerModel partnerModel){
-		//PartnerModel partnerRepresentation = new PartnerModel();
-		PartnerBean partnerBean = ElementUtil.buildPartnerBean(partnerModel);
+		
 		String message;
 		try {
-			partnerService.register(partnerBean);
+			partnerService.register(ElementUtil.buildPartnerBean(partnerModel));
 			message = "partner successfully registered";
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			message = "Error. Partner could not be registered";
 		}	
-		return Response.ok(message, MediaType.APPLICATION_JSON).build();
+		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
 	
 	

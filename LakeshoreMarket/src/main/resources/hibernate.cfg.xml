@@ -20,11 +20,11 @@
         <!--this sets the session context-->
         <property name="hibernate.current_session_context_class">thread</property>
 
-       <mapping class="entities.Order"/>
-       <mapping class="entities.OrderLine"/>
-       <mapping class="entities.Partner"/>
-       <mapping class="entities.Product"/>
-       <mapping class="entities.Customer"/>
+       <mapping class="main.java.model.entity.Order"/>
+       <mapping class="main.java.model.entity.OrderLine"/>
+       <mapping class="main.java.model.entity.Partner"/>
+       <mapping class="main.java.model.entity.Product"/>
+       <mapping class="main.java.model.entity.Customer"/>
 
     </session-factory>
 </hibernate-configuration>

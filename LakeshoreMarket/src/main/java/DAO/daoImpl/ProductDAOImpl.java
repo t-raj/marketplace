@@ -50,7 +50,7 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 	
 	@Override
-	public void  update(Product product) {
+	public void update(Product product) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(product);

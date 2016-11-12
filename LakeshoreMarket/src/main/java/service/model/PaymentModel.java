@@ -36,7 +36,4 @@ public class PaymentModel {
 	public void setCardholderName(String cardholderName) {
 		this.cardholderName = cardholderName;
 	}
-	
-	
-
 }

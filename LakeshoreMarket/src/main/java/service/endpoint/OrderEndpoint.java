@@ -102,12 +102,15 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	 * @param partnerId
 	 * @return list of orders that have been placed for the partner
 	 */
-	@POST//2.c push orders that customers made to the partner
+	@PUT//2.c push orders that customers made to the partner
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
 	@Path("/pushedOrders")
-	public List<OrderModel> pushToPartner(@PathParam("partnerId") long partnerId){
-		return ElementUtil.buildOrderModelList(orderService.pushToPartner(partnerId));
+	public Response pushToPartner(@PathParam("partnerId") long partnerId){
+		
+		List<OrderModel> orderModels= ElementUtil.buildOrderModelList(orderService.pushToPartner(partnerId));
+		String message = "The order with partnerId" + partnerId + "has been pushed to the partner!";
+		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
 	
 	@GET  //2.d. get acknowledgement of order fulfillment if shipped

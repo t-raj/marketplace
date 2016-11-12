@@ -35,9 +35,7 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 		PartnerBean partnerBean = ElementUtil.buildPartnerBean(partnerModel);
 		String message;
 		try {
-			partnerService.register(partnerBean.getId(), partnerBean.getLogin(), partnerBean.getPassword(), 
-					partnerBean.getFirstName(), partnerBean.getLastName(), partnerBean.getStreetAddress(), 
-					partnerBean.getCity(), partnerBean.getState(), partnerBean.getZip_code());
+			partnerService.register(partnerBean);
 			message = "partner successfully registered";
 		} catch (NullPointerException e) {
 			e.printStackTrace();

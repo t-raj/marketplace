@@ -28,20 +28,9 @@ public class PartnerServiceImpl implements PartnerService {
 	private PartnerDAO partnerDAO = new PartnerDAOImpl();
 	
 	@Override
-	public void register(int partnerID, String login, String password, String firstName, String lastName, String streetAddress, String city, String state, int zip) {
-		PartnerBean partner = new PartnerBean();
-		partner.setId(partnerID);
-		partner.setLogin(login);
-		partner.setPassword(password);
-		partner.setFirstName(firstName);
-		partner.setFirstName(lastName);
-		partner.setStreetAddress(streetAddress);
-		partner.setCity(city);
-		partner.setState(state);
-		partner.setActive(true);
-		partner.setZip_code(zip);
-		System.out.println("partner " + partner.getFirstName() + " " + partner.getLastName() + " has been registered");
-		partnerDAO.add(ElementUtil.buildPartner(partner));		
+	public void register(PartnerBean partnerBean) {
+		
+		partnerDAO.add(ElementUtil.buildPartner(partnerBean));		
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package main.java.model.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,9 +11,6 @@ import javax.persistence.Table;
 @Table(name="customer")
 public class Customer implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -129,7 +127,7 @@ public class Customer implements Serializable {
 		this.zip_code = zip_code;
 	}
 
-	public boolean isActive() {
+	public boolean getActive() {
 		return active;
 	}
 

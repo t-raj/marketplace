@@ -1,11 +1,13 @@
+import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.ws.Response;
 
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 
@@ -14,11 +16,6 @@ import main.java.DAO.PartnerDAO;
 import main.java.DAO.daoImpl.CustomerDAOImpl;
 import main.java.DAO.daoImpl.PartnerDAOImpl;
 
-import org.apache.cxf.interceptor.LoggingInInterceptor;
-import org.apache.cxf.interceptor.LoggingOutInterceptor;
-
-import java.sql.Connection;
-
 
 
 
@@ -26,9 +23,6 @@ import java.sql.Connection;
 public class Client {
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		
-		
 		/*
 		 * the following part of the code checks if the java has a connection with the database, only for testing purpose
 		 */

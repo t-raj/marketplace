@@ -7,9 +7,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
 import main.java.DAO.OrderLineDAO;
 import main.java.model.constant.Constant;
@@ -17,12 +17,15 @@ import main.java.model.entity.OrderLine;
 
 public class OrderLineDAOImpl implements OrderLineDAO {
 
-	private SessionFactory sessionFactory = buildSessionFactory(new Configuration().configure(Constant.HIBERNATE_FILE_NAME));
+	private SessionFactory sessionFactory = createSessionFactory();
 
-	private SessionFactory buildSessionFactory(Configuration configuration) {
-		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
-		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-		return sessionFactory;
+	public static SessionFactory createSessionFactory() {
+		Configuration configuration = new Configuration();
+	    configuration.configure(Constant.HIBERNATE_FILE_NAME);
+
+		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+				configuration.getProperties()).build();
+		return configuration.buildSessionFactory(serviceRegistry);
 	}
 
 	@Override

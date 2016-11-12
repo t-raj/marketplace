@@ -49,7 +49,7 @@ public class ElementUtil {
 			customerBean.getAddress().setState(customer.getState());
 			customerBean.getAddress().setStreetAddress(customer.getStreetAddress());
 			customerBean.getAddress().setZipCode(customer.getZip_code());
-			customerBean.setActive(customer.isActive());
+			customerBean.setActive(customer.getActive());
         }
 
         return customerBean;

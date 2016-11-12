@@ -8,7 +8,11 @@ public interface ProductService {
 	
 	void update(ProductBean productBean);	
 	
+<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
 	void add(ProductBean productBean);
+=======
+	void addNewProduct(ProductBean productBean);
+>>>>>>> e47aef9 updated product service
 	
 	void delete(long productID);
 }

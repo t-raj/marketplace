@@ -27,7 +27,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
 	public void add(ProductBean productBean){
+=======
+	public void addNewProduct(ProductBean productBean){
+>>>>>>> e47aef9 updated product service
 		productDAO.add(ElementUtil.buildProduct(productBean));
 	}
 		

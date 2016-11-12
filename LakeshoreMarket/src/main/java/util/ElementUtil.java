@@ -155,8 +155,8 @@ public class ElementUtil {
 	public static final Order buildOrder(OrderBean orderBean){
 		Order order = new Order();
 		if(orderBean !=null){
-			order.setId(orderBean.getId());
-			order.setCustomerId(orderBean.getCustomerId());
+			order.setId((int) orderBean.getId());
+			order.setCustomerId((int) orderBean.getCustomerId());
 			
 			if (orderBean.getStatus() != null) {
 				order.setStatus(orderBean.getStatus().toString());

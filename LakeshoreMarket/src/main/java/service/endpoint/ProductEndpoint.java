@@ -19,23 +19,9 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	
 	private static ProductService productService; 
 	
-<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
-<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
-	@Path("/Product/{ProductId}")//1.a search item database by product
-=======
->>>>>>> 6713b26 Refactored formatting on various classes
-=======
 	@Path("/{productID}")//1.a search item database by product
->>>>>>> 7051ca2 Updated product endpoint and corresponding service and util classes
 	@GET
 	@Produces("application/xml")
-<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
-<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
-=======
-	@Path("/{productID}")//1.a search item database by product
->>>>>>> 6713b26 Refactored formatting on various classes
-=======
->>>>>>> 7051ca2 Updated product endpoint and corresponding service and util classes
 	public ProductModel search(@PathParam("productId") int productId) {
 		ProductModel productRepresentation = new ProductModel();
 		try {
@@ -51,14 +37,14 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	@Consumes({"application/xml"})
 	@Path("/add/{productID}")
 
-	public Response addNewProduct(ProductModel product){
+	public Response add(ProductModel product){
 		String message;
 		try {
-			productService.addNewProduct(ElementUtil.buildProductBean(product));
-			message = "product successfully added";
+			productService.add(ElementUtil.buildProductBean(product));
+			message = "Product successfully added";
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			message = "Error.Product could not be added.";
+			message = "Error: Product could not be added.";
 		}
 		return Response.ok(message, MediaType.APPLICATION_XML).build();
 	}
@@ -66,18 +52,16 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	@PUT//2.2 Add product or products in market place
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
-	@Path("/add/{productID}")
-	public Response addExistingProduct(@PathParam("productId") int productID, @PathParam("partnerId") int partnerID, @PathParam("quantity") int quantity){
+	public Response update(ProductModel productModel){
 		String message;
-		ProductModel productRepresentation = search(productID);
 		try {
-			productRepresentation = ElementUtil.buildProductModel(productService.addExistingProduct(productID, partnerID, quantity));
-			message = "product successfully added";
+			productService.update(ElementUtil.buildProductBean(productModel));
+			message = "Product successfully updated";
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			message = "Error.Product could not be added.";
+			message = "Error: Product could not be updated.";
 		}
 		return Response.ok(message, MediaType.APPLICATION_XML).build();
-	} 
+	}
 
 }

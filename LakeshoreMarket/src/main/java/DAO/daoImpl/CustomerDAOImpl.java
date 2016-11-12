@@ -28,8 +28,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(customer);
-		session.flush();
 		tx.commit();
+		session.flush();
 	}
 
 	public void delete(long customerId) {
@@ -38,8 +38,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 		customer.setActive(false);
 		Transaction tx = session.beginTransaction();
 		update(customer);
-		session.flush();
 		tx.commit();
+		session.flush();
 	}
 
 	public Customer find(long customerId) {
@@ -52,16 +52,17 @@ public class CustomerDAOImpl implements CustomerDAO {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(customer);
-		session.flush();
 		tx.commit();
+		session.flush();
 	}
 	
 	public List<Customer> find() {
 		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Customer.class);
 		List<Customer> customers = criteria.list();
+		tx.commit();
 		session.close();
-		
 		return customers;
 	}
 

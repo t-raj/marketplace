@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
@@ -28,8 +29,8 @@ public class PartnerDAOImpl implements PartnerDAO {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(partner);
-		session.flush();
 		tx.commit();
+		session.flush();
 	}
 
 	public void delete(long partnerId) {
@@ -38,28 +39,42 @@ public class PartnerDAOImpl implements PartnerDAO {
 		partner.setActive(false);
 		Transaction tx = session.beginTransaction();
 		update(partner);
-		session.flush();
 		tx.commit();
+		session.flush();
 	}
 
 	public Partner find(long partnerId) {
-		return (Partner) sessionFactory.
-			      getCurrentSession().
-			      get(Partner.class, partnerId);
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Partner.class);
+		criteria.add(Restrictions.eq("id", partnerId));
+		List<Partner> partners = criteria.list();
+		tx.commit();
+		session.close();
+		
+		Partner partner = null;
+		if (partners != null && !partners.isEmpty()) {
+			partner = partners.get(0);
+		}
+		
+		return partner;
 	}
 
 	public void update(Partner partner) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(partner);
-		session.flush();
 		tx.commit();
+		session.flush();
 	}
 	
 	public List<Partner> find() {
 		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Partner.class);
 		List<Partner> partners = criteria.list();
+		tx.commit();
+
 		session.close();
 		
 		return partners;

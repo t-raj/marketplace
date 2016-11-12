@@ -1,15 +1,20 @@
 package main.java.DAO.daoImpl;
 
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import main.java.DAO.ProductDAO;
 import main.java.model.constant.Constant;
+import main.java.model.entity.Partner;
 import main.java.model.entity.Product;
 
 public class ProductDAOImpl implements ProductDAO{
@@ -40,13 +45,26 @@ public class ProductDAOImpl implements ProductDAO{
 		product.setActive(false);
 		Transaction tx = session.beginTransaction();
 		update(product);
-		session.flush();
 		tx.commit();
+		session.flush();
 	}
 
 	@Override
 	public Product find(long productId) {
-		return (Product) sessionFactory.getCurrentSession().get(Product.class, productId);
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Partner.class);
+		criteria.add(Restrictions.eq("id", productId));
+		List<Product> products = criteria.list();
+		tx.commit();
+		session.close();
+		
+		Product product = null;
+		if (products != null && !products.isEmpty()) {
+			product = products.get(0);
+		}
+		
+		return product;
 	}
 	
 	@Override
@@ -54,8 +72,8 @@ public class ProductDAOImpl implements ProductDAO{
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(product);
-		session.flush();
 		tx.commit();
+		session.flush();
 	}
 
 }

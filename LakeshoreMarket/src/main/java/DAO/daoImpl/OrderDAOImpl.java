@@ -7,21 +7,24 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 import main.java.DAO.OrderDAO;
+import main.java.model.constant.Constant;
 import main.java.model.entity.Order;
 import main.java.service.service.OrderService.Status;
 
 public class OrderDAOImpl implements OrderDAO {
-	private SessionFactory sessionFactory = null;
-//	private SessionFactory sessionFactory = buildSessionFactory(new Configuration().configure(Constant.HIBERNATE_FILE_NAME));
-//
-//	private SessionFactory buildSessionFactory(Configuration configuration) {
-//		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
-//		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-//		return sessionFactory;
-//	}
+	private SessionFactory sessionFactory = buildSessionFactory(new Configuration().configure(Constant.HIBERNATE_FILE_NAME));
+
+	private SessionFactory buildSessionFactory(Configuration configuration) {
+		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+		return sessionFactory;
+	}
 
 	/**
 	 * This method adds an order to the database 
@@ -75,8 +78,9 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> get(List<Status> statuses) {
 		List<Order> orders = null;
+		Session session = sessionFactory.openSession();
 		try {
-			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(Order.class);
 			if (statuses != null && !statuses.isEmpty()) {
 				// add the status restriction(s)
@@ -85,9 +89,11 @@ public class OrderDAOImpl implements OrderDAO {
 				}
 			}
 			orders = criteria.list();
-			session.close();
+			tx.commit();
 		} catch (HibernateException e) {
 			e.printStackTrace();
+		} finally {
+			session.close();
 		}
 		return orders;
 	}
@@ -114,47 +120,43 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> get(Status status, long partnerId) {
 		List<Order> orders = null;
+		Session session = sessionFactory.openSession();
 		try {
-			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(Order.class);
 			if (status != null) {
 				criteria.add(Restrictions.eq("status", status.toString()));
 			}
 			criteria.add(Restrictions.eq("partner_id", partnerId));
 			orders = criteria.list();
-			session.close();
+			tx.commit();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			session.close();			
+		}
+		return orders;
+	}
+
+	@Override
+	public List<Order> get(Status status) {
+		List<Order> orders = null;
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(Order.class);
+			if (status != null) {
+				criteria.add(Restrictions.eq("status", status.toString()));
+			}
+			orders = criteria.list();
+			session.flush();
+			tx.commit();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 		return orders;
 	}
 
-//	@Override
-//	public List<Order> get(Status status) {
-//		List<Order> orders = null;
-//		try {
-//			Session session = sessionFactory.openSession();
-//			Criteria criteria = session.createCriteria(Order.class);
-//			if (status != null) {
-//				criteria.add(Restrictions.eq("status", status.toString()));
-//			}
-//			orders = criteria.list();
-//			session.close();
-//		} catch (HibernateException e) {
-//			e.printStackTrace();
-//		}
-//		return orders;
-//	}
-
-	@Override
-	public List<Order> get(Status status) {
-		List<Order> orders = null;
-		Order order = new Order();
-		order.setCustomerId(1234);
-		order.setId(555);
-		order.setPartnerId(777);
-		order.setStatus("samplestatus");
-		return orders;
-	}
+	
 
 }

@@ -14,6 +14,7 @@ import main.java.model.entity.OrderLine;
 import main.java.model.entity.Partner;
 import main.java.model.entity.Product;
 import main.java.service.model.OrderModel;
+import main.java.service.model.PartnerModel;
 import main.java.service.model.ProductModel;
 
 public class ElementUtil {
@@ -123,6 +124,25 @@ public class ElementUtil {
 
         return partnerBean;
 	}
+	
+	public static final PartnerBean buildPartnerBean(PartnerModel partnerModel) {
+		PartnerBean partnerBean = new PartnerBean();
+		
+		if (partnerModel != null) {
+			partnerBean.setId(partnerModel.getId());
+			partnerBean.setCity(partnerModel.getCity());
+			partnerBean.setFirstName(partnerModel.getFirstName());
+			partnerBean.setLastName(partnerModel.getLastName());
+			partnerBean.setLogin(partnerModel.getLogin());
+			partnerBean.setState(partnerModel.getState());
+			partnerBean.setStreetAddress(partnerModel.getStreetAddress());
+			partnerBean.setZip_code(partnerModel.getZip_code());
+			partnerBean.setActive(partnerModel.isActive());
+        }
+
+        return partnerBean;
+	}
+
 
 	public static List<PartnerBean> buildPartnerBeanList(List<Partner> partners) {
 		List<PartnerBean> partnerBeans = new ArrayList<PartnerBean>();

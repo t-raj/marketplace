@@ -11,8 +11,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import main.java.model.bean.PartnerBean;
 import main.java.service.model.PartnerModel;
 import main.java.service.service.PartnerService;
+import main.java.util.ElementUtil;
 
 
 /**
@@ -28,11 +30,14 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
 	@Path("/Partner")
-	public Response registerPartner(@PathParam("partnerId")int partnerID, String login, String password, String firstName, String lastName, String streetAddress, String city, String state, int zip){
+	public Response registerPartner(PartnerModel partnerModel){
 		//PartnerModel partnerRepresentation = new PartnerModel();
+		PartnerBean partnerBean = ElementUtil.buildPartnerBean(partnerModel);
 		String message;
 		try {
-			partnerService.register(partnerID, login, password, firstName, lastName, streetAddress, city, state, zip);
+			partnerService.register(partnerBean.getId(), partnerBean.getLogin(), partnerBean.getPassword(), 
+					partnerBean.getFirstName(), partnerBean.getLastName(), partnerBean.getStreetAddress(), 
+					partnerBean.getCity(), partnerBean.getState(), partnerBean.getZip_code());
 			message = "partner successfully registered";
 		} catch (NullPointerException e) {
 			e.printStackTrace();

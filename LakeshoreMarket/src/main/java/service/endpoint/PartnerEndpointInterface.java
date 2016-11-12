@@ -7,11 +7,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import main.java.service.model.PartnerModel;
+
 
 @WebService
 public interface PartnerEndpointInterface {
 
-	Response registerPartner(int partnerID, String login, String password, String firstName, String lastName,
-			String streetAddress, String city, String state, int zip);
+	Response registerPartner(PartnerModel partnerModel);
 
 }

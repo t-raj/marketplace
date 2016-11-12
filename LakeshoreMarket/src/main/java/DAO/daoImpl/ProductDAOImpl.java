@@ -14,7 +14,6 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import main.java.DAO.ProductDAO;
 import main.java.model.constant.Constant;
-import main.java.model.entity.Partner;
 import main.java.model.entity.Product;
 
 public class ProductDAOImpl implements ProductDAO{
@@ -53,7 +52,7 @@ public class ProductDAOImpl implements ProductDAO{
 	public Product find(long productId) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		Criteria criteria = session.createCriteria(Partner.class);
+		Criteria criteria = session.createCriteria(Product.class);
 		criteria.add(Restrictions.eq("id", productId));
 		List<Product> products = criteria.list();
 		tx.commit();

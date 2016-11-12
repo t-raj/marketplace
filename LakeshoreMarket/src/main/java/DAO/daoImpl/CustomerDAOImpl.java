@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
@@ -43,9 +44,20 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	public Customer find(long customerId) {
-		return (Customer) sessionFactory.
-			      getCurrentSession().
-			      get(Customer.class, customerId);
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Customer.class);
+		criteria.add(Restrictions.eq("id", customerId));
+		List<Customer> customers = criteria.list();
+		tx.commit();
+		session.close();
+		
+		Customer customer = null;
+		if (customers != null && !customers.isEmpty()) {
+			customer = customers.get(0);
+		}
+		
+		return customer;
 	}
 
 	public void update(Customer customer) {

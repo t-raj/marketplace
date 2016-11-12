@@ -20,15 +20,22 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	private static ProductService productService; 
 	
 <<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
+<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
 	@Path("/Product/{ProductId}")//1.a search item database by product
 =======
 >>>>>>> 6713b26 Refactored formatting on various classes
+=======
+	@Path("/{productID}")//1.a search item database by product
+>>>>>>> 7051ca2 Updated product endpoint and corresponding service and util classes
 	@GET
 	@Produces("application/xml")
+<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
 <<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
 =======
 	@Path("/{productID}")//1.a search item database by product
 >>>>>>> 6713b26 Refactored formatting on various classes
+=======
+>>>>>>> 7051ca2 Updated product endpoint and corresponding service and util classes
 	public ProductModel search(@PathParam("productId") int productId) {
 		ProductModel productRepresentation = new ProductModel();
 		try {

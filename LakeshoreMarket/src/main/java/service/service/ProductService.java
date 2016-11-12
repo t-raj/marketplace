@@ -10,7 +10,7 @@ public interface ProductService {
 	
 	void update(ProductBean productBean);	
 	
-	void addNewProduct(int productID, String description, int partnerID, int numAvailable,int price);
+	void addNewProduct(ProductBean productBean);
 	
 	ProductBean addExistingProduct(int productID, int partnerID, int quantity);
 	

@@ -8,6 +8,12 @@ import javax.xml.ws.Response;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+
+import main.java.DAO.CustomerDAO;
+import main.java.DAO.PartnerDAO;
+import main.java.DAO.daoImpl.CustomerDAOImpl;
+import main.java.DAO.daoImpl.PartnerDAOImpl;
+
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 
@@ -17,7 +23,7 @@ import java.sql.Connection;
 
 
 
-public class View {
+public class Client {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
@@ -71,6 +77,14 @@ public class View {
 			System.out.println("Failed to make connection!");
 		}
 	
+		
+		CustomerDAO customer = new CustomerDAOImpl();
+		String name = customer.find(10101).getFirstName();
+		System.out.println(name);
+		
+		PartnerDAO partner = new PartnerDAOImpl();
+		String partnername = partner.find(20202).getFirstName();
+		System.out.println(partnername);
 	
 	
 	/*
@@ -81,6 +95,8 @@ public class View {
     JacksonJsonProvider provider = new JacksonJsonProvider();
     provider.addUntouchable(Response.class);
     providers.add(provider);
+    
+    
 	
     
     /*****************************************************************************************

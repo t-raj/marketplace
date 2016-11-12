@@ -22,6 +22,8 @@ import main.java.util.ElementUtil;
  * @author lbo
  *
  */
+
+@Path("/Partner")
 public class PartnerEndpoint implements PartnerEndpointInterface {
 
 	private static PartnerService partnerService;
@@ -29,7 +31,7 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@POST//2.1 Need to register and create profile of partners
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
-	@Path("/Partner")
+	
 	public Response registerPartner(PartnerModel partnerModel){
 		
 		String message;

@@ -7,7 +7,7 @@ import main.java.service.model.ProductModel;
 
 @WebService
 public interface ProductEndpointInterface {
-		ProductModel search(long productId);
+		ProductModel search(int productId);
 		Response add(ProductModel product);
 		Response update(ProductModel product);
 }

@@ -10,5 +10,5 @@ public interface ProductService {
 	
 	void add(ProductBean productBean);
 	
-	void delete(long productID);
+	void delete(int productID);
 }

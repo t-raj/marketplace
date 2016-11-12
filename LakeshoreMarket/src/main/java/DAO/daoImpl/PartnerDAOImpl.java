@@ -33,7 +33,7 @@ public class PartnerDAOImpl implements PartnerDAO {
 		session.flush();
 	}
 
-	public void delete(long partnerId) {
+	public void delete(int partnerId) {
 		Session session = sessionFactory.openSession();
 		Partner partner = find(partnerId);
 		partner.setActive(false);
@@ -43,7 +43,7 @@ public class PartnerDAOImpl implements PartnerDAO {
 		session.flush();
 	}
 
-	public Partner find(long partnerId) {
+	public Partner find(int partnerId) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Partner.class);

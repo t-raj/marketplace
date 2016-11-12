@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void delete(long productID) {
+	public void delete(int productID) {
 		productDAO.delete(productID);
 	}
 

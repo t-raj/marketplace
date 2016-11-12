@@ -8,9 +8,9 @@ public interface PartnerDAO {
 
     void add(Partner partner);
 	
-    void delete(long partnerId);
+    void delete(int partnerId);
     
-    Partner find(long partnerId);
+    Partner find(int partnerId);
     
     void update(Partner partner);
     

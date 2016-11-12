@@ -38,7 +38,7 @@ public class ProductDAOImpl implements ProductDAO{
 
 	
 	@Override
-	public void delete(long productId) {
+	public void delete(int productId) {
 		Session session = sessionFactory.openSession();
 		Product product = find(productId);
 		product.setActive(false);
@@ -49,7 +49,7 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 
 	@Override
-	public Product find(long productId) {
+	public Product find(int productId) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Product.class);

@@ -4,7 +4,6 @@ import java.util.List;
 
 import main.java.model.bean.OrderBean;
 import main.java.service.model.PaymentModel;
-import main.java.service.service.OrderService.Status;
 
 public interface OrderService {
 	
@@ -24,17 +23,17 @@ public interface OrderService {
 
 	void accept(OrderBean orderBean);
 	
-	OrderBean get(long orderId);
+	OrderBean get(int orderId);
 
 	List<OrderBean> get();
 
 	List<OrderBean> get(Status status);
 
-	List<OrderBean> pushToPartner(long partnerId);
+	List<OrderBean> pushToPartner(int partnerId);
 
-	void ship(long orderId);
+	void ship(int orderId);
 
-	void cancel(long orderId);
+	void cancel(int orderId);
 
-	boolean acceptPayment(PaymentModel paymentModel, long orderId);
+	boolean acceptPayment(PaymentModel paymentModel, int orderId);
 }

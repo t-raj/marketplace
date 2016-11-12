@@ -10,7 +10,7 @@ public interface CustomerService {
 	
 	CustomerBean get(int customerId);
 	
-	void delete(long customerId);
+	void delete(int customerId);
 
 	void update(CustomerBean customerBean);
 	

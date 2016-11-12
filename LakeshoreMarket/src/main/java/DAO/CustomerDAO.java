@@ -9,9 +9,9 @@ public interface CustomerDAO {
 	
 	void add(Customer customer);
 	
-    void delete(long customerId);
+    void delete(int customerId);
     
-    Customer find(long customerId);
+    Customer find(int customerId);
     
     void update(Customer customer);
     

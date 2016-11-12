@@ -47,7 +47,7 @@ public class OrderDAOImpl implements OrderDAO {
 	 * This method sets the status of an order to canceled
 	 */
 	@Override
-	public void delete(long orderId) {
+	public void delete(int orderId) {
 		try {
 			Session session = sessionFactory.openSession();
 			Order order = get(orderId);
@@ -66,7 +66,7 @@ public class OrderDAOImpl implements OrderDAO {
 	 * @param orderId
 	 */
 	@Override
-	public Order get(long orderId) {
+	public Order get(int orderId) {
 		return (Order) sessionFactory.
 				getCurrentSession().
 				get(Order.class, orderId);
@@ -118,7 +118,7 @@ public class OrderDAOImpl implements OrderDAO {
 	 * This method gets the orders with a certain status and partnerId
 	 */
 	@Override
-	public List<Order> get(Status status, long partnerId) {
+	public List<Order> get(Status status, int partnerId) {
 		List<Order> orders = null;
 		Session session = sessionFactory.openSession();
 		try {

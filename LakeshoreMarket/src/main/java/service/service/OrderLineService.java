@@ -9,14 +9,12 @@ public interface OrderLineService {
 
 	void addItem(OrderLineBean orderLineBean);
 	
-	OrderLineBean get(long orderId);
+	OrderLineBean get(int orderId);
 	
 	void update(OrderLineBean orderLineBean);
 
-	void cancel(long orderId);	
+	void cancel(int orderId);	
 	
 	List<OrderLineBean> get();
-
-	//List<OrderLineBean> get(int orderId);
 
 }

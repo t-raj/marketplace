@@ -12,13 +12,13 @@ import main.java.service.model.PaymentModel;
 public interface OrderEndpointInterface {
 
 	Response accept(OrderModel order);
-	Response acceptPayment(PaymentModel paymentModel, long orderId);
-	Response shipOrder(long orderId);
-	Response shipOrders(List<Long> orderIds);
-	OrderModel getOrderStatus(long orderId);
+	Response acceptPayment(PaymentModel paymentModel, int orderId);
+	Response shipOrder(int orderId);
+	Response shipOrders(List<Integer> orderIds);
+	OrderModel getOrderStatus(int orderId);
 	List<OrderModel> getInProgress();
-	Response cancelOrder(long orderId);
-	Response pushToPartner(long partnerId);
+	Response cancelOrder(int orderId);
+	Response pushToPartner(int partnerId);
 	List<OrderModel> getOrderStatus();
 	
 }

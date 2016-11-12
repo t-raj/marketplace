@@ -40,7 +40,7 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 	}
 
 	@Override
-	public void delete(long orderLineId) {
+	public void delete(int orderLineId) {
 		try {
 			Session session = sessionFactory.openSession();
 			OrderLine orderLine = get(orderLineId);
@@ -68,7 +68,7 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 	}
 
 	@Override
-	public OrderLine get(long orderLineId) {
+	public OrderLine get(int orderLineId) {
 		return (OrderLine) sessionFactory.
 			      getCurrentSession().
 			      get(OrderLine.class, orderLineId);

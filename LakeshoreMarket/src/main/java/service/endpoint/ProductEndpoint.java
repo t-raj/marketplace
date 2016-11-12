@@ -23,15 +23,10 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	@Path("/{productID}")//1.a search item database by product
 	@GET
 	@Produces("application/xml")
-	public ProductModel search(@PathParam("productId") long productId) {
+	public ProductModel search(@PathParam("productId") int productId) {
 		ProductModel productRepresentation = new ProductModel();
-		productRepresentation.setDescription("somedescription");
-		productRepresentation.setNumberAvailable(1);
-		productRepresentation.setPartnerId(2);
-		productRepresentation.setpId(4);
-		productRepresentation.setPrice(5);
 		try {
-//			productRepresentation = ElementUtil.buildProductModel(productService.get(productId));
+			productRepresentation = ElementUtil.buildProductModel(productService.get(productId));
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}

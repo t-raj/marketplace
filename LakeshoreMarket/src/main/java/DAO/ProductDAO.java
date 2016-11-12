@@ -6,9 +6,9 @@ public interface ProductDAO {
 
     void add(Product product);
 	
-    void delete(long productId);
+    void delete(int productId);
     
-    Product find(long productId);
+    Product find(int productId);
     
     void update(Product product);
 }

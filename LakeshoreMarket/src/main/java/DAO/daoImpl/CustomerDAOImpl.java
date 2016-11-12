@@ -33,7 +33,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		session.flush();
 	}
 
-	public void delete(long customerId) {
+	public void delete(int customerId) {
 		Session session = sessionFactory.openSession();
 		Customer customer = find(customerId);
 		customer.setActive(false);
@@ -43,7 +43,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		session.flush();
 	}
 
-	public Customer find(long customerId) {
+	public Customer find(int customerId) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Customer.class);

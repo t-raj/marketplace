@@ -8,11 +8,11 @@ public interface OrderLineDAO {
 	
 	void add(OrderLine orderLine);
 	
-	void delete(long orderId);
+	void delete(int orderId);
 	
 	void update(OrderLine orderLine);
 	
-	OrderLine get(long orderId);
+	OrderLine get(int orderId);
 
 	List<OrderLine> get();
 

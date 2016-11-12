@@ -34,7 +34,7 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
-	public long getPartnerId() {
+	public int getPartnerId() {
 		return partnerId;
 	}
 

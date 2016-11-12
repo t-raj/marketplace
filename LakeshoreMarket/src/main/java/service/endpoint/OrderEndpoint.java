@@ -44,7 +44,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@GET//1.c accept credit card payment
 	@Consumes({"application/xml"})
 	@Path("/{orderId}")
-	public Response acceptPayment(PaymentModel paymentModel, @PathParam("orderId") long orderId) {
+	public Response acceptPayment(PaymentModel paymentModel, @PathParam("orderId") int orderId) {
 		boolean paymentAccepted = orderService.acceptPayment(paymentModel, orderId);
 		String message = "Payment accepted";
 		if (!paymentAccepted) {
@@ -57,7 +57,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@PUT//1.d. ship order
 	@Produces({"application/xml"})
 	@Path("/shipment/{orderId}")
-	public Response shipOrder(@PathParam("orderId") long orderId){
+	public Response shipOrder(@PathParam("orderId") int orderId){
 		orderService.ship(orderId);
 		String message = "Order was shipped";
 
@@ -67,8 +67,8 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@PUT//1.d. ship orders
 	@Produces({"application/xml"})
 	@Path("/shipment")
-	public Response shipOrders(@QueryParam("orderIds") List<Long> orderIds){
-		for (Long orderId : orderIds) {
+	public Response shipOrders(@QueryParam("orderIds") List<Integer> orderIds){
+		for (Integer orderId : orderIds) {
 			orderService.ship(orderId);
 		}
 		String message = "Orders were shipped";
@@ -78,7 +78,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@GET//1.e provide order status  
 	@Produces({"application/xml"})
 	@Path("/status/{orderId}")
-	public OrderModel getOrderStatus(@PathParam("orderId") long orderId){
+	public OrderModel getOrderStatus(@PathParam("orderId") int orderId){
 		return ElementUtil.buildOrderModel(orderService.get(orderId));
 	}
 
@@ -92,7 +92,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@DELETE//1.f. order cancel
 	@Produces({"application/xml"})
 	@Path("/{orderId}")
-	public Response cancelOrder(@PathParam("orderId") long orderId){
+	public Response cancelOrder(@PathParam("orderId") int orderId){
 		orderService.cancel(orderId);
 		String message = "The order with order ID:........" + orderId + " is now canceled";
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
@@ -107,7 +107,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
 	@Path("/pushedOrders")
-	public Response pushToPartner(@PathParam("partnerId") long partnerId){
+	public Response pushToPartner(@PathParam("partnerId") int partnerId){
 		
 		List<OrderModel> orderModels= ElementUtil.buildOrderModelList(orderService.pushToPartner(partnerId));
 		String message = "The order with partnerId" + partnerId + "has been pushed to the partner!";

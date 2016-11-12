@@ -9,16 +9,16 @@ public interface OrderDAO {
 
 	void add(Order order);
 	
-	void delete(long orderId);
+	void delete(int orderId);
 	
 	void update(Order order);
 	
-	Order get(long orderId);
+	Order get(int orderId);
 
 	List<Order> get(List<Status> status);
 
 	List<Order> get(Status status);
 
-	List<Order> get(Status status, long partnerId);
+	List<Order> get(Status status, int partnerId);
 
 }

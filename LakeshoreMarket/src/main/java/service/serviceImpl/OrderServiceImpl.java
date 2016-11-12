@@ -3,25 +3,11 @@ package main.java.service.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import main.java.DAO.OrderDAO;
 import main.java.DAO.daoImpl.OrderDAOImpl;
 import main.java.model.bean.OrderBean;
-import main.java.model.bean.PartnerBean;
 import main.java.service.model.PaymentModel;
 import main.java.service.service.OrderService;
-import main.java.service.service.PartnerService;
 import main.java.service.service.PaymentService;
 import main.java.util.ElementUtil;
 
@@ -49,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
 	 * @param orderId
 	 */
 	@Override
-	public OrderBean get(long orderId) {
+	public OrderBean get(int orderId) {
 		return ElementUtil.buildOrderBean(orderDAO.get(orderId));
 	}
 	
@@ -58,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 	 * @param orderId
 	 */
 	@Override
-	public void cancel(long orderId) {
+	public void cancel(int orderId) {
 		orderDAO.delete(orderId);
 	}
 	
@@ -83,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
 	 * @return pushedOrders
 	 */
 	@Override
-	public List<OrderBean> pushToPartner(long partnerId) {
+	public List<OrderBean> pushToPartner(int partnerId) {
 		List<OrderBean> pushedOrders = new ArrayList<OrderBean>();
 		// retrieve the orders that customer have placed and that have been paid for a specific partner. These are the orders ready to be pushed.
 		List<OrderBean> paidOrders = ElementUtil.buildOrderBeanList(orderDAO.get(Status.PAID, partnerId));
@@ -101,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
 	 * This method ships the order and sets the order status to shipped 
 	 */
 	@Override
-	public void ship(long orderId) {
+	public void ship(int orderId) {
 		OrderBean order = ElementUtil.buildOrderBean(orderDAO.get(orderId));
 		// in the real world, this may call other 3rd party apis to perform the actual shipping, e.g. shippingService
 		order.setStatus(Status.SHIPPED);
@@ -114,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	// 1c Accept credit card payment
 	@Override
-	public boolean acceptPayment(PaymentModel paymentModel, long orderId) {
+	public boolean acceptPayment(PaymentModel paymentModel, int orderId) {
 		boolean paymentAccepted = false;
 		if (paymentService.isValid(paymentModel)) {
 			OrderBean order = get(orderId);

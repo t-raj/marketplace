@@ -12,7 +12,7 @@ public interface PartnerService {
 	
 	void update(PartnerBean partnerBean);
 	
-	void delete(long partnerId);
+	void delete(int partnerId);
 	
 	List<PartnerBean> get();
 	

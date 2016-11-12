@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Partner")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-
 public class PartnerModel {
 	private int id;
 	private String login;

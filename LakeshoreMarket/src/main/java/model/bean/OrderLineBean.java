@@ -1,20 +1,11 @@
 package main.java.model.bean;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import main.java.model.entity.Product;
-
 public class OrderLineBean {
-	
-	
+
 	private int id;
 	private int lineNumber;
 	private int productId;
 	private int quantity;
-	private double price;
-	List<Integer> productIds = new ArrayList<Integer>();
-	
 	
 	public int getId() {
 		return id;
@@ -40,23 +31,4 @@ public class OrderLineBean {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	public List<Integer> getProductIds(List<Product> products) {
-		for(Product product : products){
-			productIds.add(product.getId());
-		}
-		return productIds;
-	}
-	public void setProductIds(List<Integer> productIds) {
-		this.productIds = productIds;
-	}
-	
-	
-	
-
 }

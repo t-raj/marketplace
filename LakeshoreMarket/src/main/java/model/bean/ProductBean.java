@@ -1,9 +1,5 @@
 package main.java.model.bean;
 
-//import java.math.int;
-
-import javax.persistence.Column;
-
 public class ProductBean {
 	
 	private int id;
@@ -12,7 +8,6 @@ public class ProductBean {
 	private int numAvailable;
 	private int price;
 	private boolean active;
-
 	
 	public int getId() {
 		return id;
@@ -50,9 +45,5 @@ public class ProductBean {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	
-	
-	
 
 }

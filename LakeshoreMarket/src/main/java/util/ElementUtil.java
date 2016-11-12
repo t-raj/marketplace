@@ -479,19 +479,11 @@ public class ElementUtil {
 	}
 	
 	public static final OrderLine buildOrderLine(OrderLineBean orderLineBean){
-		
 		OrderLine orderLine = new OrderLine();
-		List<Product> products = new ArrayList<Product>(); 
-		
-		
 		if(orderLineBean !=null){
-			
 			orderLine.setId(orderLineBean.getId());
 			orderLine.setLineNumber(orderLineBean.getLineNumber());
-			orderLine.setProductIds(orderLineBean.getProductIds(products));
 			orderLine.setQuantity(orderLineBean.getQuantity());
-			orderLine.setCost(orderLineBean.getPrice());
-			
 		}
 		return orderLine;
 	} 
@@ -504,8 +496,6 @@ public class ElementUtil {
 		if (orderLine != null) {
 			orderLineBean.setId(orderLine.getId());
 			orderLineBean.setLineNumber(orderLine.getLineNumber());
-			orderLineBean.setPrice(orderLine.getPrice());
-			orderLineBean.setProductIds(orderLine.getProductIds(products));
 			orderLineBean.setQuantity(orderLine.getQuantity());
         }
         return orderLineBean;

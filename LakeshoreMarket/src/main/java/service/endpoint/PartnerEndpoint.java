@@ -3,7 +3,10 @@ package main.java.service.endpoint;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
 import javax.ws.rs.Produces;
+=======
+>>>>>>> 6713b26 Refactored formatting on various classes
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,18 +21,22 @@ import main.java.util.ElementUtil;
  * @author lbo
  *
  */
+<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
 
+=======
+>>>>>>> 6713b26 Refactored formatting on various classes
 @Path("/Partner")
 public class PartnerEndpoint implements PartnerEndpointInterface {
 
 	private static PartnerService partnerService = new PartnerServiceImpl();
 	
 	@POST//2.1 Need to register and create profile of partners
-	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
+<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
 	
+=======
+>>>>>>> 6713b26 Refactored formatting on various classes
 	public Response registerPartner(PartnerModel partnerModel){
-		
 		String message;
 		try {
 			partnerService.register(ElementUtil.buildPartnerBean(partnerModel));
@@ -40,7 +47,5 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 		}	
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
-	
-	
 
 }

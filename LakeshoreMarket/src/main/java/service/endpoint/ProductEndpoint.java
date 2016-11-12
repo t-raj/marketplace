@@ -19,16 +19,21 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	
 	private static ProductService productService; 
 	
+<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
 	@Path("/Product/{ProductId}")//1.a search item database by product
+=======
+>>>>>>> 6713b26 Refactored formatting on various classes
 	@GET
 	@Produces("application/xml")
+<<<<<<< Upstream, based on branch 'master' of https://lboloyola@bitbucket.org/lboloyola/lakeshoremarket.git
+=======
+	@Path("/{productID}")//1.a search item database by product
+>>>>>>> 6713b26 Refactored formatting on various classes
 	public ProductModel search(@PathParam("productId") int productId) {
 		ProductModel productRepresentation = new ProductModel();
-		
 		try {
 			productRepresentation = ElementUtil.buildProductModel(productService.get(productId));
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return productRepresentation;

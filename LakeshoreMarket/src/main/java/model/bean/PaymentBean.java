@@ -9,8 +9,8 @@ public class PaymentBean {
 	private int zipCode;
 	
 	public enum Type {
-		Visa,
-		Mastercard;
+		VISA,
+		MASTERCARD;
 	}
 
 	public int getCardNumber() {

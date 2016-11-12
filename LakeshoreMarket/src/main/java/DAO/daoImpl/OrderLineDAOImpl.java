@@ -13,8 +13,6 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import main.java.DAO.OrderLineDAO;
 import main.java.model.constant.Constant;
-import main.java.model.entity.Customer;
-import main.java.model.entity.Order;
 import main.java.model.entity.OrderLine;
 
 public class OrderLineDAOImpl implements OrderLineDAO {
@@ -46,7 +44,6 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 		try {
 			Session session = sessionFactory.openSession();
 			OrderLine orderLine = get(orderLineId);
-			orderLine.setStatus("Deleted");
 			Transaction tx = session.beginTransaction();
 			update(orderLine);
 			session.flush();

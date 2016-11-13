@@ -1,11 +1,15 @@
 package main.java.service.endpoint;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import main.java.service.model.OrderModel;
 import main.java.service.model.PartnerModel;
 import main.java.service.service.PartnerService;
 import main.java.service.serviceImpl.PartnerServiceImpl;
@@ -35,6 +39,13 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 			message = "Error. Partner could not be registered";
 		}	
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
+	}
+	
+	@GET//get partner info, testing purpose 
+	@Produces({"application/xml"})
+	@Path("/{id}")
+	public PartnerModel getPartner(@PathParam("partnerId") int orderId){
+		return ElementUtil.buildPartnerModel(partnerService.get(orderId));
 	}
 
 }

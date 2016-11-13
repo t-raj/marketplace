@@ -76,8 +76,8 @@ public class OrderDAOImpl implements OrderDAO {
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(Order.class);
-				criteria.add(Restrictions.eq("id", orderId));
-			List<Order> orders = criteria.list();
+			criteria.add(Restrictions.eq("id", orderId));
+			List<Order> orders = (List<Order>)criteria.list();
 			if (orders != null && !orders.isEmpty()) {
 				order = orders.get(0);
 			}

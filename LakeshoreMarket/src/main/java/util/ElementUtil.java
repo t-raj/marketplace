@@ -273,4 +273,24 @@ public class ElementUtil {
 		return productBean;
 	}
 
+	public static PartnerModel buildPartnerModel(PartnerBean partnerBean) {
+		// TODO Auto-generated method stub
+		
+		if(partnerBean ==null){
+			return null;
+		}
+		PartnerModel partnerModel = new PartnerModel();
+		partnerModel.setId(partnerBean.getId());
+		partnerModel.setFirstName(partnerModel.getFirstName());
+		partnerModel.setLastName(partnerBean.getLastName());
+		partnerModel.setLogin(partnerBean.getLogin());
+		partnerModel.setStreetAddress(partnerBean.getStreetAddress());
+		partnerModel.setCity(partnerBean.getCity());
+		partnerModel.setState(partnerBean.getState());
+		partnerModel.setActive(partnerBean.isActive());
+		
+		
+		return null;
+	}
+
 }

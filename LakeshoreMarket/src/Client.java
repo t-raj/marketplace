@@ -12,9 +12,13 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 
 import main.java.DAO.CustomerDAO;
+import main.java.DAO.OrderDAO;
 import main.java.DAO.PartnerDAO;
+import main.java.DAO.ProductDAO;
 import main.java.DAO.daoImpl.CustomerDAOImpl;
+import main.java.DAO.daoImpl.OrderDAOImpl;
 import main.java.DAO.daoImpl.PartnerDAOImpl;
+import main.java.DAO.daoImpl.ProductDAOImpl;
 
 
 
@@ -71,19 +75,33 @@ public class Client {
 			System.out.println("Failed to make connection!");
 		}
 	
+	
 		
 		CustomerDAO customer = new CustomerDAOImpl();
 		String name = customer.find(10101).getFirstName();
 		System.out.println(name);
 		
+		/*
+		ProductDAO product = new ProductDAOImpl();
+		String description = product.find(30303).getDescription();
+		System.out.println(description);
+		
+		*/
+		
 		PartnerDAO partner = new PartnerDAOImpl();
 		String partnername = partner.find(20202).getFirstName();
 		System.out.println(partnername);
-	
-	
+		
+		/*
+		OrderDAO order = new OrderDAOImpl();
+		int customerId = order.get(50505).getCustomerId();
+		System.out.println(customerId);
+	*/
 	/*
 	 * The following part of the code is the client class the professor showed as example
 	 */
+		
+		
 	
 	List<Object> providers = new ArrayList<Object>();
     JacksonJsonProvider provider = new JacksonJsonProvider();

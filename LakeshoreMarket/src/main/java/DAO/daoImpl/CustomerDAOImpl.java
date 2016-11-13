@@ -2,7 +2,9 @@ package main.java.DAO.daoImpl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Criteria;
+//import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -48,11 +50,13 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	public Customer find(int customerId) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		session.beginTransaction();
 		Criteria criteria = session.createCriteria(Customer.class);
 		criteria.add(Restrictions.eq("id", customerId));
 		List<Customer> customers = criteria.list();
-		tx.commit();
+		//Query query = session.createQuery("FROM customer WHERE customer.id=:customerId");
+		//List<Customer> customers = (List<Customer>)query.list();
+		session.getTransaction().commit();
 		session.close();
 		
 		Customer customer = null;
@@ -75,8 +79,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public List<Customer> find() {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		Criteria criteria = session.createCriteria(Customer.class);
-		List<Customer> customers = criteria.list();
+		//Criteria criteria = session.createCriteria(Customer.class);
+		Query query = session.createQuery("FROM Customer");
+		List<Customer> customers = query.list();
 		tx.commit();
 		session.close();
 		return customers;

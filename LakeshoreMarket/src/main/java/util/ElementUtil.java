@@ -234,6 +234,7 @@ public class ElementUtil {
 			return null;
 		}
 		OrderModel orderModel = new OrderModel();
+		orderModel.setOrderId((int) orderBean.getId());
 		orderModel.setCustomerId(orderBean.getCustomerId());
 		orderModel.setStatus(orderBean.getStatus());
 		orderModel.setProductIds(orderBean.getProductIds());
@@ -245,6 +246,7 @@ public class ElementUtil {
 		OrderBean orderBean = new OrderBean();
 		
 		if (order != null) {
+			orderBean.setId(order.getOrderId());
 			orderBean.setCustomerId(order.getCustomerId());
 			orderBean.setStatus(orderBean.getStatus());
 			orderBean.setProductIds(order.getProductIds());

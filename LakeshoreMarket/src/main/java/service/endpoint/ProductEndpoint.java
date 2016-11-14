@@ -44,7 +44,7 @@ public class ProductEndpoint implements ProductEndpointInterface{
 			e.printStackTrace();
 			message = "Error: Product could not be added.";
 		}
-		return Response.ok(message, MediaType.APPLICATION_XML).build();
+		return Response.ok(message, MediaType.TEXT_PLAIN).build();
 	}
 	
 	@PUT//2.2 Update product or products in market place

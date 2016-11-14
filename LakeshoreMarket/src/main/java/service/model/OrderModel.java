@@ -15,6 +15,7 @@ import main.java.service.service.OrderService.Status;
 @XmlType(name = "")
 public class OrderModel {
 
+	private int orderId;
 	private long customerId;
 	private Status status;
 	private List<Long> productIds;
@@ -31,11 +32,15 @@ public class OrderModel {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
+	public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
 	public List<Long> getProductIds() {
 		return productIds;
 	}
-
 	public void setProductIds(List<Long> productIds) {
 		this.productIds = productIds;
 	}

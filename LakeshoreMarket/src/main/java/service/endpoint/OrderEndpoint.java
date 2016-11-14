@@ -42,7 +42,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	}
 	
 	@GET//1.c accept credit card payment
-	@Consumes({"application/xml"})
+	@Produces({"application/xml"})
 	@Path("/{orderId}")
 	public Response acceptPayment(PaymentModel paymentModel, @PathParam("orderId") int orderId) {
 		boolean paymentAccepted = orderService.acceptPayment(paymentModel, orderId);

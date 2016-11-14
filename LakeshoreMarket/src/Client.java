@@ -20,10 +20,6 @@ import main.java.DAO.daoImpl.OrderDAOImpl;
 import main.java.DAO.daoImpl.PartnerDAOImpl;
 import main.java.DAO.daoImpl.ProductDAOImpl;
 
-
-
-
-
 public class Client {
 
 	public static void main(String[] args) throws Exception {
@@ -35,22 +31,17 @@ public class Client {
         String password = "M38kBlQBSuiyx_hiVwHdoukKgc";
         String driver = "org.postgresql.Driver";
 
-       
-        
         System.out.println("-------- PostgreSQL "
 				+ "JDBC Connection Testing ------------");
 
-		try {
+        try {
 
 			Class.forName("org.postgresql.Driver");
-
 		} catch (ClassNotFoundException e) {
-
 			System.out.println("Where is your PostgreSQL JDBC Driver? "
 					+ "Include in your library path!");
 			e.printStackTrace();
 			return;
-
 		}
 
 		System.out.println("PostgreSQL JDBC Driver Registered!");
@@ -58,15 +49,11 @@ public class Client {
 		Connection connection = null;
 
 		try {
-
 			connection = DriverManager.getConnection(url, username, password);
-
 		} catch (SQLException e) {
-
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
 			return;
-
 		}
 
 		if (connection != null) {
@@ -75,41 +62,29 @@ public class Client {
 			System.out.println("Failed to make connection!");
 		}
 	
-	
-		
 		CustomerDAO customer = new CustomerDAOImpl();
 		String name = customer.find(10101).getFirstName();
 		System.out.println(name);
 		
-		/*
 		ProductDAO product = new ProductDAOImpl();
 		String description = product.find(30303).getDescription();
 		System.out.println(description);
-		
-		*/
 		
 		PartnerDAO partner = new PartnerDAOImpl();
 		String partnername = partner.find(20202).getFirstName();
 		System.out.println(partnername);
 		
-		/*
 		OrderDAO order = new OrderDAOImpl();
 		int customerId = order.get(50505).getCustomerId();
 		System.out.println(customerId);
-	*/
 	/*
 	 * The following part of the code is the client class the professor showed as example
 	 */
 		
-		
-	
 	List<Object> providers = new ArrayList<Object>();
     JacksonJsonProvider provider = new JacksonJsonProvider();
     provider.addUntouchable(Response.class);
     providers.add(provider);
-    
-    
-	
     
     /*****************************************************************************************
      * GET METHOD invoke
@@ -123,7 +98,7 @@ public class Client {
     WebClient.getConfig(getClient).getInInterceptors().add(new LoggingInInterceptor());
     
     // change application/xml  to get in xml format
-    getClient = getClient.accept("application/xml").type("application/xml").path("/order");
+    getClient = getClient.accept("application/xml").type("application/xml").path("/order/50505");
     
     //The following lines are to show how to log messages without the CXF interceptors
     String getRequestURI = getClient.getCurrentURI().toString();
@@ -134,8 +109,6 @@ public class Client {
     //to see as raw XML/json
     String response = getClient.get(String.class);
     System.out.println("GET METHOD Response: ...." + response);
-    
-    //this is a test just to see if i can push 
 	}
 
 }

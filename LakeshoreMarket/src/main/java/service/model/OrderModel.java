@@ -16,14 +16,15 @@ import main.java.service.service.OrderService.Status;
 public class OrderModel {
 
 	private int orderId;
-	private long customerId;
+	private int customerId;
+	private int partnerId;
 	private Status status;
-	private List<Long> productIds;
+	private List<Integer> productIds;
 	
-	public long getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(long customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 	public Status getStatus() {
@@ -38,11 +39,17 @@ public class OrderModel {
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
-	public List<Long> getProductIds() {
+	public List<Integer> getProductIds() {
 		return productIds;
 	}
-	public void setProductIds(List<Long> productIds) {
+	public void setProductIds(List<Integer> productIds) {
 		this.productIds = productIds;
+	}
+	public int getPartnerId() {
+		return partnerId;
+	}
+	public void setPartnerId(int partnerId) {
+		this.partnerId = partnerId;
 	}
 
 }

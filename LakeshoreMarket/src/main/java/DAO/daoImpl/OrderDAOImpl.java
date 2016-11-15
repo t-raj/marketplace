@@ -38,10 +38,9 @@ public class OrderDAOImpl implements OrderDAO {
 		try {
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
-			List result = session.createQuery("FROM Order").list();
 			session.saveOrUpdate(order);
-			session.flush();
 			tx.commit();
+			session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -58,8 +57,8 @@ public class OrderDAOImpl implements OrderDAO {
 			order.setStatus(Status.CANCELED.toString());
 			Transaction tx = session.beginTransaction();
 			update(order);
-			session.flush();
 			tx.commit();
+			session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -81,8 +80,8 @@ public class OrderDAOImpl implements OrderDAO {
 			if (orders != null && !orders.isEmpty()) {
 				order = orders.get(0);
 			}
-			session.flush();
 			tx.commit();
+			session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}

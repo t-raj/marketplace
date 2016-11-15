@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 
 import main.java.DAO.OrderLineDAO;
@@ -29,14 +30,21 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 	}
 
 	@Override
-	public void add(OrderLine orderLine) {
+	public void add(List<OrderLine> orderLineList) {
+		if (orderLineList != null && !orderLineList.isEmpty()) {
+			for (OrderLine orderLine : orderLineList) {
+				add(orderLine);
+			}
+		}
+	}
+
+	private void add(OrderLine orderLine) {
 		try {
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
-			List result = session.createQuery("FROM Order").list();
 			session.saveOrUpdate(orderLine);
-			session.flush();
 			tx.commit();
+			session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -49,8 +57,8 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 			OrderLine orderLine = get(orderLineId);
 			Transaction tx = session.beginTransaction();
 			update(orderLine);
-			session.flush();
 			tx.commit();
+			session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -63,8 +71,8 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
 			session.saveOrUpdate(orderLine);
-			session.flush();
 			tx.commit();
+			session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -72,9 +80,23 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 
 	@Override
 	public OrderLine get(int orderLineId) {
-		return (OrderLine) sessionFactory.
-			      getCurrentSession().
-			      get(OrderLine.class, orderLineId);
+		OrderLine orderLine = null;
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(OrderLine.class);
+			criteria.add(Restrictions.eq("id", orderLineId));
+			List<OrderLine> orderLines = (List<OrderLine>)criteria.list();
+			if (orderLines != null && !orderLines.isEmpty()) {
+				orderLine = orderLines.get(0);
+			}
+			tx.commit();
+			session.flush();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		
+		return orderLine;
 	}
 
 	@Override
@@ -82,8 +104,10 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 		List<OrderLine> orderLines = null;
 		try {
 			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(OrderLine.class);
 			orderLines = criteria.list();
+			tx.commit();
 			session.close();
 		} catch (HibernateException e) {
 			e.printStackTrace();

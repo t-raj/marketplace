@@ -33,15 +33,21 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	
 	@POST//1.b accept a new buy order
 	@Consumes({"application/xml"})
-	@Path("/")
 	public Response accept(OrderModel order) {
-		orderService.accept(ElementUtil.buildOrderBean(order));
-		String message = "Order was accepted";
+		String message;
+		if (order != null) {
+			// set the status to accept
+			order.setStatus(OrderService.Status.ACCEPTED);
+			orderService.accept(ElementUtil.buildOrderBean(order));
+			message = "Order was accepted";
+		} else {
+			message = "Invalid order information.";
+		}
 		
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
 	
-	@GET//1.c accept credit card payment
+	@PUT//1.c accept credit card payment
 	@Produces({"application/xml"})
 	@Path("/{orderId}")
 	public Response acceptPayment(PaymentModel paymentModel, @PathParam("orderId") int orderId) {
@@ -106,9 +112,8 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@PUT//2.c push orders that customers made to the partner
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
-	@Path("/pushedOrders")
+	@Path("/pushedOrders/{partnerId}")
 	public Response pushToPartner(@PathParam("partnerId") int partnerId){
-		
 		List<OrderModel> orderModels= ElementUtil.buildOrderModelList(orderService.pushToPartner(partnerId));
 		String message = "The order with partnerId" + partnerId + "has been pushed to the partner!";
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();

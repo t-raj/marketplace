@@ -16,6 +16,7 @@ import main.java.model.entity.Product;
 import main.java.service.model.OrderModel;
 import main.java.service.model.PartnerModel;
 import main.java.service.model.ProductModel;
+import main.java.service.service.OrderService;
 
 public class ElementUtil {
 	
@@ -137,7 +138,6 @@ public class ElementUtil {
 			partnerBean.setState(partnerModel.getState());
 			partnerBean.setStreetAddress(partnerModel.getStreetAddress());
 			partnerBean.setZip_code(partnerModel.getZip_code());
-			partnerBean.setActive(partnerModel.isActive());
         }
 
         return partnerBean;
@@ -154,10 +154,10 @@ public class ElementUtil {
 	
 	public static final Order buildOrder(OrderBean orderBean){
 		Order order = new Order();
-		if(orderBean !=null){
-			order.setId((int) orderBean.getId());
-			order.setCustomerId((int) orderBean.getCustomerId());
-			
+		if(orderBean != null){
+			order.setId(orderBean.getId());
+			order.setCustomerId(orderBean.getCustomerId());
+			order.setPartnerId(orderBean.getPartnerId());
 			if (orderBean.getStatus() != null) {
 				order.setStatus(orderBean.getStatus().toString());
 			}
@@ -172,25 +172,27 @@ public class ElementUtil {
 			orderBean.setId(order.getId());
 			orderBean.setCustomerId(order.getCustomerId());
 			orderBean.setPartnerId(order.getPartnerId());
-			orderBean.setStatus(orderBean.getStatus());
+			orderBean.setStatus(Enum.valueOf(OrderService.Status.class, order.getStatus()));
 			
         }
         return orderBean;
 	}
 	
 	public static List<OrderBean> buildOrderBeanList(List<Order> orders) {
-		
 		List<OrderBean> orderBeans = new ArrayList<OrderBean>();
-		for (Order order :orders) {
-			orderBeans.add(buildOrderBean(order));
+		if (orders != null && !orders.isEmpty()) {
+			for (Order order :orders) {
+				orderBeans.add(buildOrderBean(order));
+			}
 		}
+
 		return orderBeans;
 	}
 	
 	public static final OrderLine buildOrderLine(OrderLineBean orderLineBean){
 		OrderLine orderLine = new OrderLine();
 		if(orderLineBean !=null){
-			orderLine.setId(orderLineBean.getId());
+			orderLine.setOrderId(orderLineBean.getId());
 			orderLine.setLineNumber(orderLineBean.getLineNumber());
 			orderLine.setQuantity(orderLineBean.getQuantity());
 		}
@@ -198,10 +200,9 @@ public class ElementUtil {
 	} 
 	
 	public static final OrderLineBean buildOrderLineBean(OrderLine orderLine) {
-
 		OrderLineBean orderLineBean = new OrderLineBean();
 		if (orderLine != null) {
-			orderLineBean.setId(orderLine.getId());
+			orderLineBean.setId(orderLine.getOrderId());
 			orderLineBean.setLineNumber(orderLine.getLineNumber());
 			orderLineBean.setQuantity(orderLine.getQuantity());
         }
@@ -234,7 +235,8 @@ public class ElementUtil {
 			return null;
 		}
 		OrderModel orderModel = new OrderModel();
-		orderModel.setOrderId((int) orderBean.getId());
+		orderModel.setOrderId(orderBean.getId());
+		orderModel.setPartnerId(orderBean.getPartnerId());
 		orderModel.setCustomerId(orderBean.getCustomerId());
 		orderModel.setStatus(orderBean.getStatus());
 		orderModel.setProductIds(orderBean.getProductIds());
@@ -248,7 +250,8 @@ public class ElementUtil {
 		if (order != null) {
 			orderBean.setId(order.getOrderId());
 			orderBean.setCustomerId(order.getCustomerId());
-			orderBean.setStatus(orderBean.getStatus());
+			orderBean.setPartnerId(order.getPartnerId());
+			orderBean.setStatus(order.getStatus());
 			orderBean.setProductIds(order.getProductIds());
         }
         return orderBean;
@@ -276,8 +279,6 @@ public class ElementUtil {
 	}
 
 	public static PartnerModel buildPartnerModel(PartnerBean partnerBean) {
-		// TODO Auto-generated method stub
-		
 		if(partnerBean ==null){
 			return null;
 		}
@@ -289,10 +290,31 @@ public class ElementUtil {
 		partnerModel.setStreetAddress(partnerBean.getStreetAddress());
 		partnerModel.setCity(partnerBean.getCity());
 		partnerModel.setState(partnerBean.getState());
-		partnerModel.setActive(partnerBean.isActive());
 		
-		
-		return null;
+		return partnerModel;
+	}
+
+	/**
+	 * This method saves the order line data from the order 
+	 * @param orderBean
+	 * @return
+	 */
+	public static List<OrderLine> buildOrderLineList(OrderBean orderBean) {
+		List<OrderLine> orderLineList = new ArrayList<OrderLine>();
+		if (orderBean != null) {
+			List<Integer> productIds = orderBean.getProductIds();
+			int lineNumber = 0;
+			for (Integer productId : productIds) {
+				OrderLine orderLine = new OrderLine();
+				orderLine.setOrderId(orderBean.getId());
+				orderLine.setLineNumber(lineNumber);
+				orderLine.setProductId(Integer.parseInt(productId.toString()));
+				orderLine.setQuantity(1); //default quantity
+				orderLineList.add(orderLine);
+			}
+			
+        }
+        return orderLineList;
 	}
 
 }

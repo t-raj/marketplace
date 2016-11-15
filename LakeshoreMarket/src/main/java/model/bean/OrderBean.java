@@ -6,29 +6,29 @@ import main.java.service.service.OrderService.Status;
 
 public class OrderBean {
 	
-	private long id;
-	private long partnerId;
-	private long customerId;
-	private List<Long> productIds;
+	private int id;
+	private int partnerId;
+	private int customerId;
+	private List<Integer> productIds;
 	private Status status;
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-	public long getPartnerId() {
+	public int getPartnerId() {
 		return partnerId;
 	}
 
-	public void setPartnerId(long partnerId) {
+	public void setPartnerId(int partnerId) {
 		this.partnerId = partnerId;
 	}
-	public long getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(long customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 	public Status getStatus() {
@@ -37,10 +37,10 @@ public class OrderBean {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public List<Long> getProductIds() {
+	public List<Integer> getProductIds() {
 		return productIds;
 	}
-	public void setProductIds(List<Long> productIds) {
+	public void setProductIds(List<Integer> productIds) {
 		this.productIds = productIds;
 	}
 	

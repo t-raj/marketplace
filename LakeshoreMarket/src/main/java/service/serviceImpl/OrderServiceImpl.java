@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.DAO.OrderDAO;
+import main.java.DAO.OrderLineDAO;
 import main.java.DAO.daoImpl.OrderDAOImpl;
+import main.java.DAO.daoImpl.OrderLineDAOImpl;
 import main.java.model.bean.OrderBean;
+import main.java.model.entity.OrderLine;
 import main.java.service.model.PaymentModel;
 import main.java.service.service.OrderService;
 import main.java.service.service.PaymentService;
@@ -19,6 +22,7 @@ import main.java.util.ElementUtil;
 public class OrderServiceImpl implements OrderService {
 
 	private OrderDAO orderDAO = new OrderDAOImpl();
+	private OrderLineDAO orderLineDAO = new OrderLineDAOImpl();
 	private PaymentService paymentService = new PaymentServiceImpl();
 	
 	/**
@@ -28,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void accept(OrderBean orderBean) {
 		orderDAO.add(ElementUtil.buildOrder(orderBean));
+		orderLineDAO.add(ElementUtil.buildOrderLineList(orderBean));
 	}
 
 	/**
@@ -36,7 +41,10 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@Override
 	public OrderBean get(int orderId) {
-		return ElementUtil.buildOrderBean(orderDAO.get(orderId));
+		OrderBean orderBean = ElementUtil.buildOrderBean(orderDAO.get(orderId));
+		orderBean.setProductIds(getProductIds(orderId));
+		
+		return orderBean;
 	}
 	
 	/**
@@ -59,7 +67,23 @@ public class OrderServiceImpl implements OrderService {
 		statusInProgress.add(Status.PAID);
 		statusInProgress.add(Status.PENDING);
 		statusInProgress.add(Status.SHIPPED);
-		return ElementUtil.buildOrderBeanList(orderDAO.get(statusInProgress));
+
+		List<OrderBean> orderBeanList = ElementUtil.buildOrderBeanList(orderDAO.get(statusInProgress)); 
+		for (OrderBean orderBean : orderBeanList) {
+			orderBean.setProductIds(getProductIds(orderBean.getId()));
+		}
+		
+		return orderBeanList;
+	}
+	
+	private List<Integer> getProductIds(int orderId) {
+		List<Integer> productIds = new ArrayList<Integer>();
+		OrderLine orderLine = orderLineDAO.get(orderId);
+		if (orderLine != null) {
+			productIds.add(orderLine.getProductId());
+		}
+		
+		return productIds;
 	}
 
 	/**

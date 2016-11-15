@@ -34,8 +34,8 @@ public class ProductDAOImpl implements ProductDAO{
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(product);
-		session.flush();
 		tx.commit();
+		session.flush();
 	}
 	
 	@Override

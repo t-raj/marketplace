@@ -9,7 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import main.java.service.model.OrderModel;
 import main.java.service.model.PartnerModel;
 import main.java.service.service.PartnerService;
 import main.java.service.serviceImpl.PartnerServiceImpl;
@@ -22,7 +21,7 @@ import main.java.util.ElementUtil;
  *
  */
 
-@Path("/Partner")
+@Path("/partner")
 public class PartnerEndpoint implements PartnerEndpointInterface {
 
 	private static PartnerService partnerService = new PartnerServiceImpl();
@@ -43,7 +42,7 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	
 	@GET//get partner info, testing purpose 
 	@Produces({"application/xml"})
-	@Path("/{id}")
+	@Path("/{partnerId}")
 	public PartnerModel getPartner(@PathParam("partnerId") int orderId){
 		return ElementUtil.buildPartnerModel(partnerService.get(orderId));
 	}

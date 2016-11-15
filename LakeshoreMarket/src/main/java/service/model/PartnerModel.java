@@ -19,16 +19,9 @@ public class PartnerModel {
 	private String city;
 	private String state;
 	private int zip_code;
-	private boolean isActive;
 
 	public int getId() {
 		return id;
-	}
-	public boolean isActive() {
-		return isActive;
-	}
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
 	}
 	public void setId(int id) {
 		this.id = id;

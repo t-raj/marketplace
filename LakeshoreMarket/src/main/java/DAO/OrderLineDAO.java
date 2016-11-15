@@ -6,8 +6,8 @@ import main.java.model.entity.OrderLine;
 
 public interface OrderLineDAO {
 	
-	void add(OrderLine orderLine);
-	
+	void add(List<OrderLine> orderLine);
+
 	void delete(int orderId);
 	
 	void update(OrderLine orderLine);

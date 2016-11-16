@@ -24,11 +24,11 @@ public class Product implements Serializable {
 	@Column(name="description")
 	private String description;
 	
-	@Column(name="partnerID")
+	@Column(name="partner_id")
 	private int partnerID;
 	
-	@Column(name="numAvailable")
-	private int numAvailable;
+	@Column(name="quantity")
+	private int quantity;
 	
 	@Column(name="price")
 	private int price;
@@ -52,12 +52,12 @@ public class Product implements Serializable {
 		this.partnerID = partnerID;
 	}
 	
-	public int getNumAvailable() {
-		return numAvailable;
+	public int getQuantity() {
+		return quantity;
 	}
 	
-	public void setNumAvailable(int numAvailable) {
-		this.numAvailable = numAvailable;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	public String getDescription() {

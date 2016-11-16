@@ -2,4 +2,8 @@ Instructions on how to run this project:
 
 1. Once the project has been imported into the IDE workspace, import the dependencies by right-clicking the project name and going to the run configuration Run As > Maven Install. In order for this to work, Maven will need to be installed on your computer.
 2. Once the Maven install has been successful, right click the project name and Run As > Run On Server. This project is configured to run on Tomcat 8, so Tomcat 8 will need to be installed on your server computer.
-3. Once the web service has started, web service calls can be made via a rest client such as Postman or SOAPUI.  
+3. Once the web service has started, web service calls can be made via a rest client such as Postman or SOAPUI.
+
+Notes for troubleshooting:
+
+- The timeout on the Tomcat server may need to be increased to allow the web service to run   

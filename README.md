@@ -70,8 +70,8 @@ The Lakeshore Market API is a RESTful API.
 * * state String: the state where the partner lives
 * * zip_cod String: the zip code for the partner
 
-* Example:
-* * Method: create a partner
+
+**create a partner**
 * * Arguments: 
 * * PartnerModel Required: a partnerModel is required to create a partner, all the attributes will be in the payload when necessary
 

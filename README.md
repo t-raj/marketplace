@@ -72,8 +72,8 @@ The Lakeshore Market API is a RESTful API.
 
 
 **create a partner**
-* * Arguments: 
-* * PartnerModel Required: a partnerModel is required to create a partner, all the attributes will be in the payload when necessary
+
+* Arguments: PartnerModel Required: a partnerModel is required to create a partner, all the attributes will be in the payload when necessary
 
 
 

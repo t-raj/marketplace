@@ -60,16 +60,15 @@ The Lakeshore Market API is a RESTful API.
 
 * Attributes: 
 
-* Id  Int: Unique Id for the partner
-* login String: login name for the partner
-* password String: Short description of the product
-* firstName String: first name of the partner
-* lastName String: last name of the partner
-* streetAddress String: the street address where the partner lives
-* city String: the city where the partner lives
-* state String: the state where the partner lives
-* zip_cod String: the zip code for the partner
-
+* * Id  Int: Unique Id for the partner
+* * login String: login name for the partner
+* * password String: Short description of the product
+* * firstName String: first name of the partner
+* * lastName String: last name of the partner
+* * streetAddress String: the street address where the partner lives
+* * city String: the city where the partner lives
+* * state String: the state where the partner lives
+* * zip_cod String: the zip code for the partner
 
 * Example:
 Method: create a partner

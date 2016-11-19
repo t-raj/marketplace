@@ -105,18 +105,18 @@ The Lakeshore Market API is a RESTful API.
 * * pId: Required
 
 
-* Add a product
+**Add a product**
 
-** Add a new product to the database.*
+* Add a new product to the database.
 
 * * ARGUMENTS
 
 * * ProductModel: Required
 
-* Update a product
+**Update a product**
 
 
-** Update an existing product in the database.*
+* Update an existing product in the database.
 
 * * ARGUMENTS
 

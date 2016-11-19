@@ -96,9 +96,9 @@ The Lakeshore Market API is a RESTful API.
 
 *Methods:*
 
-* Search a product
+**Search a product**
 
-* * Search the database for a product based on it’s ID.
+* Search the database for a product based on it’s ID.
 
 * * ARGUMENTS
 

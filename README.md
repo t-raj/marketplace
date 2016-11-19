@@ -92,30 +92,35 @@ The Lakeshore Market API is a RESTful API.
 * * partnerId  Int: Unique Id for the Partner who supplies this product
 
 
-* Example:
+**Example:**
 
-*  Methods:
+*Methods:*
 
 * Search a product
 
 * * Search the database for a product based on it’s ID.
-
 
 * * ARGUMENTS
 
 * * pId: Required
 
 
-Add a product
+* Add a product
 
-Add a new product to the database.
+** Add a new product to the database.*
+
+* * ARGUMENTS
+
+* * ProductModel: Required
+
+* Update a product
 
 
-Update a product
+** Update an existing product in the database.*
 
+* * ARGUMENTS
 
-Update an existing product in the database.
-
+* * ProductModel: Required
 
 Orders
 

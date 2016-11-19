@@ -73,7 +73,7 @@ The Lakeshore Market API is a RESTful API.
 * Example:
 * * Method: create a partner
 * * Arguments: 
-* * PartnerModel Required: a partnerModel is required to create a partner, all the attributes will be in the payload when necessary* 
+* * PartnerModel Required: a partnerModel is required to create a partner, all the attributes will be in the payload when necessary
 
 
 
@@ -81,37 +81,28 @@ The Lakeshore Market API is a RESTful API.
 
 
 
-Products
+**Products**
+
+*Each product is identified by a unique ID and is linked to a partner.*
 
 
-Each product is identified by a unique ID and is linked to a partner.
+* Attributes: 
 
 
-Attributes: 
+* * pId   Int: Unique Id for the product 
+* * price  Double: Cost of the product
+* * description String: Short description of the product
+* * numberAvailable  Int: Number of items of the product that are currently available
+* * partnerId  Int: Unique Id for the Partner who supplies this product
 
 
-pId
-Int: Unique Id for the product 
-price
-Double: Cost of the product
-description
-String: Short description of the product
-numberAvailable
-Int: Number of items of the product that are currently available
-partnerId
-Int: Unique Id for the Partner who supplies this product
+* Example:
 
-
-Example:
-
-
-Methods:
-
-
-Search a product
-
-
-Search the database for a product based on it’s ID.
+* * Methods:
+* * 
+* * Search a product
+* * 
+* * Search the database for a product based on it’s ID.
 
 
 ARGUMENTS

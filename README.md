@@ -49,47 +49,49 @@ The Lakeshore Market API is a RESTful API.
 * Responses: Responses will be in XML format.
 
 
-Partners
+**Partners**
 
 
-Partner is the provider of certain product. 
+*Partner is the provider of certain product.* 
 
 
-The PartnerEndpoint class servers as a Resource in the Service Layer. The path of this server was defined as “/partner”. There is a POST method acting as Insert Partner. The Consumes type for the server is xml in our example. Inside the payload, the partner information was added manually, such as Id, login, password, firstName and lastName etc. The data was verified in our database and they are consistent. 
+* The PartnerEndpoint class servers as a Resource in the Service Layer. The path of this server was defined as “/partner”. There is a POST method acting as Insert Partner. The Consumes type for the server is xml in our example. Inside the payload, the partner information was added manually, such as Id, login, password, firstName and lastName etc. The data was verified in our database and they are consistent. 
 
 
-Attributes: 
+* Attributes: 
+* 
+* 
+* Id
+* Int: Unique Id for the partner
+* login
+* String: login name for the partner
+* password
+* String: Short description of the product
+* firstName
+* String: first name of the partner
+* lastName
+* String: last name of the partner
+* streetAddress
+* String: the street address where the partner lives
+* city
+* String: the city where the partner lives
+* state
+* String: the state where the partner lives
+* zip_cod
+* String: the zip code for the partner
 
 
-Id
-Int: Unique Id for the partner
-login
-String: login name for the partner
-password
-String: Short description of the product
-firstName
-String: first name of the partner
-lastName
-String: last name of the partner
-streetAddress
-String: the street address where the partner lives
-city
-String: the city where the partner lives
-state
-String: the state where the partner lives
-zip_cod
-String: the zip code for the partner
-Example:
-
-
-Method: create a partner
-
-
-Arguments: 
-
-
-PartnerModel
-Required: a partnerModel is required to create a partner, all the attributes will be in the payload when necessary
+* Example:
+* 
+* 
+* Method: create a partner
+* 
+* 
+* Arguments: 
+* 
+* 
+* PartnerModel
+* Required: a partnerModel is required to create a partner, all the attributes will be in the payload when necessary
 
 
 

@@ -136,11 +136,23 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	public Response pushToPartner(@PathParam("partnerId") int partnerId){
 		List<OrderRepresentation> orderModels= ElementUtil.buildOrderModelList(orderService.pushToPartner(partnerId));
 		String message = "The order with partnerId" + partnerId + "has been pushed to the partner!";
+		
+		//set link to check order status
+		for(OrderRepresentation order : orderModels){
+		Link checkStatus = new Link("status", Constant.BASE_PATH + "/orders/status/" + order.getOrderId(), "/", Constant.MEDIA_TYPE_XML);
+
+		//if status is shipped, send fulfilled and shipped email notification
+		if(order.getStatus().equals("shipped")){
+			Link shipped = new Link("shipped", Constant.BASE_PATH +"orders/fulfilled","/", Constant.MEDIA_TYPE_XML);
+		}
+		
+		order.setLinks(checkStatus);
+		}
+		
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
 	
 	@GET  //2.d. get acknowledgement of order fulfillment if shipped
-	@Produces({"application/xml"})
 	@Path("/fulfilled")
 	public List<OrderRepresentation> getOrderStatus(){
 		return ElementUtil.buildOrderModelList(orderService.get(Status.FULFILLED));

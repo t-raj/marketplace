@@ -9,6 +9,6 @@ import main.java.service.representation.PartnerRepresentation;
 @WebService
 public interface PartnerEndpointInterface {
 
-	Response registerPartner(PartnerRepresentation partnerModel);
+	PartnerRepresentation registerPartner(PartnerRepresentation partnerModel);
 
 }

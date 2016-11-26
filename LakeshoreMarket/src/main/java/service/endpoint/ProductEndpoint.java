@@ -15,7 +15,7 @@ import main.java.service.service.ProductService;
 import main.java.service.serviceImpl.ProductServiceImpl;
 import main.java.util.ElementUtil;
 
-@Path("/product")
+@Path("/products")
 public class ProductEndpoint implements ProductEndpointInterface{
 	
 	private static ProductService productService = new ProductServiceImpl(); 

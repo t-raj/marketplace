@@ -1,0 +1,16 @@
+- update cxf in pom.xml library and update project facet for cxf as well as runtime to same version as updated pom
+- make sure to add the apache cxf library unzipped folder to the project build path via a library runtime for apache cxf
+- made sure to import the jackson jar in pom.xml for maven
+- commented out the jackson json provider for the cxf.xml in order to only allow xml and solve error in creating jackson bean 
+- changed port to 8083 to allow service to run 
+
+Samples product model xml:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Product>
+<pId>4</pId>
+<description>somedescription</description>
+<price>5</price>
+<partnerId>2</partnerId>
+<numberAvailable>1</numberAvailable>
+ </Product>

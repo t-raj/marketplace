@@ -2,8 +2,8 @@ package main.java.DAO.daoImpl;
 
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 //import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -85,6 +85,27 @@ public class CustomerDAOImpl implements CustomerDAO {
 		tx.commit();
 		session.close();
 		return customers;
+	}
+
+	@Override
+	public Customer find(String login) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Customer.class);
+//		Query query = session.createQuery("FROM Customer");
+		criteria.add(Restrictions.eq("login", login));
+		List<Customer> customers = criteria.list();
+		//Query query = session.createQuery("FROM customer WHERE customer.id=:customerId");
+		//List<Customer> customers = (List<Customer>)query.list();
+		session.getTransaction().commit();
+		session.close();
+		
+		Customer customer = null;
+		if (customers != null && !customers.isEmpty()) {
+			customer = customers.get(0);
+		}
+		
+		return customer;
 	}
 
 }

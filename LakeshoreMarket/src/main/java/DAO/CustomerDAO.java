@@ -16,4 +16,6 @@ public interface CustomerDAO {
     void update(Customer customer);
     
     List<Customer> find();
+
+	Customer find(String login);
 }

@@ -33,7 +33,6 @@ public class CustomerServiceImpl implements CustomerService {
 		customerDAO.update(ElementUtil.buildCustomer(customerBean));
 	}
 
-
 	@Override
 	public void delete(int customerId) {
 		customerDAO.delete(customerId);
@@ -49,6 +48,11 @@ public class CustomerServiceImpl implements CustomerService {
 		String toEmail = customerBean.getEmail();
 		
 		return toEmail;
+	}
+
+	@Override
+	public CustomerBean get(String login) {
+		return ElementUtil.buildCustomerBean(customerDAO.find(login));
 	}
 
 }

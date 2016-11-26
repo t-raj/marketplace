@@ -5,20 +5,20 @@ import java.util.List;
 import javax.jws.WebService;
 import javax.ws.rs.core.Response;
 
-import main.java.service.model.OrderModel;
-import main.java.service.model.PaymentModel;
+import main.java.service.representation.OrderRepresentation;
+import main.java.service.representation.PaymentRepresentation;
 
 @WebService
 public interface OrderEndpointInterface {
 
-	Response accept(OrderModel order);
-	Response acceptPayment(PaymentModel paymentModel, int orderId);
+	OrderRepresentation accept(OrderRepresentation order);
+	PaymentRepresentation acceptPayment(PaymentRepresentation paymentModel, int orderId);
 	Response shipOrder(int orderId);
 	Response shipOrders(List<Integer> orderIds);
-	OrderModel getOrderStatus(int orderId);
-	List<OrderModel> getInProgress();
+	OrderRepresentation getOrderStatus(int orderId);
+	List<OrderRepresentation> getInProgress();
 	Response cancelOrder(int orderId);
 	Response pushToPartner(int partnerId);
-	List<OrderModel> getOrderStatus();
+	List<OrderRepresentation> getOrderStatus();
 	
 }

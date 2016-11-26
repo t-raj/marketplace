@@ -9,7 +9,9 @@ public interface CustomerService {
 	void add(CustomerBean customerBean);
 	
 	CustomerBean get(int customerId);
-	
+
+	CustomerBean get(String login);
+
 	void delete(int customerId);
 
 	void update(CustomerBean customerBean);

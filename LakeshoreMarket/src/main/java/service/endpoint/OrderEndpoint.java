@@ -14,8 +14,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import main.java.service.model.OrderModel;
-import main.java.service.model.PaymentModel;
+import main.java.model.constant.Constant;
+import main.java.service.representation.Link;
+import main.java.service.representation.OrderRepresentation;
+import main.java.service.representation.PaymentRepresentation;
 import main.java.service.service.OrderService;
 import main.java.service.service.OrderService.Status;
 import main.java.service.serviceImpl.OrderServiceImpl;
@@ -26,38 +28,41 @@ import main.java.util.ElementUtil;
  * @author lbo
  *
  */
-@Path("/order")
+@Path("/orders")
 public class OrderEndpoint implements OrderEndpointInterface {
 	
 	private static OrderService orderService = new OrderServiceImpl();
 	
 	@POST//1.b accept a new buy order
 	@Consumes({"application/xml"})
-	public Response accept(OrderModel order) {
-		String message;
+	public OrderRepresentation accept(OrderRepresentation order) {
 		if (order != null) {
 			// set the status to accept
 			order.setStatus(OrderService.Status.ACCEPTED);
 			orderService.accept(ElementUtil.buildOrderBean(order));
-			message = "Order was accepted";
-		} else {
-			message = "Invalid order information.";
-		}
+		} 
 		
-		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
+		// set accept order links 
+		Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + order.getOrderId(), "/", Constant.MEDIA_TYPE_XML);	
+		Link pay = new Link("pay", Constant.BASE_PATH + "/orders/payment" + order.getOrderId(), "/payment", Constant.MEDIA_TYPE_XML);		
+		order.setLinks(cancel, pay);
+
+		return order;
 	}
 	
 	@PUT//1.c accept credit card payment
 	@Produces({"application/xml"})
-	@Path("/{orderId}")
-	public Response acceptPayment(PaymentModel paymentModel, @PathParam("orderId") int orderId) {
+	@Path("/payment/{orderId}")
+	public PaymentRepresentation acceptPayment(PaymentRepresentation paymentModel, @PathParam("orderId") int orderId) {
 		boolean paymentAccepted = orderService.acceptPayment(paymentModel, orderId);
-		String message = "Payment accepted";
-		if (!paymentAccepted) {
-			message = "Invalid payment information";
+		if (paymentAccepted) {
+			// set payment links 
+			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + orderId, "/", Constant.MEDIA_TYPE_XML);	
+			Link checkStatus = new Link("status", Constant.BASE_PATH + "/orders/status" + orderId, "/", Constant.MEDIA_TYPE_XML);		
+			paymentModel.setLinks(cancel, checkStatus);
 		}
 		
-		return Response.ok(message, MediaType.TEXT_PLAIN).build();
+		return paymentModel;
 	}
  
 	@PUT//1.d. ship order
@@ -84,15 +89,28 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@GET//1.e provide order status  
 	@Produces({"application/xml"})
 	@Path("/status/{orderId}")
-	public OrderModel getOrderStatus(@PathParam("orderId") int orderId){
-		return ElementUtil.buildOrderModel(orderService.get(orderId));
+	public OrderRepresentation getOrderStatus(@PathParam("orderId") int orderId){
+		OrderRepresentation orderRepresentation = ElementUtil.buildOrderModel(orderService.get(orderId));
+
+		Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + orderRepresentation.getOrderId(), "/", Constant.MEDIA_TYPE_XML);	
+		Link push = new Link("push", Constant.BASE_PATH + "/orders/" + orderRepresentation.getPartnerId(), "/", Constant.MEDIA_TYPE_XML);	
+		orderRepresentation.setLinks(cancel, push);
+
+		return orderRepresentation;
 	}
 
 	@GET//1.e provide status of all orders in progress  
 	@Produces({"application/xml"})
 	@Path("/inprogress")
-	public List<OrderModel> getInProgress(){
-		return ElementUtil.buildOrderModelList(orderService.get());
+	public List<OrderRepresentation> getInProgress(){
+		List<OrderRepresentation> orders = ElementUtil.buildOrderModelList(orderService.get());
+		for (OrderRepresentation order: orders) {
+			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + order.getOrderId(), "/", Constant.MEDIA_TYPE_XML);	
+			Link push = new Link("push", Constant.BASE_PATH + "/orders/" + order.getPartnerId(), "/", Constant.MEDIA_TYPE_XML);	
+			order.setLinks(cancel, push);
+
+		}
+		return orders;
 	}
 
 	@DELETE//1.f. order cancel
@@ -100,7 +118,9 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@Path("/{orderId}")
 	public Response cancelOrder(@PathParam("orderId") int orderId){
 		orderService.cancel(orderId);
-		String message = "The order with order ID:........" + orderId + " is now canceled";
+		Link getInProgress = new Link("progress", Constant.BASE_PATH + "/orders/inprogress" + orderId, "/inprogress", Constant.MEDIA_TYPE_XML);	
+		String message = "The order with order ID:........" + orderId + " is now canceled. " + getInProgress.toString();
+	
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
 
@@ -114,7 +134,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@Consumes({"application/xml"})
 	@Path("/pushedOrders/{partnerId}")
 	public Response pushToPartner(@PathParam("partnerId") int partnerId){
-		List<OrderModel> orderModels= ElementUtil.buildOrderModelList(orderService.pushToPartner(partnerId));
+		List<OrderRepresentation> orderModels= ElementUtil.buildOrderModelList(orderService.pushToPartner(partnerId));
 		String message = "The order with partnerId" + partnerId + "has been pushed to the partner!";
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
@@ -122,7 +142,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@GET  //2.d. get acknowledgement of order fulfillment if shipped
 	@Produces({"application/xml"})
 	@Path("/fulfilled")
-	public List<OrderModel> getOrderStatus(){
+	public List<OrderRepresentation> getOrderStatus(){
 		return ElementUtil.buildOrderModelList(orderService.get(Status.FULFILLED));
 	}
 

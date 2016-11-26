@@ -1,4 +1,4 @@
-package main.java.service.model;
+package main.java.service.representation;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,8 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Product")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-
-public class ProductModel {
+public class ProductRepresentation extends AbstractRepresentation {
 	
 	private int pId;
 	private String description;

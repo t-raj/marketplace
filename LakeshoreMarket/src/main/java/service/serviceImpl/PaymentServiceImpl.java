@@ -1,6 +1,6 @@
 package main.java.service.serviceImpl;
 
-import main.java.service.model.PaymentModel;
+import main.java.service.representation.PaymentRepresentation;
 import main.java.service.service.PaymentService;
 
 /**
@@ -14,7 +14,7 @@ public class PaymentServiceImpl implements PaymentService{
 	 * This method validates payment 
 	 */
 	@Override
-	public boolean isValid(PaymentModel paymentModel){
+	public boolean isValid(PaymentRepresentation paymentModel){
 		if (paymentModel == null) {
 			return false;
 		}

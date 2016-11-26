@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import main.java.service.model.ProductModel;
+import main.java.service.representation.ProductRepresentation;
 import main.java.service.service.ProductService;
 import main.java.service.serviceImpl.ProductServiceImpl;
 import main.java.util.ElementUtil;
@@ -23,8 +23,8 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	@Path("/{productID}")//1.a search item database by product
 	@GET
 	@Produces("application/xml")
-	public ProductModel search(@PathParam("productId") int productId) {
-		ProductModel productRepresentation = new ProductModel();
+	public ProductRepresentation search(@PathParam("productId") int productId) {
+		ProductRepresentation productRepresentation = new ProductRepresentation();
 		try {
 			productRepresentation = ElementUtil.buildProductModel(productService.get(productId));
 		} catch (NullPointerException e) {
@@ -35,7 +35,7 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	
 	@POST//2.2 Add product or products in market place
 	@Consumes({"application/xml"})
-	public Response add(ProductModel product){
+	public Response add(ProductRepresentation product){
 		String message;
 		try {
 			productService.add(ElementUtil.buildProductBean(product));
@@ -49,7 +49,7 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	
 	@PUT//2.2 Update product or products in market place
 	@Consumes({"application/xml"})
-	public Response update(ProductModel productModel){
+	public Response update(ProductRepresentation productModel){
 		String message;
 		try {
 			productService.update(ElementUtil.buildProductBean(productModel));

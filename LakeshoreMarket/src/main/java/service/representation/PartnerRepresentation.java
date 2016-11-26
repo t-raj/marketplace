@@ -1,4 +1,4 @@
-package main.java.service.model;
+package main.java.service.representation;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Partner")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-public class PartnerModel {
+public class PartnerRepresentation extends AbstractRepresentation {
 	private int id;
 	private String login;
 	private String password;

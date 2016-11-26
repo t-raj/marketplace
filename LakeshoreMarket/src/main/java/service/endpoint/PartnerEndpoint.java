@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import main.java.service.model.PartnerModel;
+import main.java.service.representation.PartnerRepresentation;
 import main.java.service.service.PartnerService;
 import main.java.service.serviceImpl.PartnerServiceImpl;
 import main.java.util.ElementUtil;
@@ -28,7 +28,7 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	
 	@POST//2.1 Need to register and create profile of partners
 	@Consumes({"application/xml"})
-	public Response registerPartner(PartnerModel partnerModel){
+	public Response registerPartner(PartnerRepresentation partnerModel){
 		String message;
 		try {
 			partnerService.register(ElementUtil.buildPartnerBean(partnerModel));
@@ -43,7 +43,7 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@GET//get partner info, testing purpose 
 	@Produces({"application/xml"})
 	@Path("/{partnerId}")
-	public PartnerModel getPartner(@PathParam("partnerId") int orderId){
+	public PartnerRepresentation getPartner(@PathParam("partnerId") int orderId){
 		return ElementUtil.buildPartnerModel(partnerService.get(orderId));
 	}
 

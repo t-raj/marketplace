@@ -1,4 +1,4 @@
-package main.java.service.model;
+package main.java.service.representation;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,7 +10,7 @@ import main.java.model.bean.AddressBean;
 @XmlRootElement(name = "Customer")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-public class CustomerModel {
+public class CustomerRepresentation extends AbstractRepresentation {
 
 		private int id;
 		private String login;

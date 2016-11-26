@@ -1,11 +1,11 @@
-package main.java.service.model;
+package main.java.service.representation;
 
 /**
  * This class is a representation of a payment method, i.e. credit card
  * @author lbo
  *
  */
-public class PaymentModel {
+public class PaymentRepresentation extends AbstractRepresentation {
 	
 	private String cardNumber;
 	private String expirationDate;

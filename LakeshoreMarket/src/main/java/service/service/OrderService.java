@@ -3,7 +3,7 @@ package main.java.service.service;
 import java.util.List;
 
 import main.java.model.bean.OrderBean;
-import main.java.service.model.PaymentModel;
+import main.java.service.representation.PaymentRepresentation;
 
 public interface OrderService {
 	
@@ -35,5 +35,5 @@ public interface OrderService {
 
 	void cancel(int orderId);
 
-	boolean acceptPayment(PaymentModel paymentModel, int orderId);
+	boolean acceptPayment(PaymentRepresentation paymentModel, int orderId);
 }

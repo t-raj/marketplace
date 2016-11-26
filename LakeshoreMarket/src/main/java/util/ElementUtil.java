@@ -13,9 +13,10 @@ import main.java.model.entity.Order;
 import main.java.model.entity.OrderLine;
 import main.java.model.entity.Partner;
 import main.java.model.entity.Product;
-import main.java.service.model.OrderModel;
-import main.java.service.model.PartnerModel;
-import main.java.service.model.ProductModel;
+import main.java.service.representation.CustomerRepresentation;
+import main.java.service.representation.OrderRepresentation;
+import main.java.service.representation.PartnerRepresentation;
+import main.java.service.representation.ProductRepresentation;
 import main.java.service.service.OrderService;
 
 public class ElementUtil {
@@ -64,6 +65,33 @@ public class ElementUtil {
 		return customerBeans;
 	}
 	
+	public static List<CustomerRepresentation> buildCustomerModelList(List<CustomerBean> customerBeanList) {
+		List<CustomerRepresentation> customerRepresentations = new ArrayList<CustomerRepresentation>();
+		for (CustomerBean customerBean : customerBeanList) {
+			customerRepresentations.add(buildCustomerModel(customerBean));
+		}
+		return customerRepresentations;
+	}
+	
+	public static CustomerRepresentation buildCustomerModel(CustomerBean customerBean) {
+		CustomerRepresentation customerRepresentation = new CustomerRepresentation();
+		
+		if (customerBean != null) {
+			customerRepresentation.setId(customerBean.getId());
+			customerRepresentation.getAddress().setCity(customerBean.getAddress().getCity());
+			customerRepresentation.setFirstName(customerBean.getFirstName());
+			customerRepresentation.setLastName(customerBean.getLastName());
+			customerRepresentation.setLogin(customerBean.getLogin());
+			if (customerBean.getAddress() != null) {
+				customerRepresentation.getAddress().setState(customerBean.getAddress().getState());
+				customerRepresentation.getAddress().setStreetAddress(customerBean.getAddress().getStreetAddress());
+				customerRepresentation.getAddress().setZipCode(customerBean.getAddress().getZipCode());
+			}
+        }
+
+        return customerRepresentation;
+	}
+
 	public static final Product buildProduct(ProductBean productBean){
 		
 		Product product = new Product();
@@ -126,7 +154,7 @@ public class ElementUtil {
         return partnerBean;
 	}
 	
-	public static final PartnerBean buildPartnerBean(PartnerModel partnerModel) {
+	public static final PartnerBean buildPartnerBean(PartnerRepresentation partnerModel) {
 		PartnerBean partnerBean = new PartnerBean();
 		
 		if (partnerModel != null) {
@@ -218,23 +246,23 @@ public class ElementUtil {
 		return orderLineBeans;
 	}
 
-	public static ProductModel buildProductModel(ProductBean productBean) {
+	public static ProductRepresentation buildProductModel(ProductBean productBean) {
 		if (productBean == null) {
 			return null;
 		}
 		
-		ProductModel productModel = new ProductModel();
+		ProductRepresentation productModel = new ProductRepresentation();
 		productModel.setpId(productBean.getId());
 		productModel.setDescription(productBean.getDescription());
 		productModel.setPrice(productBean.getPrice());
 		return productModel;
 	}
 
-	public static OrderModel buildOrderModel(OrderBean orderBean) {
+	public static OrderRepresentation buildOrderModel(OrderBean orderBean) {
 		if(orderBean == null){
 			return null;
 		}
-		OrderModel orderModel = new OrderModel();
+		OrderRepresentation orderModel = new OrderRepresentation();
 		orderModel.setOrderId(orderBean.getId());
 		orderModel.setPartnerId(orderBean.getPartnerId());
 		orderModel.setCustomerId(orderBean.getCustomerId());
@@ -244,7 +272,7 @@ public class ElementUtil {
 		return orderModel;
 	}
 
-	public static OrderBean buildOrderBean(OrderModel order) {
+	public static OrderBean buildOrderBean(OrderRepresentation order) {
 		OrderBean orderBean = new OrderBean();
 		
 		if (order != null) {
@@ -257,15 +285,15 @@ public class ElementUtil {
         return orderBean;
 	}
 
-	public static List<OrderModel> buildOrderModelList(List<OrderBean> orderBeans) {
-		List<OrderModel> orderModels = new ArrayList<OrderModel>();
+	public static List<OrderRepresentation> buildOrderModelList(List<OrderBean> orderBeans) {
+		List<OrderRepresentation> orderModels = new ArrayList<OrderRepresentation>();
 		for (OrderBean orderBean :orderBeans) {
 			orderModels.add(buildOrderModel(orderBean));
 		}
 		return orderModels;
 	}
 
-	public static ProductBean buildProductBean(ProductModel product) {
+	public static ProductBean buildProductBean(ProductRepresentation product) {
 		ProductBean productBean = new ProductBean();
 		if (product != null) {
 			productBean.setId(product.getpId());
@@ -278,11 +306,11 @@ public class ElementUtil {
 		return productBean;
 	}
 
-	public static PartnerModel buildPartnerModel(PartnerBean partnerBean) {
+	public static PartnerRepresentation buildPartnerModel(PartnerBean partnerBean) {
 		if(partnerBean ==null){
 			return null;
 		}
-		PartnerModel partnerModel = new PartnerModel();
+		PartnerRepresentation partnerModel = new PartnerRepresentation();
 		partnerModel.setId(partnerBean.getId());
 		partnerModel.setFirstName(partnerModel.getFirstName());
 		partnerModel.setLastName(partnerBean.getLastName());
@@ -316,5 +344,7 @@ public class ElementUtil {
         }
         return orderLineList;
 	}
+
+	
 
 }

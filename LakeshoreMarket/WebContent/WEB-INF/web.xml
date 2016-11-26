@@ -4,11 +4,13 @@
 
 <web-app>
   <display-name>Lakeshore Marketplace</display-name>
+
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>WEB-INF/cxf.xml</param-value>
     <!-- param-value>classpath:main/java/service/cxf.xml</param-value -->
   </context-param>
+  
   <listener>
     <listener-class>
       org.springframework.web.context.ContextLoaderListener

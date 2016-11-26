@@ -1,4 +1,4 @@
-package main.java.service.model;
+package main.java.service.representation;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import main.java.service.service.OrderService.Status;
 @XmlRootElement(name = "Order")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-public class OrderModel {
+public class OrderRepresentation extends AbstractRepresentation {
 
 	private int orderId;
 	private int customerId;

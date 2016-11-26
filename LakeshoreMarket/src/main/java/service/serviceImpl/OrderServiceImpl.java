@@ -9,7 +9,7 @@ import main.java.DAO.daoImpl.OrderDAOImpl;
 import main.java.DAO.daoImpl.OrderLineDAOImpl;
 import main.java.model.bean.OrderBean;
 import main.java.model.entity.OrderLine;
-import main.java.service.model.PaymentModel;
+import main.java.service.representation.PaymentRepresentation;
 import main.java.service.service.OrderService;
 import main.java.service.service.PaymentService;
 import main.java.util.ElementUtil;
@@ -124,7 +124,7 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	// 1c Accept credit card payment
 	@Override
-	public boolean acceptPayment(PaymentModel paymentModel, int orderId) {
+	public boolean acceptPayment(PaymentRepresentation paymentModel, int orderId) {
 		boolean paymentAccepted = false;
 		if (paymentService.isValid(paymentModel)) {
 			OrderBean order = get(orderId);

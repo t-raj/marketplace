@@ -44,5 +44,10 @@ public class PartnerServiceImpl implements PartnerService {
 		
 	}
 
+	@Override
+	public PartnerBean get(String login) {
+		return ElementUtil.buildPartnerBean(partnerDAO.find(login));
+	}
+
 
 }

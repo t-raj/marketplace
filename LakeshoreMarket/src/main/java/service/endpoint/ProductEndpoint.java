@@ -10,6 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import main.java.model.constant.Constant;
+import main.java.service.representation.Link;
 import main.java.service.representation.ProductRepresentation;
 import main.java.service.service.ProductService;
 import main.java.service.serviceImpl.ProductServiceImpl;
@@ -27,6 +29,8 @@ public class ProductEndpoint implements ProductEndpointInterface{
 		ProductRepresentation productRepresentation = new ProductRepresentation();
 		try {
 			productRepresentation = ElementUtil.buildProductModel(productService.get(productId));
+			Link buy = new Link("buy", Constant.BASE_PATH + "/orders/", "/buy", Constant.MEDIA_TYPE_XML);
+			productRepresentation.setLinks(buy);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}

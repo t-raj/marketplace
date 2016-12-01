@@ -340,9 +340,27 @@ public class ElementUtil {
 				orderLine.setQuantity(1); //default quantity
 				orderLineList.add(orderLine);
 			}
-			
         }
         return orderLineList;
+	}
+
+	public static CustomerBean buildCustomerBean(CustomerRepresentation customer) {
+		CustomerBean customerBean = new CustomerBean();
+		if (customer != null) {
+			customerBean.setActive(true);
+			customerBean.getAddress().setCity(customer.getAddress().getCity());
+			customerBean.getAddress().setState(customer.getAddress().getState());
+			customerBean.getAddress().setStreetAddress(customer.getAddress().getStreetAddress());
+			customerBean.getAddress().setZipCode(customer.getAddress().getZipCode());
+			customerBean.setEmail(customer.getEmail());
+			customerBean.setFirstName(customer.getFirstName());
+			customerBean.setId(customer.getId());
+			customerBean.setLastName(customer.getLastName());
+			customerBean.setLogin(customer.getLogin());
+			customerBean.setPassword(customer.getPassword());
+		}
+		
+		return customerBean;
 	}
 
 	

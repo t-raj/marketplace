@@ -84,4 +84,22 @@ public class PartnerDAOImpl implements PartnerDAO {
 		return partners;
 	}
 
+	@Override
+	public Partner find(String login) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Partner.class);
+		criteria.add(Restrictions.eq("login", login));
+		List<Partner> partners = criteria.list();
+		tx.commit();
+		session.close();
+		
+		Partner partner = null;
+		if (partners != null && !partners.isEmpty()) {
+			partner = partners.get(0);
+		}
+		
+		return partner;
+	}
+
 }

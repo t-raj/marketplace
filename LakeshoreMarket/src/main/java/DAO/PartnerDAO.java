@@ -15,4 +15,6 @@ public interface PartnerDAO {
     void update(Partner partner);
     
     List<Partner> find();
+
+	Partner find(String login);
 }

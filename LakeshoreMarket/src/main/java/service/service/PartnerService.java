@@ -15,6 +15,8 @@ public interface PartnerService {
 	void delete(int partnerId);
 	
 	List<PartnerBean> get();
+
+	PartnerBean get(String login);
 	
 	
 }

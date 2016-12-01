@@ -10,11 +10,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import main.java.model.constant.Constant;
+import main.java.service.representation.Link;
 import main.java.service.representation.PartnerRepresentation;
 import main.java.service.service.PartnerService;
 import main.java.service.serviceImpl.PartnerServiceImpl;
-import main.java.model.constant.Constant;
-import main.java.service.representation.Link;
 import main.java.util.ElementUtil;
 
 
@@ -69,7 +69,6 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 			message = "Error. Partner could not be deleted.";
 		}
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
-		
 	}
 	
 	
@@ -78,6 +77,14 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@Path("/{partnerId}")
 	public PartnerRepresentation getPartner(@PathParam("partnerId") int orderId){
 		return ElementUtil.buildPartnerModel(partnerService.get(orderId));
+	}
+
+	@GET//get partner info given login
+	@Produces({"application/xml"})
+	@Path("/{login}")
+	@Override
+	public PartnerRepresentation get(@PathParam("login") String login) {
+		return ElementUtil.buildPartnerModel(partnerService.get(login));
 	}
 
 }

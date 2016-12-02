@@ -26,6 +26,8 @@ public class Client {
 		/*
 		 * the following part of the code checks if the java has a connection with the database, only for testing purpose
 		 */
+		
+		/*
 		String url = "jdbc:postgresql://ec2-54-235-132-192.compute-1.amazonaws.com:5432/d6k650odsddtll?sslmode=require";
         String username = "lqafuxhdvugtwt";
         String password = "M38kBlQBSuiyx_hiVwHdoukKgc";
@@ -65,10 +67,12 @@ public class Client {
 		CustomerDAO customer = new CustomerDAOImpl();
 		String name = customer.find(10101).getFirstName();
 		System.out.println(name);
-		
+		*/
 		ProductDAO product = new ProductDAOImpl();
 		String description = product.find(30303).getDescription();
+		int partnerId = product.find(30303).getPartnerID();
 		System.out.println(description);
+		System.out.println(partnerId);
 		
 		PartnerDAO partner = new PartnerDAOImpl();
 		String partnername = partner.find(20202).getFirstName();

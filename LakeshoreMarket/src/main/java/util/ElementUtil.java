@@ -109,10 +109,11 @@ public class ElementUtil {
 		ProductBean productBean = new ProductBean();
 		
 		if(product !=null){
-			productBean.setId(productBean.getId());
-			productBean.setDescription(productBean.getDescription());
-			productBean.setPrice(productBean.getPrice());
-			productBean.setActive(productBean.isActive());
+			productBean.setId(product.getId());
+			productBean.setDescription(product.getDescription());
+			productBean.setPartnerID(product.getPartnerID());
+			productBean.setPrice(product.getPrice());
+			productBean.setActive(product.isActive());
 		}
 		return productBean;
 		
@@ -249,14 +250,17 @@ public class ElementUtil {
 	}
 
 	public static ProductRepresentation buildProductModel(ProductBean productBean) {
+		ProductRepresentation productModel = new ProductRepresentation();
 		if (productBean == null) {
 			return null;
 		}
-		
-		ProductRepresentation productModel = new ProductRepresentation();
-		productModel.setpId(productBean.getId());
+		else{
+		productModel.setproductId(productBean.getId());
+		productModel.setPartnerId(productBean.getId());
 		productModel.setDescription(productBean.getDescription());
 		productModel.setPrice(productBean.getPrice());
+		productModel.setNumberAvailable(productBean.getNumAvailable());
+		}
 		return productModel;
 	}
 
@@ -298,7 +302,7 @@ public class ElementUtil {
 	public static ProductBean buildProductBean(ProductRepresentation product) {
 		ProductBean productBean = new ProductBean();
 		if (product != null) {
-			productBean.setId(product.getpId());
+			productBean.setId(product.getproductId());
 			productBean.setDescription(product.getDescription());
 			productBean.setPartnerID(product.getPartnerId());
 			productBean.setNumAvailable(product.getNumberAvailable());

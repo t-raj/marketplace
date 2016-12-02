@@ -32,7 +32,7 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@POST//2.1 Need to register and create profile of partners, add partner
 	@Consumes({"application/xml"})
 	@Produces({"application/xml"})
-	public PartnerRepresentation registerPartner(PartnerRepresentation partnerModel){
+	public PartnerRepresentation register(PartnerRepresentation partnerModel){
 		String message;
 		try {
 			partnerService.register(ElementUtil.buildPartnerBean(partnerModel));
@@ -58,7 +58,7 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@DELETE
 	@Consumes({"application/xml"})
 	@Path("{partnerId}")
-	public Response deletePartner(PartnerRepresentation partnerModel){
+	public Response delete(PartnerRepresentation partnerModel){
 		String message;
 		
 		try{
@@ -71,14 +71,6 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
 	
-	
-	@GET//get partner info, testing purpose 
-	@Consumes({"application/xml"})
-	@Path("/{partnerId}")
-	public PartnerRepresentation getPartner(@PathParam("partnerId") int orderId){
-		return ElementUtil.buildPartnerModel(partnerService.get(orderId));
-	}
-
 	@GET//get partner info given login
 	@Produces({"application/xml"})
 	@Path("/{login}")

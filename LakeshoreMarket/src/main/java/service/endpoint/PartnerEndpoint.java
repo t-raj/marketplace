@@ -41,16 +41,8 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 			e.printStackTrace();
 			message = "Error. Partner could not be registered";
 		}	
-		PartnerRepresentation partnerRep = ElementUtil.buildPartnerModel(ElementUtil.buildPartnerBean(partnerModel));
-		//set register partner link  
-		Link push = new Link("push", Constant.BASE_PATH + "/orders/pushedOrders/{partnerId}=" + partnerRep.getId(), "/", Constant.MEDIA_TYPE_XML );
-		//delete partner link
-		Link delete = new Link("delete", Constant.BASE_PATH +"/partners/{partnerId}="+ partnerRep.getId(), "/", Constant.MEDIA_TYPE_XML);
-		//add product for partner link
-		Link addProduct = new Link("add", Constant.BASE_PATH + "/products" , "/", Constant.MEDIA_TYPE_XML);
 		
-		partnerRep.setLinks(push, delete, addProduct);
-		return partnerRep;
+		return setLinks(ElementUtil.buildPartnerModel(ElementUtil.buildPartnerBean(partnerModel)));
 		//return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
 	
@@ -76,7 +68,21 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@Path("/{login}")
 	@Override
 	public PartnerRepresentation get(@PathParam("login") String login) {
-		return ElementUtil.buildPartnerModel(partnerService.get(login));
+		return setLinks(ElementUtil.buildPartnerModel(partnerService.get(login)));
 	}
 
+	private PartnerRepresentation setLinks(PartnerRepresentation partnerRep) {
+		if (partnerRep != null) {
+			//set push to partner link  
+			Link push = new Link("push", Constant.BASE_PATH + "/orders/pushedOrders/{partnerId}=" + partnerRep.getId(), "/", Constant.MEDIA_TYPE_XML );
+			//delete partner link
+			Link delete = new Link("delete", Constant.BASE_PATH +"/partners/{partnerId}="+ partnerRep.getId(), "/", Constant.MEDIA_TYPE_XML);
+			//add product for partner link
+			Link addProduct = new Link("add", Constant.BASE_PATH + "/products" , "/", Constant.MEDIA_TYPE_XML);
+			
+			partnerRep.setLinks(push, delete, addProduct);
+		}
+		
+		return partnerRep;
+	}
 }

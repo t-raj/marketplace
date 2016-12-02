@@ -114,6 +114,7 @@ public class ElementUtil {
 			productBean.setPartnerID(product.getPartnerID());
 			productBean.setPrice(product.getPrice());
 			productBean.setActive(product.isActive());
+			productBean.setNumAvailable(product.getQuantity());
 		}
 		return productBean;
 		
@@ -257,7 +258,7 @@ public class ElementUtil {
 		}
 		else{
 		productModel.setproductId(productBean.getId());
-		productModel.setPartnerId(productBean.getId());
+		productModel.setPartnerId(productBean.getPartnerID());
 		productModel.setDescription(productBean.getDescription());
 		productModel.setPrice(productBean.getPrice());
 		productModel.setNumberAvailable(productBean.getNumAvailable());

@@ -11,17 +11,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "")
 public class ProductRepresentation extends AbstractRepresentation {
 	
-	private int pId;
+	private int productId;
 	private String description;
 	private int price;
 	private int partnerId;
 	private int numberAvailable;
 	
-	public int getpId() {
-		return pId;
+	public int getproductId() {
+		return productId;
 	}
-	public void setpId(int pId) {
-		this.pId = pId;
+	public void setproductId(int productId) {
+		this.productId = productId;
 	}	
 	public String getDescription() {
 		return description;

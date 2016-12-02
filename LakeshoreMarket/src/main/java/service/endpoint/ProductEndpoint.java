@@ -22,14 +22,14 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	
 	private static ProductService productService = new ProductServiceImpl(); 
 	
-	@Path("/{productID}")//1.a search item database by product
+	@Path("/{productId}")//1.a search item database by product
 	@GET
 	@Produces("application/xml")
 	public ProductRepresentation search(@PathParam("productId") int productId) {
 		ProductRepresentation productRepresentation = new ProductRepresentation();
 		try {
 			productRepresentation = ElementUtil.buildProductModel(productService.get(productId));
-			Link buy = new Link("buy", Constant.BASE_PATH + "/orders/", "/buy", Constant.MEDIA_TYPE_XML);
+			Link buy = new Link("buy", Constant.BASE_PATH + "/orders/", "buy", Constant.MEDIA_TYPE_XML);
 			productRepresentation.setLinks(buy);
 		} catch (NullPointerException e) {
 			e.printStackTrace();

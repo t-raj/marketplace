@@ -151,6 +151,7 @@ public class ElementUtil {
 			partnerBean.setStreetAddress(partner.getStreetAddress());
 			partnerBean.setZip_code(partner.getZip_code());
 			partnerBean.setActive(partner.isActive());
+			partnerBean.setPassword(partner.getPassword());
         }
 
         return partnerBean;
@@ -319,7 +320,7 @@ public class ElementUtil {
 		
 		PartnerRepresentation partnerModel = new PartnerRepresentation();
 		partnerModel.setId(partnerBean.getId());
-		partnerModel.setFirstName(partnerModel.getFirstName());
+		partnerModel.setFirstName(partnerBean.getFirstName());
 		partnerModel.setLastName(partnerBean.getLastName());
 		partnerModel.setLogin(partnerBean.getLogin());
 		partnerModel.setStreetAddress(partnerBean.getStreetAddress());

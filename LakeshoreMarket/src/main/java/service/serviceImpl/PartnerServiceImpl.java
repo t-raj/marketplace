@@ -19,7 +19,6 @@ public class PartnerServiceImpl implements PartnerService {
 	
 	@Override
 	public void register(PartnerBean partnerBean) {
-		
 		partnerDAO.add(ElementUtil.buildPartner(partnerBean));		
 	}
 	
@@ -42,6 +41,11 @@ public class PartnerServiceImpl implements PartnerService {
 	public void delete(int partnerId) {
 		partnerDAO.delete(partnerId);
 		
+	}
+
+	@Override
+	public PartnerBean get(String login) {
+		return ElementUtil.buildPartnerBean(partnerDAO.find(login));
 	}
 
 

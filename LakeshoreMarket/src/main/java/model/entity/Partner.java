@@ -1,6 +1,7 @@
 package main.java.model.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -67,7 +68,7 @@ public class Partner implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.login = password;
+		this.password = password;
 	}
 
 	public String getFirstName() {

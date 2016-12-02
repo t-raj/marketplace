@@ -4,6 +4,7 @@ import main.java.service.representation.CustomerRepresentation;
 
 public interface CustomerEndpointInterface {
 	
-	CustomerRepresentation get(String login, String password);
+	void register(CustomerRepresentation customer);
+	CustomerRepresentation get(String login);
 	
 }

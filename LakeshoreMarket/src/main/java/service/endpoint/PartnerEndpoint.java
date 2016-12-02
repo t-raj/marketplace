@@ -10,11 +10,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import main.java.model.constant.Constant;
+import main.java.service.representation.Link;
 import main.java.service.representation.PartnerRepresentation;
 import main.java.service.service.PartnerService;
 import main.java.service.serviceImpl.PartnerServiceImpl;
-import main.java.model.constant.Constant;
-import main.java.service.representation.Link;
 import main.java.util.ElementUtil;
 
 
@@ -32,7 +32,7 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@POST//2.1 Need to register and create profile of partners, add partner
 	@Consumes({"application/xml"})
 	@Produces({"application/xml"})
-	public PartnerRepresentation registerPartner(PartnerRepresentation partnerModel){
+	public PartnerRepresentation register(PartnerRepresentation partnerModel){
 		String message;
 		try {
 			partnerService.register(ElementUtil.buildPartnerBean(partnerModel));
@@ -58,7 +58,7 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@DELETE
 	@Consumes({"application/xml"})
 	@Path("{partnerId}")
-	public Response deletePartner(PartnerRepresentation partnerModel){
+	public Response delete(PartnerRepresentation partnerModel){
 		String message;
 		
 		try{
@@ -69,15 +69,14 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 			message = "Error. Partner could not be deleted.";
 		}
 		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
-		
 	}
 	
-	
-	@GET//get partner info, testing purpose 
-	@Consumes({"application/xml"})
-	@Path("/{partnerId}")
-	public PartnerRepresentation getPartner(@PathParam("partnerId") int orderId){
-		return ElementUtil.buildPartnerModel(partnerService.get(orderId));
+	@GET//get partner info given login
+	@Produces({"application/xml"})
+	@Path("/{login}")
+	@Override
+	public PartnerRepresentation get(@PathParam("login") String login) {
+		return ElementUtil.buildPartnerModel(partnerService.get(login));
 	}
 
 }

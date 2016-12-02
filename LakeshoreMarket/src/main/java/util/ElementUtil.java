@@ -96,11 +96,13 @@ public class ElementUtil {
 		
 		Product product = new Product();
 		
-		if(productBean !=null){
+		if(productBean != null){
 			product.setId(productBean.getId());
 			product.setDescription(productBean.getDescription());
 			product.setPrice(productBean.getPrice());
 			product.setActive(productBean.isActive());
+			product.setPartnerID(productBean.getPartnerID());
+			product.setQuantity(productBean.getNumAvailable());
 		}
 		return product;
 	}

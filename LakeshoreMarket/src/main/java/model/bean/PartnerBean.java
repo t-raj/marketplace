@@ -12,6 +12,10 @@ public class PartnerBean {
 	private String state;
 	private int zip_code;
 	private boolean isActive;
+	
+	public PartnerBean() {
+		setActive(true);
+	}
 
 	public int getId() {
 		return id;
@@ -35,7 +39,7 @@ public class PartnerBean {
 		return password;
 	}
 	public void setPassword(String password) {
-		this.login = password;
+		this.password = password;
 	}
 	public String getFirstName() {
 		return firstName;

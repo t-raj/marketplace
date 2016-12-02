@@ -131,6 +131,7 @@ public class ElementUtil {
 			partner.setStreetAddress(partnerBean.getStreetAddress());
 			partner.setZip_code(partnerBean.getZip_code());
 			partner.setId(partnerBean.getId());
+			partner.setPassword(partnerBean.getPassword());
         }
 
         return partner;
@@ -149,6 +150,7 @@ public class ElementUtil {
 			partnerBean.setStreetAddress(partner.getStreetAddress());
 			partnerBean.setZip_code(partner.getZip_code());
 			partnerBean.setActive(partner.isActive());
+			partnerBean.setPassword(partner.getPassword());
         }
 
         return partnerBean;
@@ -166,6 +168,7 @@ public class ElementUtil {
 			partnerBean.setState(partnerModel.getState());
 			partnerBean.setStreetAddress(partnerModel.getStreetAddress());
 			partnerBean.setZip_code(partnerModel.getZip_code());
+			partnerBean.setPassword(partnerModel.getPassword());
         }
 
         return partnerBean;
@@ -307,17 +310,20 @@ public class ElementUtil {
 	}
 
 	public static PartnerRepresentation buildPartnerModel(PartnerBean partnerBean) {
-		if(partnerBean ==null){
+		if (partnerBean == null){
 			return null;
 		}
+		
 		PartnerRepresentation partnerModel = new PartnerRepresentation();
 		partnerModel.setId(partnerBean.getId());
-		partnerModel.setFirstName(partnerModel.getFirstName());
+		partnerModel.setFirstName(partnerBean.getFirstName());
 		partnerModel.setLastName(partnerBean.getLastName());
 		partnerModel.setLogin(partnerBean.getLogin());
 		partnerModel.setStreetAddress(partnerBean.getStreetAddress());
 		partnerModel.setCity(partnerBean.getCity());
 		partnerModel.setState(partnerBean.getState());
+		partnerModel.setZip_code(partnerBean.getZip_code());
+		partnerModel.setPassword(partnerBean.getPassword());
 		
 		return partnerModel;
 	}
@@ -362,7 +368,5 @@ public class ElementUtil {
 		
 		return customerBean;
 	}
-
-	
 
 }

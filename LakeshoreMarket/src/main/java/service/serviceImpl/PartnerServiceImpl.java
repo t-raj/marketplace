@@ -19,7 +19,6 @@ public class PartnerServiceImpl implements PartnerService {
 	
 	@Override
 	public void register(PartnerBean partnerBean) {
-		
 		partnerDAO.add(ElementUtil.buildPartner(partnerBean));		
 	}
 	

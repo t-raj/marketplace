@@ -8,6 +8,6 @@ import main.java.service.representation.PartnerRepresentation;
 @WebService
 public interface PartnerEndpointInterface {
 
-	PartnerRepresentation registerPartner(PartnerRepresentation partnerModel);
+	PartnerRepresentation register(PartnerRepresentation partnerModel);
 	PartnerRepresentation get(String login);
 }

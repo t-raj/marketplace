@@ -34,6 +34,7 @@ public class ElementUtil {
 			customer.setStreetAddress(customerBean.getAddress().getStreetAddress());
 			customer.setZip_code(customerBean.getAddress().getZipCode());
 			customer.setId(customerBean.getId());
+			customer.setPassword(customerBean.getPassword());
 		}
 
 		return customer;
@@ -191,8 +192,8 @@ public class ElementUtil {
 		Order order = new Order();
 		if(orderBean != null){
 			order.setId(orderBean.getId());
-			order.setCustomerId(orderBean.getCustomerId());
-			order.setPartnerId(orderBean.getPartnerId());
+			order.setCustomer_id(orderBean.getCustomerId());
+			order.setPartner_id(orderBean.getPartnerId());
 			if (orderBean.getStatus() != null) {
 				order.setStatus(orderBean.getStatus().toString());
 			}
@@ -205,8 +206,8 @@ public class ElementUtil {
 
 		if (order != null) {
 			orderBean.setId(order.getId());
-			orderBean.setCustomerId(order.getCustomerId());
-			orderBean.setPartnerId(order.getPartnerId());
+			orderBean.setCustomerId(order.getCustomer_id());
+			orderBean.setPartnerId(order.getPartner_id());
 			orderBean.setStatus(Enum.valueOf(OrderService.Status.class, order.getStatus()));
 
 		}

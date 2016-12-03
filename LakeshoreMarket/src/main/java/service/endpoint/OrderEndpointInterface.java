@@ -18,7 +18,7 @@ public interface OrderEndpointInterface {
 	OrderRepresentation getOrderStatus(int orderId);
 	List<OrderRepresentation> getInProgress();
 	Response cancelOrder(int orderId);
-	Response pushToPartner(int partnerId);
+	List<OrderRepresentation> pushToPartner(int partnerId);
 	List<OrderRepresentation> getOrderStatus();
 	
 }

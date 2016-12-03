@@ -22,6 +22,7 @@
 			<ref bean="orderServiceRest" />
 			<ref bean="partnerServiceRest" />
 			<ref bean="productServiceRest" />
+     		<ref bean="customerServiceRest" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 		<!-- 	<ref bean="jacksonProvider" />-->
@@ -39,5 +40,6 @@
   	<bean id="orderServiceRest" class="main.java.service.endpoint.OrderEndpoint" />
   	<bean id="partnerServiceRest" class="main.java.service.endpoint.PartnerEndpoint" />
   	<bean id="productServiceRest" class="main.java.service.endpoint.ProductEndpoint" />
+    <bean id="customerServiceRest" class="main.java.service.endpoint.CustomerEndpoint" />
 
 </beans>

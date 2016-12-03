@@ -18,10 +18,10 @@ public class Order implements Serializable {
 	private int id;
 	
 	@Column(name="partner_id")
-	private int partnerId;
+	private int partner_id;
 	
 	@Column(name="customer_id")
-	private int customerId;
+	private int customer_id;
 	
 	@Column(name="status")
 	private String status;
@@ -34,22 +34,22 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
-	public int getPartnerId() {
-		return partnerId;
+	public int getPartner_id() {
+		return partner_id;
 	}
 
-	public void setPartnerId(int partnerId) {
-		this.partnerId = partnerId;
+	public void setPartner_id(int partner_id) {
+		this.partner_id = partner_id;
 	}
 
-	public int getCustomerId() {
-		return customerId;
+	public int getCustomer_id() {
+		return customer_id;
 	}
 
-	public void setCustomerId(int id) {
-		this.customerId = id;
+	public void setCustomer_id(int customer_id) {
+		this.customer_id = customer_id;
 	}
-	
+
 	public String getStatus() {
 		return status;
 	}

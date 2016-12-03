@@ -39,8 +39,11 @@ public class CustomerEndpoint implements CustomerEndpointInterface {
 	@Consumes({"application/xml"})
 	@Produces({"application/xml"})
 	@Override
-	public void register(CustomerRepresentation customer) {
+	public CustomerRepresentation register(CustomerRepresentation customer) {
 		customerService.add(ElementUtil.buildCustomerBean(customer));
+		//TODO: set links
+		return customer;
+		
 	}
 
 }

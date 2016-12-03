@@ -129,27 +129,27 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	 * @param partnerId
 	 * @return list of orders that have been placed for the partner
 	 */
-	@PUT//2.c push orders that customers made to the partner
+	@GET//2.c push orders that customers made to the partner
 	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
 	@Path("/pushedOrders/{partnerId}")
-	public Response pushToPartner(@PathParam("partnerId") int partnerId){
+	public List<OrderRepresentation> pushToPartner(@PathParam("partnerId") int partnerId){
 		List<OrderRepresentation> orderModels= ElementUtil.buildOrderModelList(orderService.pushToPartner(partnerId));
 		String message = "The order with partnerId" + partnerId + "has been pushed to the partner!";
-		
+
 		//set link to check order status
 		for(OrderRepresentation order : orderModels){
-		Link checkStatus = new Link("status", Constant.BASE_PATH + "/orders/status/" + order.getOrderId(), "/", Constant.MEDIA_TYPE_XML);
+			Link checkStatus = new Link("status", Constant.BASE_PATH + "/orders/status/" + order.getOrderId(), "/", Constant.MEDIA_TYPE_XML);
 
-		//if status is shipped, send fulfilled and shipped email notification
-		if(order.getStatus().equals("shipped")){
-			Link shipped = new Link("shipped", Constant.BASE_PATH +"orders/fulfilled","/", Constant.MEDIA_TYPE_XML);
+			//if status is shipped, send fulfilled and shipped email notification
+			if(order.getStatus().equals("shipped")){
+				Link shipped = new Link("shipped", Constant.BASE_PATH +"orders/fulfilled","/", Constant.MEDIA_TYPE_XML);
+			}
+
+			order.setLinks(checkStatus);
 		}
-		
-		order.setLinks(checkStatus);
-		}
-		
-		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
+
+		return orderModels;
 	}
 	
 	@GET  //2.d. get acknowledgement of order fulfillment if shipped

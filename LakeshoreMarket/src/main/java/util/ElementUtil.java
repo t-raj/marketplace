@@ -259,7 +259,7 @@ public class ElementUtil {
 			return null;
 		}
 		else{
-		productModel.setproductId(productBean.getId());
+		productModel.setProductId(productBean.getId());
 		productModel.setPartnerId(productBean.getPartnerID());
 		productModel.setDescription(productBean.getDescription());
 		productModel.setPrice(productBean.getPrice());
@@ -306,7 +306,7 @@ public class ElementUtil {
 	public static ProductBean buildProductBean(ProductRepresentation product) {
 		ProductBean productBean = new ProductBean();
 		if (product != null) {
-			productBean.setId(product.getproductId());
+			productBean.setId(product.getProductId());
 			productBean.setDescription(product.getDescription());
 			productBean.setPartnerID(product.getPartnerId());
 			productBean.setNumAvailable(product.getNumberAvailable());

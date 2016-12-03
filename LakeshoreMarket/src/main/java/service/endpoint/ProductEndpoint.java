@@ -7,8 +7,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import main.java.model.constant.Constant;
 import main.java.service.representation.Link;
@@ -39,30 +37,31 @@ public class ProductEndpoint implements ProductEndpointInterface{
 	
 	@POST//2.2 Add product or products in market place
 	@Consumes({"application/xml"})
-	public Response add(ProductRepresentation product){
-		String message;
+	public ProductRepresentation add(ProductRepresentation product){
+		ProductRepresentation productRepresentation = new ProductRepresentation();
 		try {
 			productService.add(ElementUtil.buildProductBean(product));
-			message = "Product successfully added";
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			message = "Error: Product could not be added.";
 		}
-		return Response.ok(message, MediaType.TEXT_PLAIN).build();
+		
+		//set links 
+		return productRepresentation;
+		
 	}
 	
 	@PUT//2.2 Update product or products in market place
 	@Consumes({"application/xml"})
-	public Response update(ProductRepresentation productModel){
-		String message;
+	public ProductRepresentation update(ProductRepresentation productModel){
+		ProductRepresentation productRepresentation = new ProductRepresentation();
 		try {
 			productService.update(ElementUtil.buildProductBean(productModel));
-			message = "Product successfully updated";
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			message = "Error: Product could not be updated.";
 		}
-		return Response.ok(message, MediaType.APPLICATION_XML).build();
+
+		//set links 
+		return productRepresentation;
 	}
 
 }

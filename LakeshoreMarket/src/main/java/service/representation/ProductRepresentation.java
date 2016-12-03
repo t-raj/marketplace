@@ -17,10 +17,10 @@ public class ProductRepresentation extends AbstractRepresentation {
 	private int partnerId;
 	private int numberAvailable;
 	
-	public int getproductId() {
+	public int getProductId() {
 		return productId;
 	}
-	public void setproductId(int productId) {
+	public void setProductId(int productId) {
 		this.productId = productId;
 	}	
 	public String getDescription() {

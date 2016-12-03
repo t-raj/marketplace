@@ -1,5 +1,7 @@
 package main.java.service.serviceImpl;
 
+import java.util.List;
+
 import main.java.DAO.ProductDAO;
 import main.java.DAO.daoImpl.ProductDAOImpl;
 import main.java.model.bean.ProductBean;
@@ -34,6 +36,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void delete(int productID) {
 		productDAO.delete(productID);
+	}
+
+	@Override
+	public List<ProductBean> findByPartner(int partnerId) {
+		return ElementUtil.buildProductBeanList(productDAO.findByPartner(partnerId));
 	}
 
 }

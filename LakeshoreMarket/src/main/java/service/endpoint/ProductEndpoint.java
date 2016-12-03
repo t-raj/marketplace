@@ -1,5 +1,8 @@
 package main.java.service.endpoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -34,7 +37,20 @@ public class ProductEndpoint implements ProductEndpointInterface{
 		}
 		return productRepresentation;
 	}
-	
+
+	@Path("/{partnerId}/{isActive}")//1.a search item database by product's partner
+	@GET
+	@Produces("application/xml")
+	public List<ProductRepresentation> retrieve(@PathParam("partnerId") String partnerId, @PathParam("isActive")boolean isActive) {
+		List<ProductRepresentation> productRepresentationList = new ArrayList<ProductRepresentation>();
+		try {
+			productRepresentationList = ElementUtil.buildProductModelList(productService.findByPartner(Integer.parseInt(partnerId)));
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		return productRepresentationList;
+	}
+
 	@POST//2.2 Add product or products in market place
 	@Consumes({"application/xml"})
 	public ProductRepresentation add(ProductRepresentation product){

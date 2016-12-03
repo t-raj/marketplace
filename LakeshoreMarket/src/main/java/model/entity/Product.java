@@ -22,7 +22,7 @@ public class Product implements Serializable {
 	private String description;
 	
 	@Column(name="partner_id")
-	private int partnerID;
+	private int partner_id;
 	
 	@Column(name="quantity")
 	private int quantity;
@@ -40,15 +40,15 @@ public class Product implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public int getPartner_id() {
+		return partner_id;
+	}
 
-	public int getPartnerID() {
-		return partnerID;
+	public void setPartner_id(int partner_id) {
+		this.partner_id = partner_id;
 	}
-	
-	public void setPartnerID(int partnerID) {
-		this.partnerID = partnerID;
-	}
-	
+
 	public int getQuantity() {
 		return quantity;
 	}

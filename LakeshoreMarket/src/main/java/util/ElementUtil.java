@@ -20,10 +20,10 @@ import main.java.service.representation.ProductRepresentation;
 import main.java.service.service.OrderService;
 
 public class ElementUtil {
-	
+
 	public static final Customer buildCustomer(CustomerBean customerBean) {
 		Customer customer = new Customer();
-		
+
 		if (customerBean != null) {
 			customer.setActive(true);
 			customer.setCity(customerBean.getAddress().getCity());
@@ -34,14 +34,14 @@ public class ElementUtil {
 			customer.setStreetAddress(customerBean.getAddress().getStreetAddress());
 			customer.setZip_code(customerBean.getAddress().getZipCode());
 			customer.setId(customerBean.getId());
-        }
+		}
 
-        return customer;
+		return customer;
 	}
-	
+
 	public static final CustomerBean buildCustomerBean(Customer customer) {
 		CustomerBean customerBean = new CustomerBean();
-		
+
 		if (customer != null) {
 			customerBean.setId(customer.getId());
 			customerBean.getAddress().setCity(customer.getCity());
@@ -52,9 +52,9 @@ public class ElementUtil {
 			customerBean.getAddress().setStreetAddress(customer.getStreetAddress());
 			customerBean.getAddress().setZipCode(customer.getZip_code());
 			customerBean.setActive(customer.getActive());
-        }
+		}
 
-        return customerBean;
+		return customerBean;
 	}
 
 	public static List<CustomerBean> buildCustomerBeanList(List<Customer> customers) {
@@ -64,7 +64,7 @@ public class ElementUtil {
 		}
 		return customerBeans;
 	}
-	
+
 	public static List<CustomerRepresentation> buildCustomerModelList(List<CustomerBean> customerBeanList) {
 		List<CustomerRepresentation> customerRepresentations = new ArrayList<CustomerRepresentation>();
 		for (CustomerBean customerBean : customerBeanList) {
@@ -72,10 +72,10 @@ public class ElementUtil {
 		}
 		return customerRepresentations;
 	}
-	
+
 	public static CustomerRepresentation buildCustomerModel(CustomerBean customerBean) {
 		CustomerRepresentation customerRepresentation = new CustomerRepresentation();
-		
+
 		if (customerBean != null) {
 			customerRepresentation.setId(customerBean.getId());
 			customerRepresentation.getAddress().setCity(customerBean.getAddress().getCity());
@@ -87,44 +87,44 @@ public class ElementUtil {
 				customerRepresentation.getAddress().setStreetAddress(customerBean.getAddress().getStreetAddress());
 				customerRepresentation.getAddress().setZipCode(customerBean.getAddress().getZipCode());
 			}
-        }
+		}
 
-        return customerRepresentation;
+		return customerRepresentation;
 	}
 
 	public static final Product buildProduct(ProductBean productBean){
-		
+
 		Product product = new Product();
-		
+
 		if(productBean != null){
 			product.setId(productBean.getId());
 			product.setDescription(productBean.getDescription());
 			product.setPrice(productBean.getPrice());
 			product.setActive(productBean.isActive());
-			product.setPartnerID(productBean.getPartnerID());
+			product.setPartner_id(productBean.getPartnerID());
 			product.setQuantity(productBean.getNumAvailable());
 		}
 		return product;
 	}
-	
+
 	public static final ProductBean buildProductBean(Product product){
 		ProductBean productBean = new ProductBean();
-		
+
 		if(product !=null){
 			productBean.setId(product.getId());
 			productBean.setDescription(product.getDescription());
-			productBean.setPartnerID(product.getPartnerID());
+			productBean.setPartnerID(product.getPartner_id());
 			productBean.setPrice(product.getPrice());
 			productBean.setActive(product.isActive());
 			productBean.setNumAvailable(product.getQuantity());
 		}
 		return productBean;
-		
+
 	}
-	
+
 	public static final Partner buildPartner(PartnerBean partnerBean) {
 		Partner partner = new Partner();
-		
+
 		if (partnerBean != null) {
 			partner.setActive(true);
 			partner.setCity(partnerBean.getCity());
@@ -136,14 +136,14 @@ public class ElementUtil {
 			partner.setZip_code(partnerBean.getZip_code());
 			partner.setId(partnerBean.getId());
 			partner.setPassword(partnerBean.getPassword());
-        }
+		}
 
-        return partner;
+		return partner;
 	}
-	
+
 	public static final PartnerBean buildPartnerBean(Partner partner) {
 		PartnerBean partnerBean = new PartnerBean();
-		
+
 		if (partner != null) {
 			partnerBean.setId(partner.getId());
 			partnerBean.setCity(partner.getCity());
@@ -155,14 +155,14 @@ public class ElementUtil {
 			partnerBean.setZip_code(partner.getZip_code());
 			partnerBean.setActive(partner.isActive());
 			partnerBean.setPassword(partner.getPassword());
-        }
+		}
 
-        return partnerBean;
+		return partnerBean;
 	}
-	
+
 	public static final PartnerBean buildPartnerBean(PartnerRepresentation partnerModel) {
 		PartnerBean partnerBean = new PartnerBean();
-		
+
 		if (partnerModel != null) {
 			partnerBean.setId(partnerModel.getId());
 			partnerBean.setCity(partnerModel.getCity());
@@ -173,9 +173,9 @@ public class ElementUtil {
 			partnerBean.setStreetAddress(partnerModel.getStreetAddress());
 			partnerBean.setZip_code(partnerModel.getZip_code());
 			partnerBean.setPassword(partnerModel.getPassword());
-        }
+		}
 
-        return partnerBean;
+		return partnerBean;
 	}
 
 
@@ -186,7 +186,7 @@ public class ElementUtil {
 		}
 		return partnerBeans;
 	}
-	
+
 	public static final Order buildOrder(OrderBean orderBean){
 		Order order = new Order();
 		if(orderBean != null){
@@ -199,20 +199,20 @@ public class ElementUtil {
 		}
 		return order;
 	} 
-	
+
 	public static final OrderBean buildOrderBean(Order order) {
 		OrderBean orderBean = new OrderBean();
-		
+
 		if (order != null) {
 			orderBean.setId(order.getId());
 			orderBean.setCustomerId(order.getCustomerId());
 			orderBean.setPartnerId(order.getPartnerId());
 			orderBean.setStatus(Enum.valueOf(OrderService.Status.class, order.getStatus()));
-			
-        }
-        return orderBean;
+
+		}
+		return orderBean;
 	}
-	
+
 	public static List<OrderBean> buildOrderBeanList(List<Order> orders) {
 		List<OrderBean> orderBeans = new ArrayList<OrderBean>();
 		if (orders != null && !orders.isEmpty()) {
@@ -223,7 +223,7 @@ public class ElementUtil {
 
 		return orderBeans;
 	}
-	
+
 	public static final OrderLine buildOrderLine(OrderLineBean orderLineBean){
 		OrderLine orderLine = new OrderLine();
 		if(orderLineBean !=null){
@@ -233,19 +233,19 @@ public class ElementUtil {
 		}
 		return orderLine;
 	} 
-	
+
 	public static final OrderLineBean buildOrderLineBean(OrderLine orderLine) {
 		OrderLineBean orderLineBean = new OrderLineBean();
 		if (orderLine != null) {
 			orderLineBean.setId(orderLine.getOrderId());
 			orderLineBean.setLineNumber(orderLine.getLineNumber());
 			orderLineBean.setQuantity(orderLine.getQuantity());
-        }
-        return orderLineBean;
+		}
+		return orderLineBean;
 	}
-	
+
 	public static List<OrderLineBean> buildOrderLineBeanList(List<OrderLine> orderLines) {
-		
+
 		List<OrderLineBean> orderLineBeans = new ArrayList<OrderLineBean>();
 		for (OrderLine orderLine : orderLines) {
 			orderLineBeans.add(buildOrderLineBean(orderLine));
@@ -259,11 +259,11 @@ public class ElementUtil {
 			return null;
 		}
 		else{
-		productModel.setProductId(productBean.getId());
-		productModel.setPartnerId(productBean.getPartnerID());
-		productModel.setDescription(productBean.getDescription());
-		productModel.setPrice(productBean.getPrice());
-		productModel.setNumberAvailable(productBean.getNumAvailable());
+			productModel.setProductId(productBean.getId());
+			productModel.setPartnerId(productBean.getPartnerID());
+			productModel.setDescription(productBean.getDescription());
+			productModel.setPrice(productBean.getPrice());
+			productModel.setNumberAvailable(productBean.getNumAvailable());
 		}
 		return productModel;
 	}
@@ -278,21 +278,21 @@ public class ElementUtil {
 		orderModel.setCustomerId(orderBean.getCustomerId());
 		orderModel.setStatus(orderBean.getStatus());
 		orderModel.setProductIds(orderBean.getProductIds());
-		
+
 		return orderModel;
 	}
 
 	public static OrderBean buildOrderBean(OrderRepresentation order) {
 		OrderBean orderBean = new OrderBean();
-		
+
 		if (order != null) {
 			orderBean.setId(order.getOrderId());
 			orderBean.setCustomerId(order.getCustomerId());
 			orderBean.setPartnerId(order.getPartnerId());
 			orderBean.setStatus(order.getStatus());
 			orderBean.setProductIds(order.getProductIds());
-        }
-        return orderBean;
+		}
+		return orderBean;
 	}
 
 	public static List<OrderRepresentation> buildOrderModelList(List<OrderBean> orderBeans) {
@@ -312,7 +312,7 @@ public class ElementUtil {
 			productBean.setNumAvailable(product.getNumberAvailable());
 			productBean.setPrice(product.getPrice());
 			productBean.setActive(true);
-        }
+		}
 		return productBean;
 	}
 
@@ -320,7 +320,7 @@ public class ElementUtil {
 		if (partnerBean == null){
 			return null;
 		}
-		
+
 		PartnerRepresentation partnerModel = new PartnerRepresentation();
 		partnerModel.setId(partnerBean.getId());
 		partnerModel.setFirstName(partnerBean.getFirstName());
@@ -331,7 +331,7 @@ public class ElementUtil {
 		partnerModel.setState(partnerBean.getState());
 		partnerModel.setZip_code(partnerBean.getZip_code());
 		partnerModel.setPassword(partnerBean.getPassword());
-		
+
 		return partnerModel;
 	}
 
@@ -340,40 +340,64 @@ public class ElementUtil {
 	 * @param orderBean
 	 * @return
 	 */
-	public static List<OrderLine> buildOrderLineList(OrderBean orderBean) {
-		List<OrderLine> orderLineList = new ArrayList<OrderLine>();
-		if (orderBean != null) {
-			List<Integer> productIds = orderBean.getProductIds();
-			int lineNumber = 0;
-			for (Integer productId : productIds) {
-				OrderLine orderLine = new OrderLine();
-				orderLine.setOrderId(orderBean.getId());
-				orderLine.setLineNumber(lineNumber);
-				orderLine.setProductId(Integer.parseInt(productId.toString()));
-				orderLine.setQuantity(1); //default quantity
-				orderLineList.add(orderLine);
-			}
-        }
-        return orderLineList;
-	}
+	 public static List<OrderLine> buildOrderLineList(OrderBean orderBean) {
+		 List<OrderLine> orderLineList = new ArrayList<OrderLine>();
+		 if (orderBean != null) {
+			 List<Integer> productIds = orderBean.getProductIds();
+			 int lineNumber = 0;
+			 for (Integer productId : productIds) {
+				 OrderLine orderLine = new OrderLine();
+				 orderLine.setOrderId(orderBean.getId());
+				 orderLine.setLineNumber(lineNumber);
+				 orderLine.setProductId(Integer.parseInt(productId.toString()));
+				 orderLine.setQuantity(1); //default quantity
+				 orderLineList.add(orderLine);
+			 }
+		 }
+		 return orderLineList;
+	 }
 
-	public static CustomerBean buildCustomerBean(CustomerRepresentation customer) {
-		CustomerBean customerBean = new CustomerBean();
-		if (customer != null) {
-			customerBean.setActive(true);
-			customerBean.getAddress().setCity(customer.getAddress().getCity());
-			customerBean.getAddress().setState(customer.getAddress().getState());
-			customerBean.getAddress().setStreetAddress(customer.getAddress().getStreetAddress());
-			customerBean.getAddress().setZipCode(customer.getAddress().getZipCode());
-			customerBean.setEmail(customer.getEmail());
-			customerBean.setFirstName(customer.getFirstName());
-			customerBean.setId(customer.getId());
-			customerBean.setLastName(customer.getLastName());
-			customerBean.setLogin(customer.getLogin());
-			customerBean.setPassword(customer.getPassword());
-		}
-		
-		return customerBean;
-	}
+	 public static CustomerBean buildCustomerBean(CustomerRepresentation customer) {
+		 CustomerBean customerBean = new CustomerBean();
+		 if (customer != null) {
+			 customerBean.setActive(true);
+			 customerBean.getAddress().setCity(customer.getAddress().getCity());
+			 customerBean.getAddress().setState(customer.getAddress().getState());
+			 customerBean.getAddress().setStreetAddress(customer.getAddress().getStreetAddress());
+			 customerBean.getAddress().setZipCode(customer.getAddress().getZipCode());
+			 customerBean.setEmail(customer.getEmail());
+			 customerBean.setFirstName(customer.getFirstName());
+			 customerBean.setId(customer.getId());
+			 customerBean.setLastName(customer.getLastName());
+			 customerBean.setLogin(customer.getLogin());
+			 customerBean.setPassword(customer.getPassword());
+		 }
+
+		 return customerBean;
+	 }
+
+	 public static List<ProductBean> buildProductBeanList(List<Product> products) {
+		 List<ProductBean> productBeans = new ArrayList<ProductBean>();
+		 for (Product product : products) {
+			 productBeans.add(buildProductBean(product));
+		 }
+		 return productBeans;
+	 }
+
+	 public static List<ProductRepresentation> buildProductModelList(List<ProductBean> productBeanList) {
+		 if (isEmpty(productBeanList)) {
+			 return null;
+		 }
+		 
+		 List<ProductRepresentation> productRepresentations = new ArrayList<ProductRepresentation>();
+		 for (ProductBean productBean : productBeanList) {
+			 productRepresentations.add(buildProductModel(productBean));
+		 }
+		 return productRepresentations;
+	 }
+	 
+	 private static boolean isEmpty(List<?> list) {
+		 return list == null || list.isEmpty();
+	 }
 
 }

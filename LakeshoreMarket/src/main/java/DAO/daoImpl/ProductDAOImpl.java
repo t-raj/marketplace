@@ -76,4 +76,17 @@ public class ProductDAOImpl implements ProductDAO{
 		session.flush();
 	}
 
+	@Override
+	public List<Product> findByPartner(int partnerId) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Product.class);
+		criteria.add(Restrictions.eq("partner_id", partnerId));
+		List<Product> products = criteria.list();
+		tx.commit();
+		session.close();
+		
+		return products;
+	}
+
 }

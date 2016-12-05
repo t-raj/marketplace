@@ -53,6 +53,7 @@ public class ElementUtil {
 			customerBean.getAddress().setStreetAddress(customer.getStreetAddress());
 			customerBean.getAddress().setZipCode(customer.getZip_code());
 			customerBean.setActive(customer.getActive());
+			customerBean.setPassword(customer.getPassword());
 		}
 
 		return customerBean;
@@ -88,6 +89,7 @@ public class ElementUtil {
 				customerRepresentation.getAddress().setStreetAddress(customerBean.getAddress().getStreetAddress());
 				customerRepresentation.getAddress().setZipCode(customerBean.getAddress().getZipCode());
 			}
+			customerRepresentation.setPassword(customerBean.getPassword());
 		}
 
 		return customerRepresentation;

@@ -76,7 +76,7 @@ public class Customer implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.login = password;
+		this.password = password;
 	}
 
 	public String getFirstName() {

@@ -43,7 +43,7 @@ public class CustomerRepresentation extends AbstractRepresentation {
 			return password;
 		}
 		public void setPassword(String password) {
-			this.login = password;
+			this.password = password;
 		}
 		public String getFirstName() {
 			return firstName;

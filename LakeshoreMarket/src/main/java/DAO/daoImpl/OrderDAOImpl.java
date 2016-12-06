@@ -67,12 +67,20 @@ public class OrderDAOImpl implements OrderDAO {
 	public void delete(int orderId) {
 		try {
 			Session session = sessionFactory.openSession();
-			Order order = get(orderId);
-			if (order != null) {
-				order.setStatus(Status.CANCELED.toString());
-			}
 			Transaction tx = session.beginTransaction();
-			update(order);
+			
+			Criteria criteria = session.createCriteria(Order.class);
+			criteria.add(Restrictions.eq("id", orderId));
+			List<Order> orders = (List<Order>)criteria.list();
+			if (orders != null && !orders.isEmpty()) {
+				Order order = orders.get(0);
+				if (order != null) {
+					order.setStatus(Status.CANCELED.toString());
+					session.saveOrUpdate(order);
+				}
+
+			}
+		
 			tx.commit();
 			session.flush();
 		} catch (HibernateException e) {
@@ -136,13 +144,26 @@ public class OrderDAOImpl implements OrderDAO {
 	 * This method updates an order
 	 */
 	@Override
-	public void update(Order order) {
+	public void update(int orderId, Status status) {
 		try {
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
-			session.saveOrUpdate(order);
-			session.flush();
+			// in hibernate, the same order referenced object must be modified in order to be saved 
+			Criteria criteria = session.createCriteria(Order.class);
+			criteria.add(Restrictions.eq("id", orderId));
+			List<Order> orders = (List<Order>)criteria.list();
+			if (orders != null && !orders.isEmpty()) {
+				Order order = orders.get(0);
+				if (order != null && status != null) {
+					order.setStatus(status.toString());
+					session.saveOrUpdate(order);
+				}
+
+			}
+
 			tx.commit();
+			session.flush();
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -183,8 +204,8 @@ public class OrderDAOImpl implements OrderDAO {
 				criteria.add(Restrictions.eq("status", status.toString()));
 			}
 			orders = criteria.list();
-			session.flush();
 			tx.commit();
+			session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -200,8 +221,8 @@ public class OrderDAOImpl implements OrderDAO {
 			Criteria criteria = session.createCriteria(Order.class);
 			criteria.add(Restrictions.eq("customer_id", customerId));
 			orders = criteria.list();
-			session.flush();
 			tx.commit();
+			session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}

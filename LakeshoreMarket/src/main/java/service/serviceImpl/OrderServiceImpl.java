@@ -100,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
 		// push them to partners and update their status to pushed to the partner: pending
 		for (OrderBean paidOrder : paidOrders) {
 			paidOrder.setStatus(Status.PENDING);
-			orderDAO.update(ElementUtil.buildOrder(paidOrder));
+			orderDAO.update(paidOrder.getId(), Status.PENDING);
 			pushedOrders.add(paidOrder);
 		}
 		
@@ -115,7 +115,7 @@ public class OrderServiceImpl implements OrderService {
 		OrderBean order = ElementUtil.buildOrderBean(orderDAO.get(orderId));
 		// in the real world, this may call other 3rd party apis to perform the actual shipping, e.g. shippingService
 		order.setStatus(Status.SHIPPED);
-		orderDAO.update(ElementUtil.buildOrder(order));
+		orderDAO.update(orderId, Status.SHIPPED);
 		// exceptions during shipping will be caught as runtime Exceptions for now
 	}
 
@@ -127,9 +127,7 @@ public class OrderServiceImpl implements OrderService {
 	public boolean acceptPayment(PaymentRepresentation paymentModel, int orderId) {
 		boolean paymentAccepted = false;
 		if (paymentService.isValid(paymentModel)) {
-			OrderBean order = get(orderId);
-			order.setStatus(Status.PAID);
-			orderDAO.update(ElementUtil.buildOrder(order));
+			orderDAO.update(orderId, Status.PAID); ;
 			paymentAccepted = true;
 		} 
 

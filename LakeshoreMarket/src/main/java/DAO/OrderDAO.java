@@ -11,8 +11,6 @@ public interface OrderDAO {
 	
 	void delete(int orderId);
 	
-	void update(Order order);
-	
 	Order get(int orderId);
 
 	List<Order> get(List<Status> status);
@@ -22,5 +20,7 @@ public interface OrderDAO {
 	List<Order> get(Status status, int partnerId);
 
 	List<Order> getByCustomer(int customerId);
+
+	void update(int orderId, Status shipped);
 
 }

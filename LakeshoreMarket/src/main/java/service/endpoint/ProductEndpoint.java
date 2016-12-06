@@ -30,12 +30,10 @@ public class ProductEndpoint implements ProductEndpointInterface{
 		ProductRepresentation productRepresentation = new ProductRepresentation();
 		try {
 			productRepresentation = ElementUtil.buildProductModel(productService.get(productId));
-			Link buy = new Link("buy", Constant.BASE_PATH + "/orders/", "buy", Constant.MEDIA_TYPE_XML);
-			productRepresentation.setLinks(buy);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		return productRepresentation;
+		return setLinks(productRepresentation);
 	}
 
 	@Path("/{partnerId}/{isActive}")//1.a search item database by product's partner
@@ -63,7 +61,6 @@ public class ProductEndpoint implements ProductEndpointInterface{
 		
 		//set links 
 		return productRepresentation;
-		
 	}
 	
 	@PUT//2.2 Update product or products in market place
@@ -78,6 +75,16 @@ public class ProductEndpoint implements ProductEndpointInterface{
 
 		//set links 
 		return productRepresentation;
+	}
+
+	private ProductRepresentation setLinks(ProductRepresentation partnerRep) {
+		if (partnerRep != null) {
+			Link buy = new Link("buy", Constant.BASE_PATH + "/orders/", Constant.BASE_PATH_CONSUMER + "/buy", Constant.MEDIA_TYPE_XML );
+			
+			partnerRep.setLinks(buy);
+		}
+		
+		return partnerRep;
 	}
 
 }

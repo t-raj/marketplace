@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 
@@ -34,16 +36,28 @@ public class OrderDAOImpl implements OrderDAO {
 	 * This method adds an order to the database 
 	 */
 	@Override
-	public void add(Order order) {	
+	public int add(Order order) {	
+		// TODO: hack to auto-generate order id. Should auto increment in database.
+		int currentMaxId = 0;
+		
 		try {
+			
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
+			DetachedCriteria criteria1 = DetachedCriteria.forClass(Order.class).setProjection(Projections.max("id"));
+			Integer maxOrderId = (Integer) criteria1.getExecutableCriteria(session).list().get(0);
+			currentMaxId = maxOrderId + 1;
+			// give the order an id
+			order.setId(currentMaxId); 
 			session.saveOrUpdate(order);
 			tx.commit();
 			session.flush();
+			
 		} catch (HibernateException e) {
 			e.printStackTrace();
-		}
+		} 
+		
+		return currentMaxId;
 	}
 
 	/**
@@ -54,7 +68,9 @@ public class OrderDAOImpl implements OrderDAO {
 		try {
 			Session session = sessionFactory.openSession();
 			Order order = get(orderId);
-			order.setStatus(Status.CANCELED.toString());
+			if (order != null) {
+				order.setStatus(Status.CANCELED.toString());
+			}
 			Transaction tx = session.beginTransaction();
 			update(order);
 			tx.commit();
@@ -74,6 +90,7 @@ public class OrderDAOImpl implements OrderDAO {
 		try {
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
+			
 			Criteria criteria = session.createCriteria(Order.class);
 			criteria.add(Restrictions.eq("id", orderId));
 			List<Order> orders = (List<Order>)criteria.list();
@@ -165,6 +182,23 @@ public class OrderDAOImpl implements OrderDAO {
 			if (status != null) {
 				criteria.add(Restrictions.eq("status", status.toString()));
 			}
+			orders = criteria.list();
+			session.flush();
+			tx.commit();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return orders;
+	}
+
+	@Override
+	public List<Order> getByCustomer(int customerId) {
+		List<Order> orders = null;
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(Order.class);
+			criteria.add(Restrictions.eq("customer_id", customerId));
 			orders = criteria.list();
 			session.flush();
 			tx.commit();

@@ -30,9 +30,9 @@ public class OrderServiceImpl implements OrderService {
 	 * @param orderBean
 	 */
 	@Override
-	public void accept(OrderBean orderBean) {
-		orderDAO.add(ElementUtil.buildOrder(orderBean));
-		orderLineDAO.add(ElementUtil.buildOrderLineList(orderBean));
+	public int accept(OrderBean orderBean) {
+		return orderDAO.add(ElementUtil.buildOrder(orderBean));
+//		orderLineDAO.add(ElementUtil.buildOrderLineList(orderBean));
 	}
 
 	/**
@@ -129,6 +129,7 @@ public class OrderServiceImpl implements OrderService {
 		if (paymentService.isValid(paymentModel)) {
 			OrderBean order = get(orderId);
 			order.setStatus(Status.PAID);
+			orderDAO.update(ElementUtil.buildOrder(order));
 			paymentAccepted = true;
 		} 
 
@@ -141,6 +142,11 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderBean> get(Status status) {
 		return ElementUtil.buildOrderBeanList(orderDAO.get(status));
+	}
+
+	@Override
+	public List<OrderBean> getByCustomer(int customerId) {
+		return ElementUtil.buildOrderBeanList(orderDAO.getByCustomer(customerId));
 	}
 	
 }

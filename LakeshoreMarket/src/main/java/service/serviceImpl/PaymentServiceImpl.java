@@ -15,10 +15,6 @@ public class PaymentServiceImpl implements PaymentService{
 	 */
 	@Override
 	public boolean isValid(PaymentRepresentation paymentModel){
-		if (paymentModel == null) {
-			return false;
-		}
-		
 		// dummy implementation of payment validation does not do actual 3rd party validation
 		return true;
 	}

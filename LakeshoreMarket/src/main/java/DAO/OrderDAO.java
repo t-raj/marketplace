@@ -7,7 +7,7 @@ import main.java.service.service.OrderService.Status;
 
 public interface OrderDAO {
 
-	void add(Order order);
+	int add(Order order);
 	
 	void delete(int orderId);
 	
@@ -20,5 +20,7 @@ public interface OrderDAO {
 	List<Order> get(Status status);
 
 	List<Order> get(Status status, int partnerId);
+
+	List<Order> getByCustomer(int customerId);
 
 }

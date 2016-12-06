@@ -21,7 +21,7 @@ public interface OrderService {
 		ACCEPTED, PAID, PENDING, SHIPPED, FULFILLED, CANCELED;
 	}
 
-	void accept(OrderBean orderBean);
+	int accept(OrderBean orderBean);
 	
 	OrderBean get(int orderId);
 
@@ -36,4 +36,6 @@ public interface OrderService {
 	void cancel(int orderId);
 
 	boolean acceptPayment(PaymentRepresentation paymentModel, int orderId);
+
+	List<OrderBean> getByCustomer(int customerId);
 }

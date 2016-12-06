@@ -7,7 +7,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import main.java.model.constant.Constant;
 import main.java.service.representation.CustomerRepresentation;
+import main.java.service.representation.Link;
 import main.java.service.service.CustomerService;
 import main.java.service.serviceImpl.CustomerServiceImpl;
 import main.java.util.ElementUtil;
@@ -27,7 +29,7 @@ public class CustomerEndpoint implements CustomerEndpointInterface {
 	@Path("/{login}")
 	@Override
 	public CustomerRepresentation get(@PathParam("login") String login) {
-		return ElementUtil.buildCustomerModel(customerService.get(login));
+		return setLinks(ElementUtil.buildCustomerModel(customerService.get(login)));
 	}
 
 	/**
@@ -41,9 +43,16 @@ public class CustomerEndpoint implements CustomerEndpointInterface {
 	@Override
 	public CustomerRepresentation register(CustomerRepresentation customer) {
 		customerService.add(ElementUtil.buildCustomerBean(customer));
-		//TODO: set links
-		return customer;
+		return setLinks(customer);
+	}
+
+	private CustomerRepresentation setLinks(CustomerRepresentation customererRep) {
+		if (customererRep != null) {
+			Link searchProduct = new Link("searchProduct", Constant.BASE_PATH + "/products/", Constant.BASE_PATH_CONSUMER + "/searchProducts", Constant.MEDIA_TYPE_XML );
+			customererRep.setLinks(searchProduct);
+		}
 		
+		return customererRep;
 	}
 
 }

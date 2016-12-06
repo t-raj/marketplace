@@ -230,7 +230,7 @@ public class ElementUtil {
 	public static final OrderLine buildOrderLine(OrderLineBean orderLineBean){
 		OrderLine orderLine = new OrderLine();
 		if(orderLineBean !=null){
-			orderLine.setOrderId(orderLineBean.getId());
+			orderLine.setOrder_id(orderLineBean.getId());
 			orderLine.setLineNumber(orderLineBean.getLineNumber());
 			orderLine.setQuantity(orderLineBean.getQuantity());
 		}
@@ -240,7 +240,7 @@ public class ElementUtil {
 	public static final OrderLineBean buildOrderLineBean(OrderLine orderLine) {
 		OrderLineBean orderLineBean = new OrderLineBean();
 		if (orderLine != null) {
-			orderLineBean.setId(orderLine.getOrderId());
+			orderLineBean.setId(orderLine.getOrder_id());
 			orderLineBean.setLineNumber(orderLine.getLineNumber());
 			orderLineBean.setQuantity(orderLine.getQuantity());
 		}
@@ -345,12 +345,12 @@ public class ElementUtil {
 	 */
 	 public static List<OrderLine> buildOrderLineList(OrderBean orderBean) {
 		 List<OrderLine> orderLineList = new ArrayList<OrderLine>();
-		 if (orderBean != null) {
+		 if (orderBean != null && !isEmpty(orderBean.getProductIds())) {
 			 List<Integer> productIds = orderBean.getProductIds();
 			 int lineNumber = 0;
 			 for (Integer productId : productIds) {
 				 OrderLine orderLine = new OrderLine();
-				 orderLine.setOrderId(orderBean.getId());
+				 orderLine.setOrder_id(orderBean.getId());
 				 orderLine.setLineNumber(lineNumber);
 				 orderLine.setProductId(Integer.parseInt(productId.toString()));
 				 orderLine.setQuantity(1); //default quantity

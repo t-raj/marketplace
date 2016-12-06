@@ -33,17 +33,13 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	@Consumes({"application/xml"})
 	@Produces({"application/xml"})
 	public PartnerRepresentation register(PartnerRepresentation partnerModel){
-		String message;
 		try {
 			partnerService.register(ElementUtil.buildPartnerBean(partnerModel));
-			message = "partner successfully registered";
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			message = "Error. Partner could not be registered";
 		}	
 		
 		return setLinks(ElementUtil.buildPartnerModel(ElementUtil.buildPartnerBean(partnerModel)));
-		//return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
 	
 	//the partner can register and after that delete the partner

@@ -18,7 +18,7 @@ public class OrderLine implements Serializable {
 
 	@Id
 	@Column(name="order_id")
-	private int orderId;
+	private int order_id;
 
 	@Id
 	@Column(name="id")
@@ -54,13 +54,14 @@ public class OrderLine implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public int getOrderId() {
-		return orderId;
+	public int getOrder_id() {
+		return order_id;
 	}
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public void setOrder_id(int order_id) {
+		this.order_id = order_id;
 	}
+
 	
 		
 }

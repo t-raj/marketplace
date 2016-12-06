@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 import main.java.model.constant.Constant;
 import main.java.service.representation.Link;
 import main.java.service.representation.OrderRepresentation;
-import main.java.service.representation.PaymentRepresentation;
 import main.java.service.service.OrderService;
 import main.java.service.service.OrderService.Status;
 import main.java.service.serviceImpl.OrderServiceImpl;
@@ -34,35 +33,38 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	private static OrderService orderService = new OrderServiceImpl();
 	
 	@POST//1.b accept a new buy order
+	@Produces({"application/xml"})
 	@Consumes({"application/xml"})
 	public OrderRepresentation accept(OrderRepresentation order) {
+		int orderId = 0;
 		if (order != null) {
 			// set the status to accept
 			order.setStatus(OrderService.Status.ACCEPTED);
-			orderService.accept(ElementUtil.buildOrderBean(order));
+			orderId = orderService.accept(ElementUtil.buildOrderBean(order));
 		} 
 		
 		// set accept order links 
-		Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + order.getOrderId(), "/", Constant.MEDIA_TYPE_XML);	
-		Link pay = new Link("pay", Constant.BASE_PATH + "/orders/payment" + order.getOrderId(), "/payment", Constant.MEDIA_TYPE_XML);		
+		Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
+		Link pay = new Link("pay", Constant.BASE_PATH + "/orders/payment" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/payment", Constant.MEDIA_TYPE_XML);		
 		order.setLinks(cancel, pay);
-
+		order.setOrderId(orderId);
+		
 		return order;
 	}
 	
 	@PUT//1.c accept credit card payment
 	@Produces({"application/xml"})
 	@Path("/payment/{orderId}")
-	public PaymentRepresentation acceptPayment(PaymentRepresentation paymentModel, @PathParam("orderId") int orderId) {
-		boolean paymentAccepted = orderService.acceptPayment(paymentModel, orderId);
+	public OrderRepresentation acceptPayment(@PathParam("orderId") int orderId) {
+		boolean paymentAccepted = orderService.acceptPayment(null, orderId);
+		OrderRepresentation order = ElementUtil.buildOrderModel(orderService.get(orderId));
 		if (paymentAccepted) {
 			// set payment links 
-			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + orderId, "/", Constant.MEDIA_TYPE_XML);	
-			Link checkStatus = new Link("status", Constant.BASE_PATH + "/orders/status" + orderId, "/", Constant.MEDIA_TYPE_XML);		
-			paymentModel.setLinks(cancel, checkStatus);
+			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + orderId, Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
+			order.setLinks(cancel);
 		}
 		
-		return paymentModel;
+		return order;
 	}
  
 	@PUT//1.d. ship order
@@ -92,9 +94,8 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	public OrderRepresentation getOrderStatus(@PathParam("orderId") int orderId){
 		OrderRepresentation orderRepresentation = ElementUtil.buildOrderModel(orderService.get(orderId));
 
-		Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + orderRepresentation.getOrderId(), "/", Constant.MEDIA_TYPE_XML);	
-		Link push = new Link("push", Constant.BASE_PATH + "/orders/" + orderRepresentation.getPartnerId(), "/", Constant.MEDIA_TYPE_XML);	
-		orderRepresentation.setLinks(cancel, push);
+		Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + orderRepresentation.getOrderId(), Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
+		orderRepresentation.setLinks(cancel);
 
 		return orderRepresentation;
 	}
@@ -105,9 +106,8 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	public List<OrderRepresentation> getInProgress(){
 		List<OrderRepresentation> orders = ElementUtil.buildOrderModelList(orderService.get());
 		for (OrderRepresentation order: orders) {
-			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + order.getOrderId(), "/", Constant.MEDIA_TYPE_XML);	
-			Link push = new Link("push", Constant.BASE_PATH + "/orders/" + order.getPartnerId(), "/", Constant.MEDIA_TYPE_XML);	
-			order.setLinks(cancel, push);
+			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
+			order.setLinks(cancel);
 
 		}
 		return orders;
@@ -116,12 +116,8 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@DELETE//1.f. order cancel
 	@Produces({"application/xml"})
 	@Path("/{orderId}")
-	public Response cancelOrder(@PathParam("orderId") int orderId){
+	public void cancelOrder(@PathParam("orderId") int orderId){
 		orderService.cancel(orderId);
-		Link getInProgress = new Link("progress", Constant.BASE_PATH + "/orders/inprogress" + orderId, "/inprogress", Constant.MEDIA_TYPE_XML);	
-		String message = "The order with order ID:........" + orderId + " is now canceled. " + getInProgress.toString();
-	
-		return Response.ok(message, MediaType.TEXT_XML_TYPE).build();
 	}
 
 	/**
@@ -135,15 +131,14 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	@Path("/pushedOrders/{partnerId}")
 	public List<OrderRepresentation> pushToPartner(@PathParam("partnerId") int partnerId){
 		List<OrderRepresentation> orderModels= ElementUtil.buildOrderModelList(orderService.pushToPartner(partnerId));
-		String message = "The order with partnerId" + partnerId + "has been pushed to the partner!";
 
 		//set link to check order status
 		for(OrderRepresentation order : orderModels){
-			Link checkStatus = new Link("status", Constant.BASE_PATH + "/orders/status/" + order.getOrderId(), "/", Constant.MEDIA_TYPE_XML);
+			Link checkStatus = new Link("status", Constant.BASE_PATH + "/orders/status/" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/status", Constant.MEDIA_TYPE_XML);
 
 			//if status is shipped, send fulfilled and shipped email notification
 			if(order.getStatus().equals("shipped")){
-				Link shipped = new Link("shipped", Constant.BASE_PATH +"orders/fulfilled","/", Constant.MEDIA_TYPE_XML);
+				Link shipped = new Link("shipped", Constant.BASE_PATH +"orders/fulfilled", Constant.BASE_PATH_CONSUMER + "/shipped", Constant.MEDIA_TYPE_XML);
 			}
 
 			order.setLinks(checkStatus);
@@ -154,8 +149,55 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	
 	@GET  //2.d. get acknowledgement of order fulfillment if shipped
 	@Path("/fulfilled")
+	@Produces({"application/xml"})
 	public List<OrderRepresentation> getOrderStatus(){
 		return ElementUtil.buildOrderModelList(orderService.get(Status.FULFILLED));
 	}
+	
+	@GET
+	@Produces({"application/xml"})
+	@Consumes({"application/xml"})
+	@Path("/{customerId}")
+	public List<OrderRepresentation> retrieve(@PathParam("customerId") int customerId){
+		List<OrderRepresentation> orderModels = ElementUtil.buildOrderModelList(orderService.getByCustomer(customerId));
+
+		//set link to check order status
+		for(OrderRepresentation order : orderModels){
+			setLinkByOrderStatus(order);
+		}
+
+		return orderModels;
+	}
+	
+	private void setLinkByOrderStatus(OrderRepresentation order) {
+		if (order != null) {
+			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders", Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);
+			Link pay = new Link("pay", Constant.BASE_PATH + "/orders/payment" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/payment", Constant.MEDIA_TYPE_XML);		
+					
+			Status status = order.getStatus();
+			
+			switch(status) {
+			case PAID:
+				order.setLinks(cancel);
+			case CANCELED:
+				//no-op
+				return;
+			case ACCEPTED:
+				order.setLinks(pay, cancel);
+				return;
+			case PENDING:
+				// fall through to shipped
+			case SHIPPED:
+				order.setLinks(cancel);
+				return;
+			case FULFILLED:
+				// no-op
+				return;
+			default:
+				break;
+			}
+		}
+	}
+	
 
 }

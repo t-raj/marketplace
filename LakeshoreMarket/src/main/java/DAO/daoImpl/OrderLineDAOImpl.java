@@ -79,13 +79,13 @@ public class OrderLineDAOImpl implements OrderLineDAO {
 	}
 
 	@Override
-	public OrderLine get(int orderLineId) {
+	public OrderLine get(int orderId) {
 		OrderLine orderLine = null;
 		try {
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
 			Criteria criteria = session.createCriteria(OrderLine.class);
-			criteria.add(Restrictions.eq("id", orderLineId));
+			criteria.add(Restrictions.eq("order_id", orderId));
 			List<OrderLine> orderLines = (List<OrderLine>)criteria.list();
 			if (orderLines != null && !orderLines.isEmpty()) {
 				orderLine = orderLines.get(0);

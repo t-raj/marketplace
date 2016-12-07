@@ -135,23 +135,18 @@ public class OrderEndpoint implements OrderEndpointInterface {
 		//set link to check order status
 		for(OrderRepresentation order : orderModels){
 			Link checkStatus = new Link("status", Constant.BASE_PATH + "/orders/status/" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/status", Constant.MEDIA_TYPE_XML);
-
-			//if status is shipped, send fulfilled and shipped email notification
-			if(order.getStatus().equals("shipped")){
-				Link shipped = new Link("shipped", Constant.BASE_PATH +"orders/fulfilled", Constant.BASE_PATH_CONSUMER + "/shipped", Constant.MEDIA_TYPE_XML);
-			}
-
 			order.setLinks(checkStatus);
 		}
 
 		return orderModels;
 	}
 	
-	@GET  //2.d. get acknowledgement of order fulfillment if shipped
-	@Path("/fulfilled")
+	@GET  //2.d. get acknowledgement of order fulfillment if pending
+	@Path("/fulfilled/{partnerId}")
 	@Produces({"application/xml"})
-	public List<OrderRepresentation> getOrderStatus(){
-		return ElementUtil.buildOrderModelList(orderService.get(Status.FULFILLED));
+	public List<OrderRepresentation> fulfill(@PathParam("partnerId") int partnerId){
+		// change pending orders to shipped and then fulfill
+		return ElementUtil.buildOrderModelList(orderService.fulfill(partnerId));
 	}
 	
 	@GET

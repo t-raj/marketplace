@@ -21,6 +21,11 @@ import main.java.service.service.OrderService;
 
 public class ElementUtil {
 
+	/**
+	 * Build customer
+	 * @param customerBean
+	 * @return
+	 */
 	public static final Customer buildCustomer(CustomerBean customerBean) {
 		Customer customer = new Customer();
 
@@ -40,6 +45,11 @@ public class ElementUtil {
 		return customer;
 	}
 
+	/**
+	 * Build customer bean
+	 * @param customer
+	 * @return
+	 */
 	public static final CustomerBean buildCustomerBean(Customer customer) {
 		CustomerBean customerBean = new CustomerBean();
 
@@ -59,6 +69,11 @@ public class ElementUtil {
 		return customerBean;
 	}
 
+	/**
+	 * Build customer bean list
+	 * @param customers
+	 * @return
+	 */
 	public static List<CustomerBean> buildCustomerBeanList(List<Customer> customers) {
 		List<CustomerBean> customerBeans = new ArrayList<CustomerBean>();
 		for (Customer customer : customers) {
@@ -399,7 +414,7 @@ public class ElementUtil {
 		 return productRepresentations;
 	 }
 	 
-	 private static boolean isEmpty(List<?> list) {
+	 public static boolean isEmpty(List<?> list) {
 		 return list == null || list.isEmpty();
 	 }
 

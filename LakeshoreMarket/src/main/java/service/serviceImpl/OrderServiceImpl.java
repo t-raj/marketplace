@@ -146,5 +146,22 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderBean> getByCustomer(int customerId) {
 		return ElementUtil.buildOrderBeanList(orderDAO.getByCustomer(customerId));
 	}
+
+	@Override
+	public List<OrderBean> fulfill(int partnerId) {
+		List<OrderBean> fulfilledOrders = new ArrayList<OrderBean>();
+		List<OrderBean> pendingOrders = ElementUtil.buildOrderBeanList(orderDAO.get(Status.PENDING, partnerId));
+		if (!ElementUtil.isEmpty(pendingOrders)) {
+			for (OrderBean pendingOrder : pendingOrders) {
+				// dummy process of shipping before fulfilling the order
+				pendingOrder.setStatus(Status.SHIPPED);
+				pendingOrder.setStatus(Status.FULFILLED);
+				orderDAO.update(pendingOrder.getId(), Status.FULFILLED);
+				fulfilledOrders.add(pendingOrder);
+			}
+		}
+		
+		return fulfilledOrders;
+	}
 	
 }

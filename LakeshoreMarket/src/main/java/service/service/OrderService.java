@@ -21,21 +21,71 @@ public interface OrderService {
 		ACCEPTED, PAID, PENDING, SHIPPED, FULFILLED, CANCELED;
 	}
 
+	/**
+	 * Accept order 
+	 * @param orderBean
+	 * @return
+	 */
 	int accept(OrderBean orderBean);
 	
+	/**
+	 * Get order
+	 * @param orderId
+	 * @return
+	 */
 	OrderBean get(int orderId);
 
+	/**
+	 * Get order bean
+	 * @return
+	 */
 	List<OrderBean> get();
 
+	/**
+	 * Get order by status
+	 * @param status
+	 * @return
+	 */
 	List<OrderBean> get(Status status);
 
+	/**
+	 * Push order to partner
+	 * @param partnerId
+	 * @return
+	 */
 	List<OrderBean> pushToPartner(int partnerId);
 
+	/**
+	 * Ship order
+	 * @param orderId
+	 */
 	void ship(int orderId);
 
+	/**
+	 * Cancel order
+	 * @param orderId
+	 */
 	void cancel(int orderId);
 
+	/**
+	 * Accept payment
+	 * @param paymentModel
+	 * @param orderId
+	 * @return
+	 */
 	boolean acceptPayment(PaymentRepresentation paymentModel, int orderId);
 
+	/**
+	 * Get order by customer
+	 * @param customerId
+	 * @return
+	 */
 	List<OrderBean> getByCustomer(int customerId);
+
+	/**
+	 * Fulfill order by partner id
+	 * @param partnerId
+	 * @return
+	 */
+	List<OrderBean> fulfill(int partnerId);
 }

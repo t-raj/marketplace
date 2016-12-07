@@ -6,9 +6,27 @@ import main.java.service.representation.ProductRepresentation;
 
 @WebService
 public interface ProductEndpointInterface {
-		ProductRepresentation search(int productId);
-		ProductRepresentation add(ProductRepresentation product);
-		ProductRepresentation update(ProductRepresentation product);
+
+	/**
+	 * Search product 
+	 * @param productId
+	 * @return ProductRepresentation
+	 */
+	ProductRepresentation search(int productId);
+
+	/**
+	 * Add product
+	 * @param product
+	 * @return ProductRepresentation
+	 */
+	ProductRepresentation add(ProductRepresentation product);
+
+	/**
+	 * Update product
+	 * @param product
+	 * @return ProductRepresentation
+	 */
+	ProductRepresentation update(ProductRepresentation product);
 }
 
 

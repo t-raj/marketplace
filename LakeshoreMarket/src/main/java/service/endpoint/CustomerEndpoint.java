@@ -8,6 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import main.java.model.constant.Constant;
+import main.java.model.constant.HTTPVerb;
 import main.java.service.representation.CustomerRepresentation;
 import main.java.service.representation.Link;
 import main.java.service.service.CustomerService;
@@ -46,13 +47,14 @@ public class CustomerEndpoint implements CustomerEndpointInterface {
 		return setLinks(customer);
 	}
 
-	private CustomerRepresentation setLinks(CustomerRepresentation customererRep) {
-		if (customererRep != null) {
-			Link searchProduct = new Link("searchProduct", Constant.BASE_PATH + "/products/", Constant.BASE_PATH_CONSUMER + "/searchProducts", Constant.MEDIA_TYPE_XML );
-			customererRep.setLinks(searchProduct);
+	private CustomerRepresentation setLinks(CustomerRepresentation customerRep) {
+		if (customerRep != null) {
+			Link searchProduct = new Link(HTTPVerb.GET.toString(), Constant.BASE_PATH + "/products/", Constant.BASE_PATH_CONSUMER + "/searchProducts", Constant.MEDIA_TYPE_XML );
+			Link getOrder = new Link(HTTPVerb.GET.toString(), Constant.BASE_PATH + "/orders/", Constant.BASE_PATH_CONSUMER + "/orders", Constant.MEDIA_TYPE_XML );
+			customerRep.setLinks(searchProduct, getOrder);
 		}
 		
-		return customererRep;
+		return customerRep;
 	}
 
 }

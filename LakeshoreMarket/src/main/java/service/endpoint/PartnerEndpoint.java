@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import main.java.model.constant.Constant;
+import main.java.model.constant.HTTPVerb;
 import main.java.service.representation.Link;
 import main.java.service.representation.PartnerRepresentation;
 import main.java.service.service.PartnerService;
@@ -70,10 +71,10 @@ public class PartnerEndpoint implements PartnerEndpointInterface {
 	private PartnerRepresentation setLinks(PartnerRepresentation partnerRep) {
 		if (partnerRep != null) {
 			//set push to partner link  
-			Link push = new Link("push", Constant.BASE_PATH + "/orders/pushedOrders/" + partnerRep.getId(), Constant.BASE_PATH_CONSUMER + "/pushedOrders", Constant.MEDIA_TYPE_XML );
+			Link push = new Link(HTTPVerb.GET.toString(), Constant.BASE_PATH + "/orders/pushedOrders/", Constant.BASE_PATH_CONSUMER + "/pushedOrders", Constant.MEDIA_TYPE_XML );
 			//add product for partner link
-			Link addProduct = new Link("add", Constant.BASE_PATH + "/products", Constant.BASE_PATH_CONSUMER + "/addProduct", Constant.MEDIA_TYPE_XML);
-			Link acknowledge = new Link("acknowledge", Constant.BASE_PATH + "/orders/fulfilled", Constant.BASE_PATH_CONSUMER + "/fulfilledOrders", Constant.MEDIA_TYPE_XML);
+			Link addProduct = new Link(HTTPVerb.POST.toString(), Constant.BASE_PATH + "/products", Constant.BASE_PATH_CONSUMER + "/addProduct", Constant.MEDIA_TYPE_XML);
+			Link acknowledge = new Link(HTTPVerb.GET.toString(), Constant.BASE_PATH + "/orders/fulfilled", Constant.BASE_PATH_CONSUMER + "/fulfilledOrders", Constant.MEDIA_TYPE_XML);
 			
 			partnerRep.setLinks(push, acknowledge, addProduct);
 		}

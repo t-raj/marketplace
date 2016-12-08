@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import main.java.model.constant.Constant;
+import main.java.model.constant.HTTPVerb;
 import main.java.service.representation.Link;
 import main.java.service.representation.OrderRepresentation;
 import main.java.service.service.OrderService;
@@ -44,8 +45,8 @@ public class OrderEndpoint implements OrderEndpointInterface {
 		} 
 		
 		// set accept order links 
-		Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
-		Link pay = new Link("pay", Constant.BASE_PATH + "/orders/payment" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/payment", Constant.MEDIA_TYPE_XML);		
+		Link cancel = new Link(HTTPVerb.DELETE.toString(), Constant.BASE_PATH + "/orders/" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
+		Link pay = new Link(HTTPVerb.PUT.toString(), Constant.BASE_PATH + "/orders/payment" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/payment", Constant.MEDIA_TYPE_XML);		
 		order.setLinks(cancel, pay);
 		order.setOrderId(orderId);
 		
@@ -60,7 +61,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 		OrderRepresentation order = ElementUtil.buildOrderModel(orderService.get(orderId));
 		if (paymentAccepted) {
 			// set payment links 
-			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + orderId, Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
+			Link cancel = new Link(HTTPVerb.DELETE.toString(), Constant.BASE_PATH + "/orders/" + orderId, Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
 			order.setLinks(cancel);
 		}
 		
@@ -94,7 +95,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	public OrderRepresentation getOrderStatus(@PathParam("orderId") int orderId){
 		OrderRepresentation orderRepresentation = ElementUtil.buildOrderModel(orderService.get(orderId));
 
-		Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + orderRepresentation.getOrderId(), Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
+		Link cancel = new Link(HTTPVerb.DELETE.toString(), Constant.BASE_PATH + "/orders/" + orderRepresentation.getOrderId(), Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
 		orderRepresentation.setLinks(cancel);
 
 		return orderRepresentation;
@@ -106,7 +107,7 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	public List<OrderRepresentation> getInProgress(){
 		List<OrderRepresentation> orders = ElementUtil.buildOrderModelList(orderService.get());
 		for (OrderRepresentation order: orders) {
-			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders/" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
+			Link cancel = new Link(HTTPVerb.DELETE.toString(), Constant.BASE_PATH + "/orders/" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);	
 			order.setLinks(cancel);
 
 		}
@@ -134,8 +135,8 @@ public class OrderEndpoint implements OrderEndpointInterface {
 
 		//set link to check order status
 		for(OrderRepresentation order : orderModels){
-			Link checkStatus = new Link("status", Constant.BASE_PATH + "/orders/status/" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/status", Constant.MEDIA_TYPE_XML);
-			order.setLinks(checkStatus);
+			Link fulfill = new Link(HTTPVerb.PUT.toString(), Constant.BASE_PATH + "/orders/fulfilled", Constant.BASE_PATH_CONSUMER + "/fulfilledOrders", Constant.MEDIA_TYPE_XML);
+			order.setLinks(fulfill);
 		}
 
 		return orderModels;
@@ -166,9 +167,9 @@ public class OrderEndpoint implements OrderEndpointInterface {
 	
 	private void setLinkByOrderStatus(OrderRepresentation order) {
 		if (order != null) {
-			Link cancel = new Link("cancel", Constant.BASE_PATH + "/orders", Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);
-			Link pay = new Link("pay", Constant.BASE_PATH + "/orders/payment" + order.getOrderId(), Constant.BASE_PATH_CONSUMER + "/payment", Constant.MEDIA_TYPE_XML);		
-					
+			Link cancel = new Link(HTTPVerb.DELETE.toString(), Constant.BASE_PATH + "/orders", Constant.BASE_PATH_CONSUMER + "/cancel", Constant.MEDIA_TYPE_XML);
+			Link pay = new Link(HTTPVerb.PUT.toString(), Constant.BASE_PATH + "/orders/payment", Constant.BASE_PATH_CONSUMER + "/payment", Constant.MEDIA_TYPE_XML);		
+
 			Status status = order.getStatus();
 			
 			switch(status) {

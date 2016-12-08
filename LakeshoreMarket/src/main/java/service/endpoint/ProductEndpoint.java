@@ -12,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import main.java.model.constant.Constant;
+import main.java.model.constant.HTTPVerb;
 import main.java.service.representation.Link;
 import main.java.service.representation.ProductRepresentation;
 import main.java.service.service.ProductService;
@@ -79,7 +80,7 @@ public class ProductEndpoint implements ProductEndpointInterface{
 
 	private ProductRepresentation setLinks(ProductRepresentation partnerRep) {
 		if (partnerRep != null) {
-			Link buy = new Link("buy", Constant.BASE_PATH + "/orders/", Constant.BASE_PATH_CONSUMER + "/buy", Constant.MEDIA_TYPE_XML );
+			Link buy = new Link(HTTPVerb.POST.toString(), Constant.BASE_PATH + "/orders/", Constant.BASE_PATH_CONSUMER + "/buy", Constant.MEDIA_TYPE_XML );
 			
 			partnerRep.setLinks(buy);
 		}
